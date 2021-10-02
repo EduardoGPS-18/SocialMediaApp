@@ -32,7 +32,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - lib/ui/assets/images/
+   - lib/ui/assets/images/
 
 flutter_icons:
   android: true
