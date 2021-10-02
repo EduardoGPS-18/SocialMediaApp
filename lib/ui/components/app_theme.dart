@@ -22,7 +22,7 @@ mixin AppTheme {
       elevatedButtonTheme: elevatedButtonThemeData(colorScheme),
       errorColor: colorScheme.error,
       focusColor: focusColor,
-      fontFamily: 'Poppins',
+      fontFamily: 'Lato',
       highlightColor: Colors.transparent,
       iconTheme: IconThemeData(color: colorScheme.onPrimary),
       inputDecorationTheme: inputDecorationTheme(colorScheme),
@@ -126,65 +126,65 @@ mixin AppTheme {
   static final TextTheme _textTheme = TextTheme(
     headline1: GoogleFonts.lato(
       fontSize: 101,
-      fontWeight: FontWeight.w300,
+      fontWeight: _light,
       letterSpacing: -1.5,
     ),
     headline2: GoogleFonts.lato(
       fontSize: 63,
-      fontWeight: FontWeight.w300,
+      fontWeight: _light,
       letterSpacing: -0.5,
     ),
     headline3: GoogleFonts.lato(
       fontSize: 50,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
     ),
     headline4: GoogleFonts.lato(
       fontSize: 36,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
       letterSpacing: 0.25,
     ),
     headline5: GoogleFonts.lato(
       fontSize: 25,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
     ),
     headline6: GoogleFonts.lato(
       fontSize: 21,
-      fontWeight: FontWeight.w500,
+      fontWeight: _medium,
       letterSpacing: 0.15,
     ),
     subtitle1: GoogleFonts.lato(
       fontSize: 17,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
       letterSpacing: 0.15,
     ),
     subtitle2: GoogleFonts.lato(
       fontSize: 15,
-      fontWeight: FontWeight.w500,
+      fontWeight: _medium,
       letterSpacing: 0.1,
     ),
     bodyText1: GoogleFonts.lato(
       fontSize: 17,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
       letterSpacing: 0.5,
     ),
     bodyText2: GoogleFonts.lato(
       fontSize: 15,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
       letterSpacing: 0.25,
     ),
     button: GoogleFonts.lato(
       fontSize: 15,
-      fontWeight: FontWeight.w500,
+      fontWeight: _medium,
       letterSpacing: 1.25,
     ),
     caption: GoogleFonts.lato(
       fontSize: 13,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
       letterSpacing: 0.4,
     ),
     overline: GoogleFonts.lato(
       fontSize: 10,
-      fontWeight: FontWeight.w400,
+      fontWeight: _regular,
       letterSpacing: 1.5,
     ),
   );
