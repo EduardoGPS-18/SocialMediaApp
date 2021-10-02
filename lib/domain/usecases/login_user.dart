@@ -1,5 +1,5 @@
 abstract class LoginUser {
-  Future<void> loadUser({required LoginUserParams params});
+  Future<void> loginUserWithEmailAndPassword({required LoginUserParams params});
 }
 
 class LoginUserParams {

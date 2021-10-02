@@ -1,5 +1,5 @@
 abstract class RegisterUser {
-  Future<void> registerUser({required RegisterUserParams params});
+  Future<void> registerUserWithRegisterParams({required RegisterUserParams params});
 }
 
 class RegisterUserParams {
