@@ -36,17 +36,17 @@ mixin AppTheme {
   static const ColorScheme lightColorScheme = ColorScheme(
     background: Color(0xFFFCFCFC),
     brightness: Brightness.light,
-    error: Color(0xFFD83838),
-    onBackground: Color(0xFF303030),
+    error: Color(0xFFFC2A36),
+    onBackground: Color(0xFF000000), //preto total por cima do fundo
     onError: Color(0xFFFCFCFC),
-    onPrimary: Color(0xFFFCFCFC),
-    onSecondary: Color(0xFFFCFCFC),
-    onSurface: Color(0xFF303030),
-    primary: Color(0xFF31844A),
-    primaryVariant: Color(0xFF63B476),
-    secondary: Color(0xFF367E9B),
-    secondaryVariant: Color(0xFF6AADCC),
-    surface: Color(0xFFFFFFFF),
+    onPrimary: Color(0xFF262626), //para letras em cima do primario
+    onSecondary: Color(0xFFFFFFFF), //por cima de cores desativas
+    onSurface: Color(0xFFFFFFFF),
+    primary: Color(0xFFF6CB46),
+    primaryVariant: Color(0xFFFFEE00), //amarelo mais forte
+    secondary: Color(0xFFD4D4D4), //cores desativas
+    secondaryVariant: Color(0xFFD4D4D4), //cores desativas
+    surface: Color(0xFFD4D4D4),
   );
 
   static const ColorScheme darkColorScheme = ColorScheme(
@@ -124,67 +124,67 @@ mixin AppTheme {
   static const _medium = FontWeight.w500;
 
   static final TextTheme _textTheme = TextTheme(
-    headline1: GoogleFonts.poppins(
-      fontSize: 93,
-      fontWeight: _light,
+    headline1: GoogleFonts.lato(
+      fontSize: 101,
+      fontWeight: FontWeight.w300,
       letterSpacing: -1.5,
     ),
-    headline2: GoogleFonts.poppins(
-      fontSize: 58,
-      fontWeight: _light,
+    headline2: GoogleFonts.lato(
+      fontSize: 63,
+      fontWeight: FontWeight.w300,
       letterSpacing: -0.5,
     ),
-    headline3: GoogleFonts.poppins(
-      fontSize: 46,
-      fontWeight: _regular,
+    headline3: GoogleFonts.lato(
+      fontSize: 50,
+      fontWeight: FontWeight.w400,
     ),
-    headline4: GoogleFonts.poppins(
-      fontSize: 33,
-      fontWeight: _regular,
+    headline4: GoogleFonts.lato(
+      fontSize: 36,
+      fontWeight: FontWeight.w400,
       letterSpacing: 0.25,
     ),
-    headline5: GoogleFonts.poppins(
-      fontSize: 23,
-      fontWeight: _regular,
+    headline5: GoogleFonts.lato(
+      fontSize: 25,
+      fontWeight: FontWeight.w400,
     ),
-    headline6: GoogleFonts.poppins(
-      fontSize: 19,
-      fontWeight: _medium,
+    headline6: GoogleFonts.lato(
+      fontSize: 21,
+      fontWeight: FontWeight.w500,
       letterSpacing: 0.15,
     ),
-    subtitle1: GoogleFonts.poppins(
+    subtitle1: GoogleFonts.lato(
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.15,
+    ),
+    subtitle2: GoogleFonts.lato(
       fontSize: 15,
-      fontWeight: _regular,
-      letterSpacing: 0.15,
-    ),
-    subtitle2: GoogleFonts.poppins(
-      fontSize: 13,
-      fontWeight: _medium,
+      fontWeight: FontWeight.w500,
       letterSpacing: 0.1,
     ),
-    bodyText1: GoogleFonts.poppins(
-      fontSize: 15,
-      fontWeight: _regular,
+    bodyText1: GoogleFonts.lato(
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
       letterSpacing: 0.5,
     ),
-    bodyText2: GoogleFonts.poppins(
-      fontSize: 13,
-      fontWeight: _regular,
+    bodyText2: GoogleFonts.lato(
+      fontSize: 15,
+      fontWeight: FontWeight.w400,
       letterSpacing: 0.25,
     ),
-    button: GoogleFonts.poppins(
-      fontSize: 13,
-      fontWeight: _medium,
+    button: GoogleFonts.lato(
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
       letterSpacing: 1.25,
     ),
-    caption: GoogleFonts.poppins(
-      fontSize: 12,
-      fontWeight: _regular,
+    caption: GoogleFonts.lato(
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
       letterSpacing: 0.4,
     ),
-    overline: GoogleFonts.poppins(
+    overline: GoogleFonts.lato(
       fontSize: 10,
-      fontWeight: _regular,
+      fontWeight: FontWeight.w400,
       letterSpacing: 1.5,
     ),
   );
