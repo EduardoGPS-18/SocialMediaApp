@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: _navigatorKey,
       title: 'Social Media App',
       theme: AppTheme.lightThemeData,
-      darkTheme: AppTheme.darkThemeData,
+      //darkTheme: AppTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
