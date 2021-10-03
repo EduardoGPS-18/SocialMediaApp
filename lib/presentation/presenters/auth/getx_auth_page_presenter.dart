@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../domain/usecases/usecases.dart';
+import '../../../domain/usecases/usecases.dart';
 
 abstract class AuthPagePresenter {
   Stream<bool> get isLogin;
