@@ -1,5 +1,7 @@
+import '../entities/entities.dart';
+
 abstract class RegisterUser {
-  Future<void> registerUserWithRegisterParams({required RegisterUserParams params});
+  Future<UserEntity> registerUserWithRegisterParams({required RegisterUserParams params});
 }
 
 class RegisterUserParams {
