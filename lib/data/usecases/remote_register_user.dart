@@ -1,7 +1,7 @@
 import '../../domain/entities/entities.dart';
 import '../../domain/usecases/usecases.dart';
 import '../firebase/firebase.dart';
-import '../models/remote_save_user_model.dart';
+import '../models/remote_user_model.dart';
 
 class RemoteRegisterUser implements RegisterUser {
   FirebaseAuthentication firebaseAuthentication;
@@ -17,7 +17,7 @@ class RemoteRegisterUser implements RegisterUser {
     final userCred = await firebaseAuthentication.registerUser(params: params);
     cloudFirestore.setDataDocument(
         doc: userCred.user?.uid ?? "",
-        data: RemoteSaveUserModel(
+        data: RemoteUserModel(
           name: params.name,
           photoUrl: params.photoUrl,
           email: params.email,

@@ -1,7 +1,7 @@
 import '../../domain/entities/entities.dart';
 
-class RemoteSaveUserModel extends UserEntity {
-  RemoteSaveUserModel({
+class RemoteUserModel extends UserEntity {
+  RemoteUserModel({
     required String name,
     required String photoUrl,
     required String email,
