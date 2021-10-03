@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-enum FirebaseAuthError {
+enum FirebaseAuthenticationError {
   emailAlreadyInUse,
   internalError,
   invalidEmail,
@@ -11,26 +11,26 @@ enum FirebaseAuthError {
   weakPassword,
 }
 
-extension FirebaseAuthErrorExtension on FirebaseAuthError {
+extension FirebaseAuthenticationErrorExtension on FirebaseAuthenticationError {
   String get name => describeEnum(this);
 
   String get code {
     switch (this) {
-      case FirebaseAuthError.emailAlreadyInUse:
+      case FirebaseAuthenticationError.emailAlreadyInUse:
         return 'email-already-in-use';
-      case FirebaseAuthError.internalError:
+      case FirebaseAuthenticationError.internalError:
         return 'internal-error';
-      case FirebaseAuthError.invalidEmail:
+      case FirebaseAuthenticationError.invalidEmail:
         return 'invalid-email';
-      case FirebaseAuthError.operationNotAllowed:
+      case FirebaseAuthenticationError.operationNotAllowed:
         return 'operation-not-allowed';
-      case FirebaseAuthError.userDisabled:
+      case FirebaseAuthenticationError.userDisabled:
         return 'user-disabled';
-      case FirebaseAuthError.userNotFound:
+      case FirebaseAuthenticationError.userNotFound:
         return 'user-not-found';
-      case FirebaseAuthError.wrongPassword:
+      case FirebaseAuthenticationError.wrongPassword:
         return 'wrong-password';
-      case FirebaseAuthError.weakPassword:
+      case FirebaseAuthenticationError.weakPassword:
         return 'weak-password';
       default:
         return 'internal-error';

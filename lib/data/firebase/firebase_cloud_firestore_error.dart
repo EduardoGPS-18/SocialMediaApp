@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
-enum FirebaseFirestoreError {
+enum FirebaseCloudFirestoreError {
   invalidData,
   internalError,
 }
 
-extension FirebaseFirestoreErrorExtension on FirebaseFirestoreError {
+extension FirebaseCloudFirestoreErrorExtension on FirebaseCloudFirestoreError {
   String get name => describeEnum(this);
 
   String get code {
