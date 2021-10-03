@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data/firebase/firebase.dart';
 
 class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
-  FirebaseFirestore firestore;
+  FirebaseFirestore firebaseFirestore;
   FirebaseCloudFirestoreAdapter({
-    required this.firestore,
+    required this.firebaseFirestore,
   });
 
   @override
@@ -20,7 +20,7 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   @override
   CollectionReference getCollection({required String collectionName}) {
     try {
-      return firestore.collection(collectionName);
+      return firebaseFirestore.collection(collectionName);
     } catch (_) {
       throw FirebaseCloudFirestoreError.internalError;
     }
