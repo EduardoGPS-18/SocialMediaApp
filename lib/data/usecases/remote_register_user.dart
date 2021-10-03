@@ -14,14 +14,18 @@ class RemoteRegisterUser implements RegisterUser {
 
   @override
   Future<UserEntity> registerUserWithRegisterParams({required RegisterUserParams params}) async {
-    final userCred = await firebaseAuthentication.registerUser(params: params);
-    cloudFirestore.setDataDocument(
-        doc: userCred.user?.uid ?? "",
-        data: RemoteUserModel(
-          name: params.name,
-          photoUrl: params.photoUrl,
-          email: params.email,
-        ).toMap());
-    return UserEntity(name: params.name, email: params.email, photoUrl: params.photoUrl);
+    try {
+      final userCred = await firebaseAuthentication.registerUser(params: params);
+      cloudFirestore.setDataDocument(
+          doc: userCred.user?.uid ?? "",
+          data: RemoteUserModel(
+            name: params.name,
+            photoUrl: params.photoUrl,
+            email: params.email,
+          ).toMap());
+      return UserEntity(name: params.name, email: params.email, photoUrl: params.photoUrl);
+    } on FirebaseAuthenticationError catch (_) {
+      rethrow;
+    }
   }
 }

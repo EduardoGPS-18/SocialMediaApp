@@ -14,8 +14,14 @@ class RemoteLoginUser implements LoginUser {
 
   @override
   Future<UserEntity> loginUserWithEmailAndPassword({required LoginUserParams params}) async {
-    final userCred = await firebaseAuthentication.loginWithEmailAndPassword(params: params);
-    final user = await cloudFirestore.getCollection(collectionName: 'users').doc(userCred.user?.uid).get();
-    return RemoteUserModel.fromMap(user.data() as Map<String, dynamic>);
+    try {
+      final userCred = await firebaseAuthentication.loginWithEmailAndPassword(params: params);
+      final user = await cloudFirestore.getCollection(collectionName: 'users').doc(userCred.user?.uid).get();
+      return RemoteUserModel.fromMap(user.data() as Map<String, dynamic>);
+    } on FirebaseAuthenticationError catch (_) {
+      rethrow;
+    } on FirebaseCloudFirestoreError catch (_) {
+      rethrow;
+    }
   }
 }
