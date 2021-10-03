@@ -1,5 +1,5 @@
 import '../../domain/entities/user_entity.dart';
-import '../../domain/usecases/load_user_by_uid.dart';
+import '../../domain/usecases/usecases.dart';
 import '../firebase/firebase.dart';
 
 class RemoteLoadUser implements LoadUser {
