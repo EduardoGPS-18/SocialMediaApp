@@ -1,3 +1,3 @@
-export 'package:social_media_app/ui/pages/widget/widget.dart';
+export 'package:social_media_app/ui/components/components.dart';
 
-export 'login/login.dart';
+export 'auth/auth.dart';

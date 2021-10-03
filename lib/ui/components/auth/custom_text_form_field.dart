@@ -25,14 +25,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return SizedBox(
       width: widget.size.width * 0.8,
       child: TextFormField(
-        // validator: ,
-
         obscureText: widget.segureText ? _segureText : false,
-
         decoration: InputDecoration(
           labelText: widget.labelText,
-          labelStyle:
-              TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          labelStyle: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
             borderRadius: BorderRadius.circular(widget.size.width * 0.015),
