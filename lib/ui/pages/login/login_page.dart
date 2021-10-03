@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+import '../widget/custom_text_form_field.dart';
+
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+bool _segureText = true;
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -101,45 +110,21 @@ class LoginPage extends StatelessWidget {
                             ))
                       ],
                     ),
-                    Container(
+                    Padding(
                       padding: EdgeInsets.only(
                           top: size.width * 0.1, bottom: size.width * 0.04),
-                      width: size.width * 0.8,
-                      child: TextFormField(
-                        onTap: () {},
-                        decoration: InputDecoration(
-                          //  label: Text("aaaaa"),
-                          labelText: "Name",
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.onBackground),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius:
-                                BorderRadius.circular(size.width * 0.015),
-                          ),
-                          prefixIcon: Icon(Icons.person),
-                        ),
+                      child: CustomTextFormField(
+                        segureText: false,
+                        size: size,
+                        labelText: "E-mail",
+                        prefixIcon: Icons.email,
                       ),
                     ),
-                    SizedBox(
-                      width: size.width * 0.8,
-                      child: TextFormField(
-                        onTap: () {},
-                        decoration: InputDecoration(
-                          //  label: Text("aaaaa"),
-                          labelText: "Senha",
-                          labelStyle: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.onBackground),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius:
-                                BorderRadius.circular(size.width * 0.015),
-                          ),
-                          prefixIcon: Icon(Icons.lock_sharp),
-                        ),
-                      ),
+                    CustomTextFormField(
+                      segureText: true,
+                      size: size,
+                      labelText: "Senha",
+                      prefixIcon: Icons.security,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: size.height * 0.09),
@@ -150,13 +135,15 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {},
                             child: Text(
                               "INICIAR SESSÃO",
-                              style:
-                                  Theme.of(context).textTheme.button?.copyWith(
-                                        fontWeight: FontWeight.w900,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .background,
-                                      ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
+                                  ),
                             )),
                       ),
                     )
@@ -171,3 +158,5 @@ class LoginPage extends StatelessWidget {
   }
 }
 // color: Theme.of(context).colorScheme.onPrimary,
+
+ 
