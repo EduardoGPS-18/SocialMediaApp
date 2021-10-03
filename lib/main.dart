@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'ui/components/components.dart';
+import 'ui/pages/pages.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,8 +21,9 @@ class MyApp extends StatelessWidget {
       //darkTheme: AppTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: const {},
+      home: AuthPage(),
+      // initialRoute: '/',
+      // routes: const {},
     );
   }
 }
