@@ -24,7 +24,21 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
 
   @override
   Future<UserCredential> registerUser({required RegisterUserParams params}) async {
-    final userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: params.email, password: params.password);
+    try {
+      final userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: params.email, password: params.password);
     return userCredential;
+    } on FirebaseAuthException catch (error) {
+      if (error.code == FirebaseAuthError.invalidEmail.code) {
+        throw FirebaseAuthError.invalidEmail;
+      } else if (error.code == FirebaseAuthError.userDisabled.code) {
+        throw FirebaseAuthError.userDisabled;
+      } else if (error.code == FirebaseAuthError.userNotFound.code) {
+        throw FirebaseAuthError.userNotFound;
+      } else if (error.code == FirebaseAuthError.wrongPassword.code) {
+        throw FirebaseAuthError.wrongPassword;
+      } else {
+        throw FirebaseAuthError.internalError;
+      }
+    }
   }
 }

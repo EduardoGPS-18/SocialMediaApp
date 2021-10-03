@@ -10,13 +10,20 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
 
   @override
   Future<void> setDataDocument({required String doc, required Object data}) async {
-    await getCollection(collectionName: "users").doc(doc).set(data);
+    try {
+      await getCollection(collectionName: "users").doc(doc).set(data);
+    } catch (_) {
+      throw FirebaseFirestoreError.internalError;
+    }
   }
 
   @override
   CollectionReference getCollection({required String collectionName}) {
-    CollectionReference collection = firestore.collection(collectionName);
-    return collection;
+    try {
+      return firestore.collection(collectionName);
+    } catch (_) {
+      throw FirebaseFirestoreError.internalError;
+    }
   }
 
   @override
