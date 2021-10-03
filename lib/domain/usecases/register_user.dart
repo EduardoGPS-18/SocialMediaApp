@@ -6,12 +6,12 @@ class RegisterUserParams {
   final String name;
   final String email;
   final String password;
-  final String image;
+  final String photoUrl;
 
   RegisterUserParams({
     required this.name,
     required this.email,
     required this.password,
-    required this.image,
+    required this.photoUrl,
   });
 }
