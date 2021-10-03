@@ -23,23 +23,27 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
 
   @override
   Future<void> loginUser() async {
-    remoteLoginUser.loginUserWithEmailAndPassword(
-      params: LoginUserParams(
-        email: "",
-        password: "",
-      ),
-    );
+    try {
+      remoteLoginUser.loginUserWithEmailAndPassword(
+        params: LoginUserParams(
+          email: "",
+          password: "",
+        ),
+      );
+    } catch (e) {}
   }
 
   @override
   Future<void> registerUser() async {
-    remoteRegisterUser.registerUserWithRegisterParams(
-      params: RegisterUserParams(
-        name: "",
-        email: "",
-        password: "",
-        photoUrl: "",
-      ),
-    );
+    try {
+      remoteRegisterUser.registerUserWithRegisterParams(
+        params: RegisterUserParams(
+          name: "",
+          email: "",
+          password: "",
+          photoUrl: "",
+        ),
+      );
+    } catch (err) {}
   }
 }
