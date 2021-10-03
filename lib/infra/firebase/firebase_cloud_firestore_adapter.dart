@@ -13,7 +13,7 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
     try {
       await getCollection(collectionName: "users").doc(doc).set(data);
     } catch (_) {
-      throw FirebaseFirestoreError.internalError;
+      throw FirebaseCloudFirestoreError.internalError;
     }
   }
 
@@ -22,7 +22,7 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
     try {
       return firestore.collection(collectionName);
     } catch (_) {
-      throw FirebaseFirestoreError.internalError;
+      throw FirebaseCloudFirestoreError.internalError;
     }
   }
 
