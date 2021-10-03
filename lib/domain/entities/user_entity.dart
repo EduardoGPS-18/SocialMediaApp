@@ -1,8 +1,10 @@
-class User {
+class UserEntity {
   final String name;
   final String photoUrl;
-  User({
+  final String token;
+  UserEntity({
     required this.name,
     required this.photoUrl,
+    required this.token,
   });
 }
