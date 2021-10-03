@@ -1,5 +1,7 @@
+import '../entities/entities.dart';
+
 abstract class LoginUser {
-  Future<void> loginUserWithEmailAndPassword({required LoginUserParams params});
+  Future<UserEntity> loginUserWithEmailAndPassword({required LoginUserParams params});
 }
 
 class LoginUserParams {
