@@ -7,6 +7,12 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   FirebaseCloudFirestoreAdapter({
     required this.firestore,
   });
+
+  @override
+  Future<void> setDataDocument({required String doc, required Object data}) async {
+    await getCollection(collectionName: "users").doc(doc).set(data);
+  }
+
   @override
   CollectionReference getCollection({required String collectionName}) {
     CollectionReference collection = firestore.collection(collectionName);
@@ -15,7 +21,6 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
 
   @override
   Stream<QuerySnapshot<Object?>> getStreamCollection({required String collectionName}) {
-    // TODO: implement getStreamCollection
     throw UnimplementedError();
   }
 }
