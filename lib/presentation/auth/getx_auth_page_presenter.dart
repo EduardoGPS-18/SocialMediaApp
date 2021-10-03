@@ -38,7 +38,7 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
         name: "",
         email: "",
         password: "",
-        image: "",
+        photoUrl: "",
       ),
     );
   }
