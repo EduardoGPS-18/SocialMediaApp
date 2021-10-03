@@ -12,4 +12,10 @@ class RemoteUserModel extends UserEntity {
         "photoUrl": photoUrl,
         "email": email,
       };
+  factory RemoteUserModel.fromMap(Map<String, dynamic> map) => RemoteUserModel(
+        name: map["name"],
+        photoUrl: map["photoUrl"],
+        email: map["email"],
+      );
+  
 }
