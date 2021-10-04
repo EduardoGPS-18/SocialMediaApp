@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/usecases/usecases.dart';
@@ -8,7 +9,8 @@ abstract class AuthPagePresenter {
   Future<void> registerUser();
 }
 
-class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter {
+class GetxAuthPagePresenter extends GetxController
+    implements AuthPagePresenter {
   LoginUser remoteLoginUser;
   RegisterUser remoteRegisterUser;
 
@@ -30,7 +32,9 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
           password: "",
         ),
       );
-    } catch (e) {}
+    } catch (error) {
+      debugPrint('$error');
+    }
   }
 
   @override
@@ -44,6 +48,8 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
           photoUrl: "",
         ),
       );
-    } catch (err) {}
+    } catch (error) {
+      debugPrint('$error');
+    }
   }
 }
