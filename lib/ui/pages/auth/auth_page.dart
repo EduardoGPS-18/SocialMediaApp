@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
+import 'auth.dart';
 
 class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  final PageController pageController = PageController();
+  final AuthPagePresenter presenter;
+
+  AuthPage({
+    Key? key,
+    required this.presenter,
+  }) : super(key: key);
 
   @override
   State<AuthPage> createState() => _AuthPageState();
 }
 
 class _AuthPageState extends State<AuthPage> {
-  late PageController pageController;
-
-  bool islog = true;
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: 0);
+    widget.presenter.pageIndex.listen((index) {
+      widget.pageController.animateToPage(
+        index,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -42,7 +52,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
             PageView(
               physics: const NeverScrollableScrollPhysics(),
-              controller: pageController,
+              controller: widget.pageController,
               children: [
                 PageWithCenterCard(
                   size: size,
@@ -79,15 +89,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            setState(() {
-                              pageController.animateToPage(
-                                1,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            });
-                          },
+                          onPressed: () => widget.presenter.setPageIndex(1),
                           child: Text(
                             "Registre-se",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(
@@ -232,15 +234,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            setState(() {
-                              pageController.animateToPage(
-                                0,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            });
-                          },
+                          onPressed: () => () => widget.presenter.setPageIndex(0),
                           child: Text(
                             "Inciar Sessão",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(
