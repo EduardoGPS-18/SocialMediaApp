@@ -45,7 +45,7 @@ mixin AppTheme {
     primary: Color(0xFFF6CB46),
     primaryVariant: Color(0xFFFFEE00), //amarelo mais forte
     secondary: Color(0xFFD4D4D4), //cores desativas
-    secondaryVariant: Color(0xFFD4D4D4), //cores desativas
+    secondaryVariant: Color(0xFF489ae3), //cores a parte
     surface: Color(0xFFD4D4D4),
   );
 
