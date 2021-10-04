@@ -1,19 +1,21 @@
 import 'package:equatable/equatable.dart';
 
 import '../../presentation/protocols/protocols.dart';
+import '../protocols/field_validation.dart';
 
-class NotNullableValidation extends Equatable implements Validation {
-  final String? field;
+class NotNullableValidation extends Equatable implements FieldValidation {
+  @override
+  final String field;
 
   const NotNullableValidation({
-    this.field,
+    required this.field,
   });
 
   @override
   List<Object?> get props => [field];
 
   @override
-  ValidationError validate({required String field, required Map input}) {
-    return field == null ? ValidationError.invalidField : ValidationError.noError;
+  ValidationError validate(Map input) {
+    return input[field] == null ? ValidationError.invalidField : ValidationError.noError;
   }
 }
