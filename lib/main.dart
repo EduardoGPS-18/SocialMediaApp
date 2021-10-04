@@ -5,6 +5,7 @@ import 'ui/components/components.dart';
 import 'ui/pages/pages.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       //darkTheme: AppTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: AuthPage(),
+      home: const AuthPage(),
       // initialRoute: '/',
       // routes: const {},
     );
