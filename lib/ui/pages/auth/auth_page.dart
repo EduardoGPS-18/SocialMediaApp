@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
@@ -36,9 +38,7 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: FocusScope.of(context).unfocus,
         child: Stack(
           children: [
             Positioned(
@@ -58,7 +58,9 @@ class _AuthPageState extends State<AuthPage> {
                   size: size,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
+                      padding: EdgeInsets.symmetric(
+                        vertical: size.width * 0.1,
+                      ),
                       child: const CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage("lib/ui/assets/icons/login_icon.png"),
@@ -100,7 +102,10 @@ class _AuthPageState extends State<AuthPage> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: size.width * 0.1, bottom: size.width * 0.04),
+                      padding: EdgeInsets.only(
+                        top: size.width * 0.1,
+                        bottom: size.width * 0.04,
+                      ),
                       child: CustomTextFormField(
                         segureText: false,
                         onChanged: widget.presenter.validateEmail,
@@ -160,10 +165,21 @@ class _AuthPageState extends State<AuthPage> {
                       padding: EdgeInsets.only(bottom: size.width * 0.04),
                       child: Column(children: [
                         InkWell(
-                          onTap: () {}, //função da imagem
-                          child: const CircleAvatar(
-                            radius: 50,
-                            backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
+                          onTap: widget.presenter.setImage, //função da imagem
+                          child: StreamBuilder<File?>(
+                            stream: widget.presenter.userImage,
+                            builder: (context, snapshot) {
+                              if (snapshot.data != null && snapshot.hasData) {
+                                return CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: FileImage(snapshot.data!),
+                                );
+                              }
+                              return const CircleAvatar(
+                                radius: 50,
+                                backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
+                              );
+                            },
                           ),
                         ),
                         Padding(
@@ -237,7 +253,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () => () => widget.presenter.setPageIndex(0),
+                          onPressed: () => widget.presenter.setPageIndex(0),
                           child: Text(
                             "Inciar Sessão",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(
