@@ -128,7 +128,7 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 PageWithCenterCard(
@@ -154,21 +154,19 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: size.width * 0.04),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {}, //função da imagem
-                            child: const CircleAvatar(
-                              radius: 50,
-                              backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
-                            ),
+                      child: Column(children: [
+                        InkWell(
+                          onTap: () {}, //função da imagem
+                          child: const CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: size.width * 0.01),
-                            child: const Text("Adicione uma imagem"),
-                          )
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: size.width * 0.01),
+                          child: const Text("Adicione uma image"),
+                        )
+                      ]),
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: size.width * 0.03),
@@ -262,3 +260,10 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 }
+
+/*
+left: size.width * 0.05,
+      right: size.width * 0.05,
+      bottom: size.height * 0.05,
+      top: size.height * 0.05,
+*/
