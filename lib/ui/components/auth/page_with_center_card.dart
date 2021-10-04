@@ -35,9 +35,11 @@ class PageWithCenterCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(size.width * 0.015),
                 color: Theme.of(context).colorScheme.background,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: children,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: children,
+                ),
               ),
             ),
           ),
