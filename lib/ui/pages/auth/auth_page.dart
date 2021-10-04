@@ -55,6 +55,7 @@ class _AuthPageState extends State<AuthPage> {
               controller: widget.pageController,
               children: [
                 PageWithCenterCard(
+                  controller: widget.pageController,
                   size: size,
                   children: [
                     Padding(
@@ -63,19 +64,22 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       child: const CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage("lib/ui/assets/icons/login_icon.png"),
+                        backgroundImage:
+                            AssetImage("lib/ui/assets/icons/login_icon.png"),
                       ),
                     ),
                     Text.rich(
                       TextSpan(
                         text: "Iniciar Sessão com a sua",
-                        style: Theme.of(context).textTheme.headline5?.copyWith(),
+                        style:
+                            Theme.of(context).textTheme.headline5?.copyWith(),
                         children: [
                           TextSpan(
                             text: "\nConta da SocialMedia",
-                            style: Theme.of(context).textTheme.headline5?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.headline5?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                           ),
                         ],
                       ),
@@ -86,17 +90,24 @@ class _AuthPageState extends State<AuthPage> {
                       children: [
                         Text(
                           "Novo na SocialMedia?",
-                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: Theme.of(context).colorScheme.onBackground,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                               ),
                         ),
                         TextButton(
                           onPressed: () => widget.presenter.setPageIndex(1),
                           child: Text(
                             "Registre-se",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.secondaryVariant,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryVariant,
+                                    ),
                           ),
                         ),
                       ],
@@ -130,9 +141,13 @@ class _AuthPageState extends State<AuthPage> {
                           onPressed: () {},
                           child: Text(
                             "INICIAR SESSÃO",
-                            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(
                                   fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).colorScheme.background,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                 ),
                           ),
                         ),
@@ -141,18 +156,24 @@ class _AuthPageState extends State<AuthPage> {
                   ],
                 ),
                 PageWithCenterCard(
+                  controller: widget.pageController,
                   size: size,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.height * 0.02),
                       child: Text.rich(
                         TextSpan(
                           text: "Crie um nova Conta\nna ",
-                          style: Theme.of(context).textTheme.headline5?.copyWith(),
+                          style:
+                              Theme.of(context).textTheme.headline5?.copyWith(),
                           children: [
                             TextSpan(
                               text: "SocialMedia",
-                              style: Theme.of(context).textTheme.headline5?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  ?.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -177,7 +198,8 @@ class _AuthPageState extends State<AuthPage> {
                               }
                               return const CircleAvatar(
                                 radius: 50,
-                                backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
+                                backgroundImage: AssetImage(
+                                    "lib/ui/assets/images/camera.png"),
                               );
                             },
                           ),
@@ -235,9 +257,13 @@ class _AuthPageState extends State<AuthPage> {
                           onPressed: () {},
                           child: Text(
                             "CADASTRAR",
-                            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                ?.copyWith(
                                   fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).colorScheme.background,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                 ),
                           ),
                         ),
@@ -248,17 +274,24 @@ class _AuthPageState extends State<AuthPage> {
                       children: [
                         Text(
                           "Eu já tenho uma conta?",
-                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: Theme.of(context).colorScheme.onBackground,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                               ),
                         ),
                         TextButton(
                           onPressed: () => widget.presenter.setPageIndex(0),
                           child: Text(
                             "Inciar Sessão",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.secondaryVariant,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryVariant,
+                                    ),
                           ),
                         ),
                       ],
