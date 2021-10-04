@@ -10,14 +10,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late PageController pageController;
-
   bool islog = true;
-  @override
-  void initState() {
-    super.initState();
-    pageController = PageController(initialPage: 0);
-  }
 
   int _currentIndexBottomNavigationBar = 0;
   @override
@@ -25,6 +18,32 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: CustomAppBar(text: "Feed"),
+
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: PageController(initialPage: 0),
+        children: [
+          SingleChildScrollView(
+            primary: true,
+            child: Column(children: [
+              Container(
+                height: 100,
+                color: Colors.black,
+              ),
+              ListView.builder(
+                  primary: false,
+                  shrinkWrap: true,
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 300,
+                      color: Colors.red,
+                    );
+                  }),
+            ]),
+          )
+        ],
+      ),
 
       bottomNavigationBar: BottomNavigationBar(
         elevation: 15,
