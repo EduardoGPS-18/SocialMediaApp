@@ -48,6 +48,93 @@ class _AuthPageState extends State<AuthPage> {
                   size: size,
                   children: [
                     Padding(
+                      padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
+                      child: const CircleAvatar(
+                        radius: 50,
+                        backgroundImage: AssetImage("lib/ui/assets/icons/login_icon.png"),
+                      ),
+                    ),
+                    Text.rich(
+                      TextSpan(
+                        text: "Iniciar Sessão com a sua",
+                        style: Theme.of(context).textTheme.headline5?.copyWith(),
+                        children: [
+                          TextSpan(
+                            text: "\nConta da SocialMedia",
+                            style: Theme.of(context).textTheme.headline5?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Novo na SocialMedia?",
+                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                                color: Theme.of(context).colorScheme.onBackground,
+                              ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {
+                              pageController.animateToPage(
+                                1,
+                                duration: const Duration(seconds: 1),
+                                curve: Curves.easeInOut,
+                              );
+                            });
+                          },
+                          child: Text(
+                            "Registre-se",
+                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
+                                  color: Theme.of(context).colorScheme.secondaryVariant,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: size.width * 0.1, bottom: size.width * 0.04),
+                      child: CustomTextFormField(
+                        segureText: false,
+                        size: size,
+                        labelText: "E-mail",
+                        prefixIcon: Icons.email,
+                      ),
+                    ),
+                    CustomTextFormField(
+                      segureText: true,
+                      size: size,
+                      labelText: "Senha",
+                      prefixIcon: Icons.security,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: size.height * 0.09),
+                      child: SizedBox(
+                        height: size.width * 0.155,
+                        width: size.width * 0.8,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text(
+                            "INICIAR SESSÃO",
+                            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: Theme.of(context).colorScheme.background,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                PageWithCenterCard(
+                  size: size,
+                  children: [
+                    Padding(
                       padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
                       child: Text.rich(
                         TextSpan(
@@ -164,93 +251,6 @@ class _AuthPageState extends State<AuthPage> {
                           ),
                         ),
                       ],
-                    ),
-                  ],
-                ),
-                PageWithCenterCard(
-                  size: size,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
-                      child: const CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage("lib/ui/assets/icons/login_icon.png"),
-                      ),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        text: "Iniciar Sessão com a sua",
-                        style: Theme.of(context).textTheme.headline5?.copyWith(),
-                        children: [
-                          TextSpan(
-                            text: "\nConta da SocialMedia",
-                            style: Theme.of(context).textTheme.headline5?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Novo na SocialMedia?",
-                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: Theme.of(context).colorScheme.onBackground,
-                              ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            setState(() {
-                              pageController.animateToPage(
-                                1,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            });
-                          },
-                          child: Text(
-                            "Registre-se",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.secondaryVariant,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: size.width * 0.1, bottom: size.width * 0.04),
-                      child: CustomTextFormField(
-                        segureText: false,
-                        size: size,
-                        labelText: "E-mail",
-                        prefixIcon: Icons.email,
-                      ),
-                    ),
-                    CustomTextFormField(
-                      segureText: true,
-                      size: size,
-                      labelText: "Senha",
-                      prefixIcon: Icons.security,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: size.height * 0.09),
-                      child: SizedBox(
-                        height: size.width * 0.155,
-                        width: size.width * 0.8,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "INICIAR SESSÃO",
-                            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).colorScheme.background,
-                                ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),
