@@ -1,12 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../domain/usecases/usecases.dart';
-
-abstract class AuthPagePresenter {
-  Stream<bool> get isLogin;
-  Future<void> loginUser();
-  Future<void> registerUser();
-}
+import '../../../ui/pages/pages.dart';
 
 class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter {
   LoginUser remoteLoginUser;
@@ -17,9 +12,15 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
     required this.remoteRegisterUser,
   });
 
-  Rx<bool> get isLoginStreamController => true.obs;
+  RxBool get isLoginStreamController => true.obs;
   @override
   Stream<bool> get isLogin => isLoginStreamController.stream;
+
+  RxInt pageIndexStreamController = 0.obs;
+  @override
+  void setPageIndex(int value) => pageIndexStreamController.subject.add(value);
+  @override
+  Stream<int> get pageIndex => pageIndexStreamController.stream;
 
   @override
   Future<void> loginUser() async {
