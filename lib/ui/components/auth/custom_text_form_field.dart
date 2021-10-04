@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  Size size;
-  bool segureText;
-  String labelText;
-  IconData prefixIcon;
+  final Size size;
+  final bool segureText;
+  final String labelText;
+  final IconData prefixIcon;
 
-  CustomTextFormField({
+  const CustomTextFormField({
     Key? key,
     required this.size,
     required this.segureText,
@@ -52,13 +52,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                         )
                       : Icon(
                           Icons.lock_sharp,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withAlpha(90),
+                          color: Theme.of(context).colorScheme.onBackground.withAlpha(90),
                         ),
                 )
-              : SizedBox(
+              : const SizedBox(
                   height: 0,
                   width: 0,
                 ),
