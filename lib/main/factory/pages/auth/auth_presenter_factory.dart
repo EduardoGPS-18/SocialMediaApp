@@ -5,5 +5,5 @@ import '../../factory.dart';
 AuthPagePresenter makeAuthPagePresenter() => GetxAuthPagePresenter(
       remoteLoginUser: makeLoginUser(),
       remoteRegisterUser: makeRegisterUser(),
-      localGetImage: makeSelectLocalImage(),
+      localGetImage: makeSelectLocalImage(), 
     );
