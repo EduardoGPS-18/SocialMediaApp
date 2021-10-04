@@ -103,6 +103,7 @@ class _AuthPageState extends State<AuthPage> {
                       padding: EdgeInsets.only(top: size.width * 0.1, bottom: size.width * 0.04),
                       child: CustomTextFormField(
                         segureText: false,
+                        onChanged: widget.presenter.validateEmail,
                         size: size,
                         labelText: "E-mail",
                         prefixIcon: Icons.email,
@@ -112,6 +113,7 @@ class _AuthPageState extends State<AuthPage> {
                       segureText: true,
                       size: size,
                       labelText: "Senha",
+                      onChanged: widget.presenter.validatePassword,
                       prefixIcon: Icons.security,
                     ),
                     Padding(
@@ -176,6 +178,7 @@ class _AuthPageState extends State<AuthPage> {
                         segureText: false,
                         size: size,
                         labelText: "Name",
+                        onChanged: widget.presenter.validateName,
                         prefixIcon: Icons.person,
                       ),
                     ),
@@ -254,10 +257,3 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 }
-
-/*
-left: size.width * 0.05,
-      right: size.width * 0.05,
-      bottom: size.height * 0.05,
-      top: size.height * 0.05,
-*/
