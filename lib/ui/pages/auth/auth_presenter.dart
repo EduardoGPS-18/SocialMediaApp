@@ -4,6 +4,10 @@ abstract class AuthPagePresenter {
 
   void setPageIndex(int value);
 
+  void validateEmail(String email);
+  void validatePassword(String password);
+  void validateName(String name);
+
   Future<void> loginUser();
   Future<void> registerUser();
 }
