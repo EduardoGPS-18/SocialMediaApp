@@ -5,13 +5,15 @@ class CustomTextFormField extends StatefulWidget {
   final bool segureText;
   final String labelText;
   final IconData prefixIcon;
+  final Function(String value)? onChanged;
 
   const CustomTextFormField({
     Key? key,
+    this.segureText = false,
     required this.size,
-    required this.segureText,
     required this.labelText,
     required this.prefixIcon,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return SizedBox(
       width: widget.size.width * 0.8,
       child: TextFormField(
+        onChanged: widget.onChanged,
         obscureText: widget.segureText ? _segureText : false,
         decoration: InputDecoration(
           labelText: widget.labelText,

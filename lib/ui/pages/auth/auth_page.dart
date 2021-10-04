@@ -1,22 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
+import 'auth.dart';
 
 class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  final PageController pageController = PageController();
+  final AuthPagePresenter presenter;
+
+  AuthPage({
+    Key? key,
+    required this.presenter,
+  }) : super(key: key);
 
   @override
   State<AuthPage> createState() => _AuthPageState();
 }
 
 class _AuthPageState extends State<AuthPage> {
-  late PageController pageController;
-
-  bool islog = true;
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: 0);
+    widget.presenter.pageIndex.listen((index) {
+      widget.pageController.animateToPage(
+        index,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -26,9 +38,7 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: FocusScope.of(context).unfocus,
         child: Stack(
           children: [
             Positioned(
@@ -42,13 +52,15 @@ class _AuthPageState extends State<AuthPage> {
             ),
             PageView(
               physics: const NeverScrollableScrollPhysics(),
-              controller: pageController,
+              controller: widget.pageController,
               children: [
                 PageWithCenterCard(
                   size: size,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: size.width * 0.1),
+                      padding: EdgeInsets.symmetric(
+                        vertical: size.width * 0.1,
+                      ),
                       child: const CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage("lib/ui/assets/icons/login_icon.png"),
@@ -79,15 +91,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            setState(() {
-                              pageController.animateToPage(
-                                1,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            });
-                          },
+                          onPressed: () => widget.presenter.setPageIndex(1),
                           child: Text(
                             "Registre-se",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(
@@ -98,9 +102,13 @@ class _AuthPageState extends State<AuthPage> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: size.width * 0.1, bottom: size.width * 0.04),
+                      padding: EdgeInsets.only(
+                        top: size.width * 0.1,
+                        bottom: size.width * 0.04,
+                      ),
                       child: CustomTextFormField(
                         segureText: false,
+                        onChanged: widget.presenter.validateEmail,
                         size: size,
                         labelText: "E-mail",
                         prefixIcon: Icons.email,
@@ -110,6 +118,7 @@ class _AuthPageState extends State<AuthPage> {
                       segureText: true,
                       size: size,
                       labelText: "Senha",
+                      onChanged: widget.presenter.validatePassword,
                       prefixIcon: Icons.security,
                     ),
                     Padding(
@@ -156,10 +165,21 @@ class _AuthPageState extends State<AuthPage> {
                       padding: EdgeInsets.only(bottom: size.width * 0.04),
                       child: Column(children: [
                         InkWell(
-                          onTap: () {}, //função da imagem
-                          child: const CircleAvatar(
-                            radius: 50,
-                            backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
+                          onTap: widget.presenter.setImage, //função da imagem
+                          child: StreamBuilder<File?>(
+                            stream: widget.presenter.userImage,
+                            builder: (context, snapshot) {
+                              if (snapshot.data != null && snapshot.hasData) {
+                                return CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage: FileImage(snapshot.data!),
+                                );
+                              }
+                              return const CircleAvatar(
+                                radius: 50,
+                                backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
+                              );
+                            },
                           ),
                         ),
                         Padding(
@@ -174,6 +194,7 @@ class _AuthPageState extends State<AuthPage> {
                         segureText: false,
                         size: size,
                         labelText: "Name",
+                        onChanged: widget.presenter.validateName,
                         prefixIcon: Icons.person,
                       ),
                     ),
@@ -232,15 +253,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            setState(() {
-                              pageController.animateToPage(
-                                0,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            });
-                          },
+                          onPressed: () => widget.presenter.setPageIndex(0),
                           child: Text(
                             "Inciar Sessão",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(
@@ -260,10 +273,3 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 }
-
-/*
-left: size.width * 0.05,
-      right: size.width * 0.05,
-      bottom: size.height * 0.05,
-      top: size.height * 0.05,
-*/
