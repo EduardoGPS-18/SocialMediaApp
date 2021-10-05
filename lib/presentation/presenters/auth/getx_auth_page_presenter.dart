@@ -27,20 +27,17 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
     required this.validation,
   });
 
-  RxBool get isLoginStreamController => true.obs;
-  @override
-  Stream<bool> get isLogin => isLoginStreamController.stream;
-
-  RxInt pageIndexStreamController = 0.obs;
+  final RxInt pageIndexStreamController = 0.obs;
+  bool isLogin = false;
   @override
   void setPageIndex(int value) {
     pageIndexStreamController.subject.add(value);
-    isLoginStreamController.subject.add(value == 0);
+    isLogin = value == 0;
   }
 
-  Rx<String> backendErrorsStreamController = Rx<String>("");
+  Rx<String> handlingErrorsStreamController = Rx<String>("");
   @override
-  Stream<String> get backendError => backendErrorsStreamController.stream;
+  Stream<String> get handlingError => handlingErrorsStreamController.stream;
 
   @override
   Stream<int> get pageIndex => pageIndexStreamController.stream;
@@ -48,23 +45,23 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   Rx<File?> userImageStreamController = Rx<File?>(null);
   @override
   Stream<File?> get userImage => userImageStreamController.stream;
-  final Rx<UIError> _userImageErrorStreamController = (UIError.noError).obs;
+  final Rx<UIError> _userImageErrorStreamController = (UIError.unexpected).obs;
   @override
   Stream<UIError> get userImageError => _userImageErrorStreamController.stream;
 
-  final Rx<UIError> _emailErrorStreamController = (UIError.noError).obs;
+  final Rx<UIError> _emailErrorStreamController = (UIError.unexpected).obs;
   @override
   Stream<UIError> get emailError => _emailErrorStreamController.stream;
 
-  final Rx<UIError> _passwordErrorStreamController = (UIError.noError).obs;
+  final Rx<UIError> _passwordErrorStreamController = (UIError.unexpected).obs;
   @override
   Stream<UIError> get passwordError => _passwordErrorStreamController.stream;
 
-  final Rx<UIError> _confirmPasswordErrorStreamController = (UIError.noError).obs;
+  final Rx<UIError> _confirmPasswordErrorStreamController = (UIError.unexpected).obs;
   @override
   Stream<UIError> get confirmPasswordError => _confirmPasswordErrorStreamController.stream;
 
-  final Rx<UIError> _nameErrorStreamController = (UIError.noError).obs;
+  final Rx<UIError> _nameErrorStreamController = (UIError.unexpected).obs;
   @override
   Stream<UIError> get nameError => _nameErrorStreamController.stream;
 
@@ -84,6 +81,7 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
     _password = password;
 
     _passwordErrorStreamController.value = _validateField('password');
+    _validateField('confirm_password');
     _validateForm();
   }
 
@@ -103,7 +101,7 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
 
   @override
   Future<void> setImage() async {
-    File image = await localGetImage.getImage();
+    File? image = await localGetImage.getImage();
     _userImage = image;
     userImageStreamController.subject.add(image);
     _userImageErrorStreamController.value = _validateField('image');
@@ -111,7 +109,7 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   }
 
   void _validateForm() {
-    final isValid = isLoginStreamController.isFalse
+    final isValid = !isLogin
         ? _emailErrorStreamController.value == UIError.noError &&
             _confirmPasswordErrorStreamController.value == UIError.noError &&
             _nameErrorStreamController.value == UIError.noError &&
@@ -152,15 +150,17 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
       );
     } on FirebaseAuthenticationError catch (error) {
       if (error.code == FirebaseAuthenticationError.userDisabled.code) {
-        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
       } else if (error.code == FirebaseAuthenticationError.userNotFound.code) {
-        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
       } else if (error.code == FirebaseAuthenticationError.wrongPassword.code) {
-        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
       } else if (error.code == FirebaseAuthenticationError.invalidEmail.code) {
-        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
       }
-      backendErrorsStreamController.subject.add(R.string.msgUnexpectedError);
+      handlingErrorsStreamController.subject.add(R.string.msgUnexpectedError);
+    } catch (_) {
+      handlingErrorsStreamController.subject.add("Ocorreu um erro!\nPreencha todos os dados incluindo a foto!");
     }
   }
 
@@ -168,16 +168,23 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   Future<void> registerUser() async {
     try {
       await remoteRegisterUser.registerUserWithRegisterParams(
-        params: RegisterUserParams(name: _name, email: _email, password: _password, userImage: _userImage!),
+        params: RegisterUserParams(
+          name: _name,
+          email: _email,
+          password: _password,
+          userImage: _userImage!,
+        ),
       );
     } on FirebaseAuthenticationError catch (error) {
       if (error.code == FirebaseAuthenticationError.emailAlreadyInUse.code) {
-        backendErrorsStreamController.subject.add(R.string.msgEmailInUse);
+        handlingErrorsStreamController.subject.add(R.string.msgEmailInUse);
       } else if (error.code == FirebaseAuthenticationError.weakPassword.code) {
-        backendErrorsStreamController.subject.add(R.string.msgWeakPassword);
+        handlingErrorsStreamController.subject.add(R.string.msgWeakPassword);
       } else {
-        backendErrorsStreamController.subject.add(R.string.msgUnexpectedError);
+        handlingErrorsStreamController.subject.add(R.string.msgUnexpectedError);
       }
+    } catch (_) {
+      handlingErrorsStreamController.subject.add("Ocorreu um erro!\nPreencha todos os dados incluindo a foto!");
     }
   }
 }
