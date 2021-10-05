@@ -39,6 +39,13 @@ class _AuthPageState extends State<AuthPage> {
     });
   }
 
+  void registerUser() async {
+    final bool registered = await widget.presenter.registerUser();
+    if (registered) {
+      debugPrint('registrado');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -80,13 +87,15 @@ class _AuthPageState extends State<AuthPage> {
                     Text.rich(
                       TextSpan(
                         text: "Iniciar Sessão com a sua",
-                        style: Theme.of(context).textTheme.headline5?.copyWith(),
+                        style:
+                            Theme.of(context).textTheme.headline5?.copyWith(),
                         children: [
                           TextSpan(
                             text: "\nConta da SocialMedia",
-                            style: Theme.of(context).textTheme.headline5?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.headline5?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                           ),
                         ],
                       ),
@@ -97,17 +106,24 @@ class _AuthPageState extends State<AuthPage> {
                       children: [
                         Text(
                           "Novo na SocialMedia?",
-                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: Theme.of(context).colorScheme.onBackground,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                               ),
                         ),
                         TextButton(
                           onPressed: () => presenter.setPageIndex(1),
                           child: Text(
                             "Registre-se",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.secondaryVariant,
-                                ),
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryVariant,
+                                    ),
                           ),
                         ),
                       ],
@@ -122,8 +138,12 @@ class _AuthPageState extends State<AuthPage> {
                         initialData: UIError.noError,
                         builder: (context, snapshot) {
                           return CustomTextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             segureText: false,
-                            errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                            errorText: snapshot.hasData &&
+                                    snapshot.data == UIError.noError
+                                ? null
+                                : snapshot.data?.description,
                             onChanged: presenter.validateEmail,
                             size: size,
                             labelText: "E-mail",
@@ -137,12 +157,15 @@ class _AuthPageState extends State<AuthPage> {
                       initialData: UIError.noError,
                       builder: (context, snapshot) {
                         return CustomTextFormField(
-                          errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                          errorText: snapshot.hasData &&
+                                  snapshot.data == UIError.noError
+                              ? null
+                              : snapshot.data?.description,
                           segureText: true,
                           size: size,
                           labelText: "Senha",
                           onChanged: presenter.validatePassword,
-                          prefixIcon: Icons.security,
+                          prefixIcon: Icons.lock_sharp,
                         );
                       },
                     ),
@@ -155,12 +178,19 @@ class _AuthPageState extends State<AuthPage> {
                           stream: widget.presenter.isFormValid,
                           builder: (context, snapshot) {
                             return ElevatedButton(
-                              onPressed: snapshot.data == true ? presenter.loginUser : null,
+                              onPressed: snapshot.data == true
+                                  ? presenter.loginUser
+                                  : null,
                               child: Text(
                                 "INICIAR SESSÃO",
-                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
                                       fontWeight: FontWeight.w900,
-                                      color: Theme.of(context).colorScheme.background,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                     ),
                               ),
                             );
@@ -175,15 +205,20 @@ class _AuthPageState extends State<AuthPage> {
                   size: size,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+                      padding:
+                          EdgeInsets.symmetric(vertical: size.height * 0.02),
                       child: Text.rich(
                         TextSpan(
                           text: "Crie um nova Conta\nna ",
-                          style: Theme.of(context).textTheme.headline5?.copyWith(),
+                          style:
+                              Theme.of(context).textTheme.headline5?.copyWith(),
                           children: [
                             TextSpan(
                               text: "SocialMedia",
-                              style: Theme.of(context).textTheme.headline5?.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  ?.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
                             ),
@@ -208,14 +243,15 @@ class _AuthPageState extends State<AuthPage> {
                               }
                               return const CircleAvatar(
                                 radius: 50,
-                                backgroundImage: AssetImage("lib/ui/assets/images/camera.png"),
+                                backgroundImage: AssetImage(
+                                    "lib/ui/assets/images/camera.png"),
                               );
                             },
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: size.width * 0.01),
-                          child: const Text("Adicione uma image"),
+                          child: const Text("Tire uma foto"),
                         )
                       ]),
                     ),
@@ -226,10 +262,13 @@ class _AuthPageState extends State<AuthPage> {
                           initialData: UIError.noError,
                           builder: (context, snapshot) {
                             return CustomTextFormField(
-                              errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                              errorText: snapshot.hasData &&
+                                      snapshot.data == UIError.noError
+                                  ? null
+                                  : snapshot.data?.description,
                               segureText: false,
                               size: size,
-                              labelText: "Name",
+                              labelText: "Nome",
                               onChanged: presenter.validateName,
                               prefixIcon: Icons.person,
                             );
@@ -244,7 +283,11 @@ class _AuthPageState extends State<AuthPage> {
                               bottom: size.width * 0.03,
                             ),
                             child: CustomTextFormField(
-                              errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                              keyboardType: TextInputType.emailAddress,
+                              errorText: snapshot.hasData &&
+                                      snapshot.data == UIError.noError
+                                  ? null
+                                  : snapshot.data?.description,
                               segureText: false,
                               size: size,
                               labelText: "E-mail",
@@ -262,12 +305,15 @@ class _AuthPageState extends State<AuthPage> {
                             bottom: size.width * 0.03,
                           ),
                           child: CustomTextFormField(
-                            errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                            errorText: snapshot.hasData &&
+                                    snapshot.data == UIError.noError
+                                ? null
+                                : snapshot.data?.description,
                             onChanged: presenter.validatePassword,
                             segureText: true,
                             size: size,
                             labelText: "Senha",
-                            prefixIcon: Icons.security,
+                            prefixIcon: Icons.lock_sharp,
                           ),
                         );
                       },
@@ -277,12 +323,15 @@ class _AuthPageState extends State<AuthPage> {
                         initialData: UIError.noError,
                         builder: (context, snapshot) {
                           return CustomTextFormField(
-                            errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                            errorText: snapshot.hasData &&
+                                    snapshot.data == UIError.noError
+                                ? null
+                                : snapshot.data?.description,
                             segureText: true,
                             size: size,
-                            labelText: "Repitir a senha",
+                            labelText: "Repita a senha",
                             onChanged: presenter.validateConfirmPassword,
-                            prefixIcon: Icons.security,
+                            prefixIcon: Icons.lock_sharp,
                           );
                         }),
                     Padding(
@@ -294,12 +343,18 @@ class _AuthPageState extends State<AuthPage> {
                           stream: presenter.isFormValid,
                           builder: (context, snapshot) {
                             return ElevatedButton(
-                              onPressed: snapshot.data == true ? presenter.registerUser : null,
+                              onPressed:
+                                  snapshot.data == true ? registerUser : null,
                               child: Text(
                                 "CADASTRAR",
-                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
                                       fontWeight: FontWeight.w900,
-                                      color: Theme.of(context).colorScheme.background,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                     ),
                               ),
                             );
@@ -311,18 +366,25 @@ class _AuthPageState extends State<AuthPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Eu já tenho uma conta?",
-                          style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                color: Theme.of(context).colorScheme.onBackground,
+                          "Já possui uma conta?",
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle2
+                              ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
                               ),
                         ),
                         TextButton(
                           onPressed: () => presenter.setPageIndex(0),
                           child: Text(
-                            "Inciar Sessão",
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  color: Theme.of(context).colorScheme.secondaryVariant,
-                                ),
+                            "Iniciar Sessão",
+                            style:
+                                Theme.of(context).textTheme.subtitle2?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryVariant,
+                                    ),
                           ),
                         ),
                       ],
