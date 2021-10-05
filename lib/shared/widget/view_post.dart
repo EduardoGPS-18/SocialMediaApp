@@ -30,33 +30,38 @@ class _ViewPostState extends State<ViewPost> {
             //   color: Colors.red,
             child: Column(
               children: [
-                ListTile(
-                  leading: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      width: widget.size.width * 0.16,
-                      height: widget.size.width * 0.16,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("lib/ui/assets/images/test.jpg"),
-                          )),
+                Padding(
+                  padding: EdgeInsets.only(left: widget.size.width * 0.01),
+                  child: ListTile(
+                    leading: InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: widget.size.width * 0.13,
+                        height: widget.size.width * 0.13,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image:
+                                  AssetImage("lib/ui/assets/images/test.jpg"),
+                            )),
+                      ),
                     ),
-                  ),
-                  title: Padding(
-                    padding: EdgeInsets.only(bottom: widget.size.width * 0.015),
-                    child: Text(
-                      "Pabricio Freitas",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    title: Padding(
+                      padding:
+                          EdgeInsets.only(bottom: widget.size.width * 0.018),
+                      child: Text(
+                        "Pabricio Freitas",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
+                    subtitle: Text("Terça-feira ás 08:22"),
                   ),
-                  subtitle: Text("Terça-feira ás 08:22"),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: widget.size.height * 0.005,
-                    horizontal: widget.size.width * 0.045,
+                    horizontal: widget.size.width * 0.05,
                   ),
                   child: InkWell(
                     onTap: () {},

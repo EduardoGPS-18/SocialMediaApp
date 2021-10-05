@@ -55,8 +55,8 @@ class _PostState extends State<Post> {
                 : InkWell(
                     onTap: widget.functionImage,
                     child: Container(
-                      width: widget.size.width * 0.16,
-                      height: widget.size.width * 0.16,
+                      width: widget.size.width * 0.13,
+                      height: widget.size.width * 0.13,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
