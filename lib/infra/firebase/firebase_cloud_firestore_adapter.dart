@@ -9,8 +9,7 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   });
 
   @override
-  Future<void> setDataDocument(
-      {required String doc, required Object data}) async {
+  Future<void> setDataDocument({required String doc, required Object data}) async {
     try {
       await getCollection(collectionName: "users").doc(doc).set(data);
     } catch (_) {
@@ -28,16 +27,18 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   }
 
   @override
-  Stream<QuerySnapshot<Object?>> getStreamCollection(
-      {required String collectionName}) {
+  Stream<QuerySnapshot<Object?>> getStreamCollection({required String collectionName}) {
     throw UnimplementedError();
   }
 
   @override
-  Future<CollectionReference> getCollectionReference(
-      {required String collectionPath}) async {
-    CollectionReference reference =
-        firebaseFirestore.collection(collectionPath);
+  Future<CollectionReference> getCollectionReference({required String collectionPath}) async {
+    CollectionReference reference = firebaseFirestore.collection(collectionPath);
     return reference;
+  }
+
+  @override
+  DocumentReference<Map<String, dynamic>> getPublishesByUserID({required String userId, required String publishId}) {
+    return firebaseFirestore.collection('publishes').doc(userId).collection('publishes').doc(publishId);
   }
 }
