@@ -23,5 +23,5 @@ abstract class AuthPagePresenter {
   void validateConfirmPassword(String confirmPassword);
 
   Future<void> loginUser();
-  Future<void> registerUser();
+  Future<bool> registerUser();
 }
