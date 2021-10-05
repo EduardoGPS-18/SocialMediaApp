@@ -13,6 +13,7 @@ class RemoteLoginUser implements LoginUser {
   });
 
   @override
+
   Future<UserEntity> loginUserWithEmailAndPassword({required LoginUserParams params}) async {
     try {
       final userCred = await firebaseAuthentication.loginWithEmailAndPassword(params: params);
