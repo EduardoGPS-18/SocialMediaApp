@@ -25,6 +25,7 @@ class RemoteRegisterUser implements RegisterUser {
           name: params.name,
           photoUrl: photoUrl,
           email: params.email,
+          uid: userCred.user?.uid,
         ).toMap(),
       );
       return UserEntity(
