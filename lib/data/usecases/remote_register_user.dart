@@ -31,6 +31,7 @@ class RemoteRegisterUser implements RegisterUser {
         name: params.name,
         email: params.email,
         photoUrl: photoUrl,
+        uid: userCred.user!.uid,
       );
     } on FirebaseAuthenticationError catch (_) {
       rethrow;
