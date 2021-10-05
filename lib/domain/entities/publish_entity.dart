@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'comment_entity.dart';
 
 class PublishEntity extends Equatable {
-  final String id;
+  final String userId;
   final String uid;
   final List<CommentEntity> comments;
   final List<String> uidOfWhoLikedIt;
@@ -11,7 +11,7 @@ class PublishEntity extends Equatable {
   final DateTime createdAt;
 
   const PublishEntity({
-    required this.id,
+    required this.userId,
     required this.uid,
     required this.comments,
     required this.uidOfWhoLikedIt,
@@ -20,6 +20,5 @@ class PublishEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [id, uid, comments, uidOfWhoLikedIt, content, createdAt];
+  List<Object?> get props => [userId, uid, comments, uidOfWhoLikedIt, content, createdAt];
 }
