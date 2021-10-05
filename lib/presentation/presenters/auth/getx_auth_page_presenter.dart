@@ -28,7 +28,7 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   });
 
   final RxInt pageIndexStreamController = 0.obs;
-  bool isLogin = false;
+  bool isLogin = true;
   @override
   void setPageIndex(int value) {
     pageIndexStreamController.subject.add(value);
@@ -81,7 +81,6 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
     _password = password;
 
     _passwordErrorStreamController.value = _validateField('password');
-    _validateField('confirm_password');
     _validateForm();
   }
 
@@ -148,17 +147,8 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
       await remoteLoginUser.loginUserWithEmailAndPassword(
         params: LoginUserParams(email: _email, password: _password),
       );
-    } on FirebaseAuthenticationError catch (error) {
-      if (error.code == FirebaseAuthenticationError.userDisabled.code) {
-        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
-      } else if (error.code == FirebaseAuthenticationError.userNotFound.code) {
-        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
-      } else if (error.code == FirebaseAuthenticationError.wrongPassword.code) {
-        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
-      } else if (error.code == FirebaseAuthenticationError.invalidEmail.code) {
-        handlingErrorsStreamController.subject.add(R.string.msgInvalidField);
-      }
-      handlingErrorsStreamController.subject.add(R.string.msgUnexpectedError);
+    } on FirebaseAuthenticationError catch (_) {
+      handlingErrorsStreamController.subject.add(R.string.msgInvalidCredentials);
     } catch (_) {
       handlingErrorsStreamController.subject.add("Ocorreu um erro!\nPreencha todos os dados incluindo a foto!");
     }
