@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class WidgetPost extends StatefulWidget {
+class Post extends StatefulWidget {
   String image;
   String hintTextTextField;
   Function() functionImage;
   Function() functionBottonTextField;
   final Size size;
-  WidgetPost({
+  Post({
     Key? key,
     required this.image,
     required this.hintTextTextField,
@@ -17,10 +17,10 @@ class WidgetPost extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WidgetPostState createState() => _WidgetPostState();
+  _PostState createState() => _PostState();
 }
 
-class _WidgetPostState extends State<WidgetPost> {
+class _PostState extends State<Post> {
   late double size;
   final bool _isEmpyt = false;
   final bool _focado = false;
