@@ -23,8 +23,6 @@ class RemoteLoginUser implements LoginUser {
       return RemoteUserModel.fromMap(userData).toEntity();
     } on FirebaseAuthenticationError catch (_) {
       rethrow;
-    } on FirebaseCloudFirestoreError catch (_) {
-      rethrow;
     }
   }
 }
