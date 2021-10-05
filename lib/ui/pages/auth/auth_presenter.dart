@@ -13,6 +13,7 @@ abstract class AuthPagePresenter {
   Stream<UIError> get passwordError;
   Stream<UIError> get confirmPasswordError;
   Stream<UIError> get nameError;
+  Stream<String> get backendError;
 
   void setPageIndex(int value);
 

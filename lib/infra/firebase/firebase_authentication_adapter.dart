@@ -13,8 +13,23 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
 
   @override
   Future<UserCredential> loginWithEmailAndPassword({required LoginUserParams params}) async {
-    final userCredential = firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
-    return userCredential;
+    try {
+      final userCredential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
+
+      return userCredential;
+    } on FirebaseAuthException catch (error) {
+      if (error.code == FirebaseAuthenticationError.invalidEmail.code) {
+        throw FirebaseAuthenticationError.invalidEmail;
+      } else if (error.code == FirebaseAuthenticationError.userDisabled.code) {
+        throw FirebaseAuthenticationError.userDisabled;
+      } else if (error.code == FirebaseAuthenticationError.userNotFound.code) {
+        throw FirebaseAuthenticationError.userNotFound;
+      } else if (error.code == FirebaseAuthenticationError.wrongPassword.code) {
+        throw FirebaseAuthenticationError.wrongPassword;
+      } else {
+        throw FirebaseAuthenticationError.internalError;
+      }
+    }
   }
 
   @override
@@ -27,7 +42,7 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
     try {
       final userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: params.email, password: params.password);
       return userCredential;
-    } on FirebaseAuthenticationError catch (error) {
+    } on FirebaseAuthException catch (error) {
       if (error.code == FirebaseAuthenticationError.invalidEmail.code) {
         throw FirebaseAuthenticationError.invalidEmail;
       } else if (error.code == FirebaseAuthenticationError.userDisabled.code) {

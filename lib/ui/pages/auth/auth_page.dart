@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../components/components.dart';
+import '../../helpers/errors/errors.dart';
 import 'auth.dart';
 
 class AuthPage extends StatefulWidget {
@@ -30,12 +31,18 @@ class _AuthPageState extends State<AuthPage> {
         curve: Curves.easeInOut,
       );
     });
+    widget.presenter.backendError.listen((event) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(event),
+        backgroundColor: Colors.red,
+      ));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final presenter = widget.presenter;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: GestureDetector(
@@ -65,7 +72,9 @@ class _AuthPageState extends State<AuthPage> {
                       ),
                       child: const CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage("lib/ui/assets/icons/login_icon.png"),
+                        backgroundImage: AssetImage(
+                          "lib/ui/assets/icons/login_icon.png",
+                        ),
                       ),
                     ),
                     Text.rich(
@@ -93,7 +102,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () => widget.presenter.setPageIndex(1),
+                          onPressed: () => presenter.setPageIndex(1),
                           child: Text(
                             "Registre-se",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(
@@ -108,35 +117,54 @@ class _AuthPageState extends State<AuthPage> {
                         top: size.width * 0.1,
                         bottom: size.width * 0.04,
                       ),
-                      child: CustomTextFormField(
-                        segureText: false,
-                        onChanged: widget.presenter.validateEmail,
-                        size: size,
-                        labelText: "E-mail",
-                        prefixIcon: Icons.email,
+                      child: StreamBuilder<UIError>(
+                        stream: widget.presenter.emailError,
+                        initialData: UIError.noError,
+                        builder: (context, snapshot) {
+                          return CustomTextFormField(
+                            segureText: false,
+                            errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                            onChanged: presenter.validateEmail,
+                            size: size,
+                            labelText: "E-mail",
+                            prefixIcon: Icons.email,
+                          );
+                        },
                       ),
                     ),
-                    CustomTextFormField(
-                      segureText: true,
-                      size: size,
-                      labelText: "Senha",
-                      onChanged: widget.presenter.validatePassword,
-                      prefixIcon: Icons.security,
+                    StreamBuilder<UIError>(
+                      stream: widget.presenter.passwordError,
+                      initialData: UIError.noError,
+                      builder: (context, snapshot) {
+                        return CustomTextFormField(
+                          errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                          segureText: true,
+                          size: size,
+                          labelText: "Senha",
+                          onChanged: presenter.validatePassword,
+                          prefixIcon: Icons.security,
+                        );
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: size.height * 0.09),
                       child: SizedBox(
                         height: size.width * 0.155,
                         width: size.width * 0.8,
-                        child: ElevatedButton(
-                          onPressed: widget.presenter.loginUser,
-                          child: Text(
-                            "INICIAR SESSÃO",
-                            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: Theme.of(context).colorScheme.background,
-                                ),
-                          ),
+                        child: StreamBuilder<bool>(
+                          stream: widget.presenter.isFormValid,
+                          builder: (context, snapshot) {
+                            return ElevatedButton(
+                              onPressed: snapshot.data == true ? presenter.loginUser : null,
+                              child: Text(
+                                "INICIAR SESSÃO",
+                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      color: Theme.of(context).colorScheme.background,
+                                    ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     )
@@ -168,11 +196,11 @@ class _AuthPageState extends State<AuthPage> {
                       padding: EdgeInsets.only(bottom: size.width * 0.04),
                       child: Column(children: [
                         InkWell(
-                          onTap: widget.presenter.setImage, //função da imagem
+                          onTap: presenter.setImage, //função da imagem
                           child: StreamBuilder<File?>(
-                            stream: widget.presenter.userImage,
+                            stream: presenter.userImage,
                             builder: (context, snapshot) {
-                              if (snapshot.data != null && snapshot.hasData) {
+                              if (snapshot.hasData) {
                                 return CircleAvatar(
                                   radius: 50,
                                   backgroundImage: FileImage(snapshot.data!),
@@ -193,64 +221,90 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(bottom: size.width * 0.03),
-                      child: CustomTextFormField(
-                        segureText: false,
-                        size: size,
-                        labelText: "Name",
-                        onChanged: widget.presenter.validateName,
-                        prefixIcon: Icons.person,
-                      ),
+                      child: StreamBuilder<UIError>(
+                          stream: presenter.nameError,
+                          initialData: UIError.noError,
+                          builder: (context, snapshot) {
+                            return CustomTextFormField(
+                              errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                              segureText: false,
+                              size: size,
+                              labelText: "Name",
+                              onChanged: presenter.validateName,
+                              prefixIcon: Icons.person,
+                            );
+                          }),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: size.width * 0.03,
-                      ),
-                      child: CustomTextFormField(
-                        segureText: false,
-                        size: size,
-                        labelText: "E-mail",
-                        onChanged: widget.presenter.validateEmail,
-                        prefixIcon: Icons.email,
-                      ),
+                    StreamBuilder<UIError>(
+                        stream: widget.presenter.emailError,
+                        initialData: UIError.noError,
+                        builder: (context, snapshot) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              bottom: size.width * 0.03,
+                            ),
+                            child: CustomTextFormField(
+                              errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                              segureText: false,
+                              size: size,
+                              labelText: "E-mail",
+                              onChanged: presenter.validateEmail,
+                              prefixIcon: Icons.email,
+                            ),
+                          );
+                        }),
+                    StreamBuilder<UIError>(
+                      stream: widget.presenter.passwordError,
+                      initialData: UIError.noError,
+                      builder: (context, snapshot) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            bottom: size.width * 0.03,
+                          ),
+                          child: CustomTextFormField(
+                            errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                            onChanged: presenter.validatePassword,
+                            segureText: true,
+                            size: size,
+                            labelText: "Senha",
+                            prefixIcon: Icons.security,
+                          ),
+                        );
+                      },
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: size.width * 0.03,
-                      ),
-                      child: CustomTextFormField(
-                        onChanged: widget.presenter.validatePassword,
-                        segureText: true,
-                        size: size,
-                        labelText: "Senha",
-                        prefixIcon: Icons.security,
-                      ),
-                    ),
-                    CustomTextFormField(
-                      segureText: true,
-                      size: size,
-                      labelText: "Repitir a senha",
-                      onChanged: widget.presenter.validateConfirmPassword,
-                      prefixIcon: Icons.security,
-                    ),
+                    StreamBuilder<UIError>(
+                        stream: widget.presenter.confirmPasswordError,
+                        initialData: UIError.noError,
+                        builder: (context, snapshot) {
+                          return CustomTextFormField(
+                            errorText: snapshot.hasData && snapshot.data == UIError.noError ? null : snapshot.data?.description,
+                            segureText: true,
+                            size: size,
+                            labelText: "Repitir a senha",
+                            onChanged: presenter.validateConfirmPassword,
+                            prefixIcon: Icons.security,
+                          );
+                        }),
                     Padding(
                       padding: EdgeInsets.only(top: size.height * 0.035),
                       child: SizedBox(
                         height: size.width * 0.155,
                         width: size.width * 0.8,
                         child: StreamBuilder<bool>(
-                            stream: widget.presenter.isFormValid,
-                            builder: (context, snapshot) {
-                              return ElevatedButton(
-                                onPressed: widget.presenter.registerUser,
-                                child: Text(
-                                  "CADASTRAR",
-                                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                                        fontWeight: FontWeight.w900,
-                                        color: Theme.of(context).colorScheme.background,
-                                      ),
-                                ),
-                              );
-                            }),
+                          stream: presenter.isFormValid,
+                          builder: (context, snapshot) {
+                            return ElevatedButton(
+                              onPressed: snapshot.data == true ? presenter.registerUser : null,
+                              child: Text(
+                                "CADASTRAR",
+                                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                                      fontWeight: FontWeight.w900,
+                                      color: Theme.of(context).colorScheme.background,
+                                    ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     Row(
@@ -263,7 +317,7 @@ class _AuthPageState extends State<AuthPage> {
                               ),
                         ),
                         TextButton(
-                          onPressed: () => widget.presenter.setPageIndex(0),
+                          onPressed: () => presenter.setPageIndex(0),
                           child: Text(
                             "Inciar Sessão",
                             style: Theme.of(context).textTheme.subtitle2?.copyWith(

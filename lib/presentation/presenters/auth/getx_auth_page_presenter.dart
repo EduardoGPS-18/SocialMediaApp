@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
+import '../../../data/firebase/firebase.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
@@ -33,7 +33,15 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
 
   RxInt pageIndexStreamController = 0.obs;
   @override
-  void setPageIndex(int value) => pageIndexStreamController.subject.add(value);
+  void setPageIndex(int value) {
+    pageIndexStreamController.subject.add(value);
+    isLoginStreamController.subject.add(value == 0);
+  }
+
+  Rx<String> backendErrorsStreamController = Rx<String>("");
+  @override
+  Stream<String> get backendError => backendErrorsStreamController.stream;
+
   @override
   Stream<int> get pageIndex => pageIndexStreamController.stream;
 
@@ -67,29 +75,30 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   @override
   void validateEmail(String email) {
     _email = email;
-    final error = _validateField('email');
-    _emailErrorStreamController.subject.add(error);
+    _emailErrorStreamController.value = _validateField('email');
+    _validateForm();
   }
 
   @override
   void validatePassword(String password) {
     _password = password;
-    final error = _validateField('password');
-    _passwordErrorStreamController.subject.add(error);
+
+    _passwordErrorStreamController.value = _validateField('password');
+    _validateForm();
   }
 
   @override
   void validateConfirmPassword(String confirmPassword) {
     _confirmPassword = confirmPassword;
-    final error = _validateField('confirm_password');
-    _confirmPasswordErrorStreamController.subject.add(error);
+    _confirmPasswordErrorStreamController.value = _validateField('confirm_password');
+    _validateForm();
   }
 
   @override
   void validateName(String name) {
     _name = name;
-    final error = _validateField('name');
-    _nameErrorStreamController.subject.add(error);
+    _nameErrorStreamController.value = _validateField('name');
+    _validateForm();
   }
 
   @override
@@ -97,20 +106,22 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
     File image = await localGetImage.getImage();
     _userImage = image;
     userImageStreamController.subject.add(image);
-    final error = _validateField('image');
-    _userImageErrorStreamController.subject.add(error);
+    _userImageErrorStreamController.value = _validateField('image');
+    _validateForm();
   }
 
   void _validateForm() {
-    isFormValidStreamController.subject.add(
-      _emailErrorStreamController.value == UIError.noError &&
-          _confirmPasswordErrorStreamController.value == UIError.noError &&
-          _nameErrorStreamController.value == UIError.noError &&
-          _userImageErrorStreamController.value == UIError.noError &&
-          _passwordErrorStreamController.value == UIError.noError &&
-          _email != '' &&
-          _password != '',
-    );
+    final isValid = isLoginStreamController.isFalse
+        ? _emailErrorStreamController.value == UIError.noError &&
+            _confirmPasswordErrorStreamController.value == UIError.noError &&
+            _nameErrorStreamController.value == UIError.noError &&
+            _userImageErrorStreamController.value == UIError.noError &&
+            _passwordErrorStreamController.value == UIError.noError &&
+            _email != '' &&
+            _password != ''
+        : _emailErrorStreamController.value == UIError.noError && _passwordErrorStreamController.value == UIError.noError && _email != '' && _password != '';
+
+    isFormValidStreamController.subject.add(isValid);
   }
 
   UIError _validateField(String field) {
@@ -121,8 +132,8 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
       'email': _email,
       'password': _password,
     };
-    print(formData);
     final error = validation.validate(field: field, input: formData);
+
     switch (error) {
       case ValidationError.invalidField:
         return UIError.invalidField;
@@ -136,22 +147,37 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   @override
   Future<void> loginUser() async {
     try {
-      remoteLoginUser.loginUserWithEmailAndPassword(
+      await remoteLoginUser.loginUserWithEmailAndPassword(
         params: LoginUserParams(email: _email, password: _password),
       );
-    } catch (error) {
-      debugPrint('$error');
+    } on FirebaseAuthenticationError catch (error) {
+      if (error.code == FirebaseAuthenticationError.userDisabled.code) {
+        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+      } else if (error.code == FirebaseAuthenticationError.userNotFound.code) {
+        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+      } else if (error.code == FirebaseAuthenticationError.wrongPassword.code) {
+        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+      } else if (error.code == FirebaseAuthenticationError.invalidEmail.code) {
+        backendErrorsStreamController.subject.add(R.string.msgInvalidField);
+      }
+      backendErrorsStreamController.subject.add(R.string.msgUnexpectedError);
     }
   }
 
   @override
   Future<void> registerUser() async {
     try {
-      remoteRegisterUser.registerUserWithRegisterParams(
+      await remoteRegisterUser.registerUserWithRegisterParams(
         params: RegisterUserParams(name: _name, email: _email, password: _password, userImage: _userImage!),
       );
-    } catch (error) {
-      debugPrint('$error');
+    } on FirebaseAuthenticationError catch (error) {
+      if (error.code == FirebaseAuthenticationError.emailAlreadyInUse.code) {
+        backendErrorsStreamController.subject.add(R.string.msgEmailInUse);
+      } else if (error.code == FirebaseAuthenticationError.weakPassword.code) {
+        backendErrorsStreamController.subject.add(R.string.msgWeakPassword);
+      } else {
+        backendErrorsStreamController.subject.add(R.string.msgUnexpectedError);
+      }
     }
   }
 }
