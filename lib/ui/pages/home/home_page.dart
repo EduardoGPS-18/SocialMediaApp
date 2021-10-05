@@ -11,7 +11,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool islog = true;
-  bool onPressedFavorite = false;
   int _currentIndexBottomNavigationBar = 0;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,9 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   itemCount: 3,
                   itemBuilder: (context, index) {
-                    return 
+                    return ViewPost(
+                      size: size,
+                    );
                   }),
             ]),
           )
