@@ -15,10 +15,9 @@ class _HomePageState extends State<HomePage> {
   int _currentIndexBottomNavigationBar = 0;
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-      // backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: CustomAppBar(text: "Feed"),
-
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: PageController(initialPage: 0),
@@ -27,8 +26,11 @@ class _HomePageState extends State<HomePage> {
             primary: true,
             child: Column(children: [
               Container(
-                height: 100,
-                color: Colors.black,
+                height: size.height * 0.15,
+              ),
+              CustomDivider(
+                size: size,
+                altura: 0.015,
               ),
               ListView.builder(
                   primary: false,
@@ -44,7 +46,6 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         elevation: 15,
         backgroundColor: Theme.of(context).colorScheme.background,
