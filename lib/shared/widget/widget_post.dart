@@ -1,0 +1,137 @@
+import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+
+class WidgetPost extends StatefulWidget {
+  String image;
+  String hintTextTextField;
+  Function() functionImage;
+  Function() functionBottonTextField;
+  final Size size;
+  WidgetPost({
+    Key? key,
+    required this.image,
+    required this.hintTextTextField,
+    required this.functionImage,
+    required this.functionBottonTextField,
+    required this.size,
+  }) : super(key: key);
+
+  @override
+  _WidgetPostState createState() => _WidgetPostState();
+}
+
+class _WidgetPostState extends State<WidgetPost> {
+  late double size;
+  final bool _isEmpyt = false;
+  final bool _focado = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        height: widget.size.height * 0.12,
+        width: widget.size.width * 0.9,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            /*
+                        CircleAvatar(
+                          radius: 40,
+                          child: DecorationImage(),
+                          backgroundImage:
+                              AssetImage("lib/ui/assets/icons/login_icon.png"),
+                        ),*/
+            widget.image.isEmpty
+                ? Shimmer.fromColors(
+                    child: CircleAvatar(
+                      radius: widget.size.width * 0.09,
+                    ),
+                    baseColor: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(60),
+                    highlightColor: Colors.grey[100]!,
+                  )
+                : GestureDetector(
+                    onTap: widget.functionImage,
+                    child: Container(
+                      width: widget.size.width * 0.16,
+                      height: widget.size.width * 0.16,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(widget.image),
+                          )),
+                    ),
+                  ),
+            widget.image.isEmpty
+                ? Shimmer.fromColors(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.red,
+                        ),
+                        height: widget.size.height * 0.07,
+                        width: widget.size.height * 0.4,
+                      ),
+                    ),
+                    baseColor: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(60),
+                    highlightColor: Colors.grey[100]!,
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: SizedBox(
+                      height: widget.size.height * 0.09,
+                      width: widget.size.height * 0.4,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          suffixIcon: _focado
+                              ? _isEmpyt
+                                  ? Icon(
+                                      Icons.send,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withAlpha(95),
+                                    )
+                                  : IconButton(
+                                      onPressed: widget.functionBottonTextField,
+                                      icon: Icon(
+                                        Icons.send,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    )
+                              : const SizedBox(
+                                  height: 0.01,
+                                  width: 0.01,
+                                ),
+                          hintText: widget.hintTextTextField,
+                          //label: Text("Adicione uma postagem"),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -25,9 +25,15 @@ class _HomePageState extends State<HomePage> {
           SingleChildScrollView(
             primary: true,
             child: Column(children: [
-              Container(
-                height: size.height * 0.15,
-              ),
+              SizedBox(
+                  height: size.height * 0.15,
+                  child: WidgetPost(
+                    image: "lib/ui/assets/images/test.jpg",
+                    hintTextTextField: "Adicione uma postagem",
+                    functionBottonTextField: () {},
+                    functionImage: () {},
+                    size: size,
+                  )),
               CustomDivider(
                 size: size,
                 altura: 0.015,
@@ -39,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     return Container(
                       height: 300,
-                      color: Colors.red,
+                      // color: Colors.white,
                     );
                   }),
             ]),
