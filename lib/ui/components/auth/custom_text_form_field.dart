@@ -6,6 +6,7 @@ class CustomTextFormField extends StatefulWidget {
   final String labelText;
   final IconData prefixIcon;
   final Function(String value)? onChanged;
+  final String? errorText;
 
   const CustomTextFormField({
     Key? key,
@@ -14,6 +15,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.labelText,
     required this.prefixIcon,
     this.onChanged,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,9 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool _segureText = true;
+
+  void switchSegureText() => setState(() => _segureText = !_segureText);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -30,6 +35,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         onChanged: widget.onChanged,
         obscureText: widget.segureText ? _segureText : false,
         decoration: InputDecoration(
+          errorText: widget.errorText,
           labelText: widget.labelText,
           labelStyle: TextStyle(
             color: Theme.of(context).colorScheme.onBackground,
@@ -43,11 +49,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
           suffixIcon: widget.segureText
               ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _segureText = !_segureText;
-                    });
-                  },
+                  onPressed: switchSegureText,
                   icon: _segureText
                       ? Icon(
                           Icons.remove_red_eye,
