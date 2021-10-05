@@ -4,4 +4,6 @@ abstract class FirebaseCloudFirestore {
   CollectionReference getCollection({required String collectionName});
   Future<void> setDataDocument({required String doc, required Object data});
   Stream<QuerySnapshot> getStreamCollection({required String collectionName});
+  Future<CollectionReference> getCollectionReference(
+      {required String collectionPath});
 }
