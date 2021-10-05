@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Post extends StatefulWidget {
-  String image;
-  String hintTextTextField;
-  Function() functionImage;
-  Function() functionBottonTextField;
+  final String image;
+  final String hintTextTextField;
+  final Function() functionImage;
+  final Function() functionBottonTextField;
   final Size size;
-  Post({
+
+  const Post({
     Key? key,
     required this.image,
     required this.hintTextTextField,
@@ -68,7 +69,7 @@ class _PostState extends State<Post> {
             widget.image.isEmpty
                 ? Shimmer.fromColors(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: 10),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -85,7 +86,7 @@ class _PostState extends State<Post> {
                     highlightColor: Colors.grey[100]!,
                   )
                 : Padding(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(left: 10),
                     child: SizedBox(
                       height: widget.size.height * 0.09,
                       width: widget.size.height * 0.4,
@@ -115,12 +116,12 @@ class _PostState extends State<Post> {
                                 ),
                           hintText: widget.hintTextTextField,
                           //label: Text("Adicione uma postagem"),
-                          enabledBorder: UnderlineInputBorder(
+                          enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               width: 2,
                             ),
                           ),
-                          focusedBorder: UnderlineInputBorder(
+                          focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               width: 2,
                             ),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {
-  double altura;
-  CustomDivider({
+  final double height;
+
+  const CustomDivider({
     Key? key,
-    required this.altura,
+    required this.height,
     required this.size,
   }) : super(key: key);
 
@@ -13,7 +14,7 @@ class CustomDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size.height * altura,
+      height: size.height * height,
       color: Theme.of(context).colorScheme.onBackground.withAlpha(40),
     );
   }

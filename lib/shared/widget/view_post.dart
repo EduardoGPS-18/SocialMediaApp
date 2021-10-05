@@ -4,8 +4,9 @@ import 'package:shimmer/shimmer.dart';
 import 'widget.dart';
 
 class ViewPost extends StatefulWidget {
-  Size size;
-  ViewPost({
+  final Size size;
+
+  const ViewPost({
     Key? key,
     required this.size,
   }) : super(key: key);
@@ -41,7 +42,7 @@ class _ViewPostState extends State<ViewPost> {
                         leading: Container(
                           width: widget.size.width * 0.13,
                           height: widget.size.width * 0.13,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.red,
                             shape: BoxShape.circle,
                           ),
@@ -100,7 +101,7 @@ class _ViewPostState extends State<ViewPost> {
                             child: Container(
                               width: widget.size.width * 0.13,
                               height: widget.size.width * 0.13,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
@@ -112,12 +113,12 @@ class _ViewPostState extends State<ViewPost> {
                           title: Padding(
                             padding: EdgeInsets.only(
                                 bottom: widget.size.width * 0.018),
-                            child: Text(
+                            child: const Text(
                               "Pabricio Freitas",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          subtitle: Text("Terça-feira ás 08:22"),
+                          subtitle: const Text("Terça-feira ás 08:22"),
                         ),
                       ),
                       Padding(
@@ -127,7 +128,7 @@ class _ViewPostState extends State<ViewPost> {
                         ),
                         child: InkWell(
                           onTap: () {},
-                          child: Text(
+                          child: const Text(
                             "Mais um trabalho realizado com sucesso. Obrigado ao aplicativo por proporcionar essa oportunidade. ",
                             style: TextStyle(
                               fontSize: 18,
@@ -153,7 +154,7 @@ class _ViewPostState extends State<ViewPost> {
                                       color:
                                           Theme.of(context).colorScheme.error,
                                     )
-                                  : Icon(
+                                  : const Icon(
                                       Icons.favorite_border_outlined,
                                     ),
                             ),
@@ -187,7 +188,8 @@ class _ViewPostState extends State<ViewPost> {
                               child: IconButton(
                                   iconSize: widget.size.width * 0.07,
                                   onPressed: () {},
-                                  icon: Icon(Icons.mode_comment_outlined)),
+                                  icon:
+                                      const Icon(Icons.mode_comment_outlined)),
                             ),
                             InkWell(
                               onTap: () {},
@@ -221,7 +223,7 @@ class _ViewPostState extends State<ViewPost> {
       ),
       CustomDivider(
         size: widget.size,
-        altura: 0.015,
+        height: 0.015,
       ),
     ]);
   }

@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: CustomAppBar(text: "Feed"),
+        appBar: const CustomAppBar(text: "Feed"),
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: PageController(initialPage: 0),
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                     )),
                 CustomDivider(
                   size: size,
-                  altura: 0.015,
+                  height: 0.015,
                 ),
                 ListView.builder(
                     primary: false,
