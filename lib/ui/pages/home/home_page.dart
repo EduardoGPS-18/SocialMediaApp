@@ -41,12 +41,49 @@ class _HomePageState extends State<HomePage> {
               ListView.builder(
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: 2,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
-                    return Container(
-                      height: 300,
-                      // color: Colors.white,
-                    );
+                    return Column(children: [
+                      SizedBox(
+                        height: 230,
+                        //color: Colors.grey,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: size.width * 0.16,
+                                  height: size.width * 0.16,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(
+                                            "lib/ui/assets/images/test.jpg"),
+                                      )),
+                                ),
+                              ),
+                              title: Padding(
+                                padding:
+                                    EdgeInsets.only(bottom: size.width * 0.02),
+                                child: Text(
+                                  "Pabricio Freitas",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              subtitle: Text("Pabricio Freitas"),
+                            ),
+                            Text(
+                                "Mais um trabalho realizado com sucesso. Obrigado ao aplicativo por proporcionar essa oportunidade")
+                          ],
+                        ),
+                      ),
+                      CustomDivider(
+                        size: size,
+                        altura: 0.015,
+                      ),
+                    ]);
                   }),
             ]),
           )
