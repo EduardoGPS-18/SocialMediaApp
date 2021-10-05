@@ -4,10 +4,15 @@ import '../../domain/entities/entities.dart';
 
 class RemoteCommentModel {
   final String? userId;
-  final String? uid;
+  String? uid;
   final String? publishId;
   final String? content;
   final DateTime? createdAt;
+
+  RemoteCommentModel setUid(String v) {
+    uid = v;
+    return this;
+  }
 
   RemoteCommentModel({
     this.userId,
