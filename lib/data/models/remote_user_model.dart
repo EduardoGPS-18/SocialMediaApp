@@ -6,11 +6,13 @@ class RemoteUserModel {
   final String? name;
   final String? email;
   final String? photoUrl;
+  final String? uid;
 
   RemoteUserModel({
     this.name,
     this.email,
     this.photoUrl,
+    this.uid,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,6 +20,7 @@ class RemoteUserModel {
       'name': name,
       'email': email,
       'photoUrl': photoUrl,
+      'uid': uid,
     };
   }
 
@@ -26,14 +29,13 @@ class RemoteUserModel {
       name: map['name'],
       email: map['email'],
       photoUrl: map['photoUrl'],
+      uid: map['uid'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory RemoteUserModel.fromJson(String source) =>
-      RemoteUserModel.fromMap(json.decode(source));
+  factory RemoteUserModel.fromJson(String source) => RemoteUserModel.fromMap(json.decode(source));
 
-  UserEntity toEntity() => UserEntity(
-      name: name ?? '', email: email ?? '', photoUrl: photoUrl ?? '');
+  UserEntity toEntity() => UserEntity(name: name ?? '', email: email ?? '', photoUrl: photoUrl ?? '', uid: uid ?? '');
 }

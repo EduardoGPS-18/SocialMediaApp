@@ -3,7 +3,6 @@ import 'dart:io';
 import '../../helpers/helpers.dart';
 
 abstract class AuthPagePresenter {
-  Stream<bool> get isLogin;
   Stream<bool> get isFormValid;
   Stream<int> get pageIndex;
 
@@ -13,6 +12,7 @@ abstract class AuthPagePresenter {
   Stream<UIError> get passwordError;
   Stream<UIError> get confirmPasswordError;
   Stream<UIError> get nameError;
+  Stream<String> get handlingError;
 
   void setPageIndex(int value);
 
@@ -23,5 +23,5 @@ abstract class AuthPagePresenter {
   void validateConfirmPassword(String confirmPassword);
 
   Future<void> loginUser();
-  Future<void> registerUser();
+  Future<bool> registerUser();
 }

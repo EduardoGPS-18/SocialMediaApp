@@ -8,8 +8,7 @@ mixin AppTheme {
   static final Color _lightFocusColor = _lightFillColor.withOpacity(0.12);
   static final Color _darkFocusColor = _darkFillColor.withOpacity(0.12);
 
-  static ThemeData lightThemeData =
-      themeData(lightColorScheme, _lightFocusColor);
+  static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
   static ThemeData darkThemeData = themeData(darkColorScheme, _darkFocusColor);
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
@@ -41,7 +40,7 @@ mixin AppTheme {
     onError: Color(0xFFFCFCFC),
     onPrimary: Color(0xFF262626), //para letras em cima do primario
     onSecondary: Color(0xFFFFFFFF), //por cima de cores desativas
-    onSurface: Color(0xFFFFFFFF),
+    onSurface: Color(0xFF000000),
     primary: Color(0xFFF6CB46),
     primaryVariant: Color(0xFFFFEE00), //amarelo mais forte
     secondary: Color(0xFFD4D4D4), //cores desativas
@@ -65,8 +64,7 @@ mixin AppTheme {
     surface: Color(0xFF303030),
   );
 
-  static ElevatedButtonThemeData elevatedButtonThemeData(
-      ColorScheme colorScheme) {
+  static ElevatedButtonThemeData elevatedButtonThemeData(ColorScheme colorScheme) {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0.0,

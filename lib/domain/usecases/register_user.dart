@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../entities/entities.dart';
 
 abstract class RegisterUser {
@@ -8,12 +10,12 @@ class RegisterUserParams {
   final String name;
   final String email;
   final String password;
-  final String photoUrl;
+  final File userImage;
 
   RegisterUserParams({
     required this.name,
     required this.email,
     required this.password,
-    required this.photoUrl,
+    required this.userImage,
   });
 }

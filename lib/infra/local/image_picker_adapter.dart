@@ -11,8 +11,8 @@ class SelectLocalImageAdapter implements SelectLocalImage {
   });
 
   @override
-  Future<File> takeAPicture() async {
+  Future<File?> takeAPicture() async {
     final selectedImage = await imagePicker.pickImage(source: ImageSource.camera);
-    return File(selectedImage?.path ?? "");
+    return selectedImage != null ? File(selectedImage.path) : null;
   }
 }

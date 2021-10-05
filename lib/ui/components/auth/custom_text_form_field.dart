@@ -6,14 +6,18 @@ class CustomTextFormField extends StatefulWidget {
   final String labelText;
   final IconData prefixIcon;
   final Function(String value)? onChanged;
+  final String? errorText;
+  final TextInputType? keyboardType;
 
   const CustomTextFormField({
     Key? key,
-    this.segureText = false,
     required this.size,
+    this.segureText = false,
     required this.labelText,
     required this.prefixIcon,
     this.onChanged,
+    this.errorText,
+    this.keyboardType = TextInputType.text,
   }) : super(key: key);
 
   @override
@@ -21,15 +25,20 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool _segureText = true;
+  bool _secureText = true;
+
+  void switchSegureText() => setState(() => _secureText = !_secureText);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.size.width * 0.8,
       child: TextFormField(
+        keyboardType: widget.keyboardType,
         onChanged: widget.onChanged,
-        obscureText: widget.segureText ? _segureText : false,
+        obscureText: widget.segureText ? _secureText : false,
         decoration: InputDecoration(
+          errorText: widget.errorText,
           labelText: widget.labelText,
           labelStyle: TextStyle(
             color: Theme.of(context).colorScheme.onBackground,
@@ -43,19 +52,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
           suffixIcon: widget.segureText
               ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _segureText = !_segureText;
-                    });
-                  },
-                  icon: _segureText
+                  onPressed: switchSegureText,
+                  icon: _secureText
                       ? Icon(
-                          Icons.remove_red_eye,
+                          Icons.visibility_outlined,
                           color: Theme.of(context).colorScheme.primary,
                         )
                       : Icon(
-                          Icons.lock_sharp,
-                          color: Theme.of(context).colorScheme.onBackground.withAlpha(90),
+                          Icons.visibility_off_outlined,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                 )
               : const SizedBox(
