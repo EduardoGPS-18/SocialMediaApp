@@ -95,6 +95,7 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
   @override
   Future<void> setImage() async {
     File image = await localGetImage.getImage();
+    _userImage = image;
     userImageStreamController.subject.add(image);
     final error = _validateField('image');
     _userImageErrorStreamController.subject.add(error);
@@ -116,10 +117,11 @@ class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter 
     final formData = {
       'confirm_password': _confirmPassword,
       'name': _name,
-      'image': _userImage,
+      'image': _userImage?.path,
       'email': _email,
       'password': _password,
     };
+    print(formData);
     final error = validation.validate(field: field, input: formData);
     switch (error) {
       case ValidationError.invalidField:
