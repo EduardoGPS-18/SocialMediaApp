@@ -9,6 +9,6 @@ export 'publish/delete_comment.dart';
 export 'publish/delete_publish.dart';
 export 'publish/like_publish.dart';
 export 'publish/load_publish.dart';
-export 'publish/load_publishes_by_uid.dart';
+export 'publish/load_publishes_by_user_id.dart';
 export 'publish/load_recent_publishes.dart';
 export 'publish/unlike_publish.dart';
