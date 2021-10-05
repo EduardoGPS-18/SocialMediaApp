@@ -43,8 +43,8 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
       final userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: params.email, password: params.password);
       return userCredential;
     } on FirebaseAuthException catch (error) {
-      if (error.code == FirebaseAuthenticationError.invalidEmail.code) {
-        throw FirebaseAuthenticationError.invalidEmail;
+      if (error.code == FirebaseAuthenticationError.emailAlreadyInUse.code) {
+        throw FirebaseAuthenticationError.emailAlreadyInUse;
       } else if (error.code == FirebaseAuthenticationError.userDisabled.code) {
         throw FirebaseAuthenticationError.userDisabled;
       } else if (error.code == FirebaseAuthenticationError.userNotFound.code) {
