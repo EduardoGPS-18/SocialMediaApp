@@ -14,13 +14,6 @@ class ValidationBuilder {
     return _instance!;
   }
 
-  ValidationBuilder notNullable() {
-    validations.add(NotNullableValidation(
-      field: fieldName,
-    ));
-    return this;
-  }
-
   ValidationBuilder required() {
     validations.add(RequiredFieldValidation(field: fieldName));
     return this;

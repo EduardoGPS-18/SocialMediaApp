@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'main/factory/factory.dart';
 import 'ui/components/components.dart';
-import 'ui/pages/pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
       //darkTheme: AppTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: AuthPage(presenter: makeAuthPagePresenter()),
+      home: makeAuthPage(),
       // initialRoute: '/',
       // routes: const {},
     );
