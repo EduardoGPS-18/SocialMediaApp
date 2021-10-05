@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'main/factory/factory.dart';
 import 'ui/components/components.dart';
 import 'ui/pages/pages.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       //darkTheme: AppTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: const AuthPage(),
+      home: AuthPage(presenter: makeAuthPagePresenter()),
       // initialRoute: '/',
       // routes: const {},
     );
