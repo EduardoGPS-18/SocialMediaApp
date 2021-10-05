@@ -8,8 +8,7 @@ import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
 
-class GetxAuthPagePresenter extends GetxController
-    implements AuthPagePresenter {
+class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter {
   LoginUser remoteLoginUser;
   RegisterUser remoteRegisterUser;
   GetImage localGetImage;
@@ -53,11 +52,9 @@ class GetxAuthPagePresenter extends GetxController
   @override
   Stream<UIError> get passwordError => _passwordErrorStreamController.stream;
 
-  final Rx<UIError> _confirmPasswordErrorStreamController =
-      (UIError.noError).obs;
+  final Rx<UIError> _confirmPasswordErrorStreamController = (UIError.noError).obs;
   @override
-  Stream<UIError> get confirmPasswordError =>
-      _confirmPasswordErrorStreamController.stream;
+  Stream<UIError> get confirmPasswordError => _confirmPasswordErrorStreamController.stream;
 
   final Rx<UIError> _nameErrorStreamController = (UIError.noError).obs;
   @override
@@ -149,8 +146,7 @@ class GetxAuthPagePresenter extends GetxController
   Future<void> registerUser() async {
     try {
       remoteRegisterUser.registerUserWithRegisterParams(
-        params: RegisterUserParams(
-            name: _name, email: _email, password: _password, photoUrl: ""),
+        params: RegisterUserParams(name: _name, email: _email, password: _password, userImage: _userImage!),
       );
     } catch (error) {
       debugPrint('$error');
