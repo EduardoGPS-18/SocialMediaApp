@@ -31,7 +31,7 @@ class _AuthPageState extends State<AuthPage> {
         curve: Curves.easeInOut,
       );
     });
-    widget.presenter.backendError.listen((event) {
+    widget.presenter.handlingError.listen((event) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(event),
         backgroundColor: Colors.red,
