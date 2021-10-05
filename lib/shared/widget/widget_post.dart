@@ -32,7 +32,7 @@ class _WidgetPostState extends State<WidgetPost> {
         height: widget.size.height * 0.12,
         width: widget.size.width * 0.9,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             /*
                         CircleAvatar(
