@@ -25,9 +25,9 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool _segureText = true;
+  bool _secureText = true;
 
-  void switchSegureText() => setState(() => _segureText = !_segureText);
+  void switchSegureText() => setState(() => _secureText = !_secureText);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       child: TextFormField(
         keyboardType: widget.keyboardType,
         onChanged: widget.onChanged,
-        obscureText: widget.segureText ? _segureText : false,
+        obscureText: widget.segureText ? _secureText : false,
         decoration: InputDecoration(
           errorText: widget.errorText,
           labelText: widget.labelText,
@@ -53,7 +53,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           suffixIcon: widget.segureText
               ? IconButton(
                   onPressed: switchSegureText,
-                  icon: _segureText
+                  icon: _secureText
                       ? Icon(
                           Icons.visibility_outlined,
                           color: Theme.of(context).colorScheme.primary,
