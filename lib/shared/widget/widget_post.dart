@@ -52,7 +52,7 @@ class _WidgetPostState extends State<WidgetPost> {
                         .withAlpha(60),
                     highlightColor: Colors.grey[100]!,
                   )
-                : GestureDetector(
+                : InkWell(
                     onTap: widget.functionImage,
                     child: Container(
                       width: widget.size.width * 0.16,
