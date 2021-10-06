@@ -15,11 +15,7 @@ class RemoteAddPublish implements AddPublish {
   @override
   Future<void> addPublish({required PublishEntity publish}) async {
     try {
-      final response = await firebaseCloudFirestore
-          .getCollection(
-            collectionName: 'publishes',
-          )
-          .add(
+      final response = await firebaseCloudFirestore.getPublishesCollection().add(
             RemotePublishModel.fromEntity(publish).toMap(),
           );
       response.update({'uid': response.id});
