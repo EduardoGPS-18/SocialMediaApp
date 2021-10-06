@@ -1,3 +1,3 @@
 abstract class UnlikePublish {
-  Future<void> unlikePublish({required String uid, required String publishId});
+  Future<void> unlikePublish({required String userId, required String publishId});
 }
