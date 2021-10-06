@@ -12,7 +12,7 @@ class RemoteLoadPublishById implements LoadPublish {
 
   @override
   Future<PublishEntity> findPublishById({required String publishId}) async {
-    final response = await firebaseCloudFirestore.getCollection(collectionName: 'publishes').doc(publishId).get();
+    final response = await firebaseCloudFirestore.getPublishesCollection().doc(publishId).get();
 
     return RemotePublishModel.fromMap(response.data() as Map<String, dynamic>).toEntity();
   }

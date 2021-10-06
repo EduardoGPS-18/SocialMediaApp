@@ -16,7 +16,7 @@ class RemoteLoginUser implements LoginUser {
   Future<UserEntity> loginUserWithEmailAndPassword({required LoginUserParams params}) async {
     try {
       final userCred = await firebaseAuthentication.loginWithEmailAndPassword(params: params);
-      final user = await cloudFirestore.getCollection(collectionName: 'users').doc(userCred.user?.uid).get();
+      final user = await cloudFirestore.getUserById(id: userCred.user?.uid);
 
       final userData = user.data() as Map<String, dynamic>;
       userData["uid"] = userCred.user!.uid;

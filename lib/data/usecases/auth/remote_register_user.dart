@@ -19,15 +19,15 @@ class RemoteRegisterUser implements RegisterUser {
     try {
       final userCred = await firebaseAuthentication.registerUser(params: params);
       var photoUrl = await firebaseStore.saveImageOfPath(params: SaveImageParams(path: userCred.user?.uid ?? "", file: params.userImage));
-      cloudFirestore.setDataDocument(
-        doc: userCred.user?.uid ?? "",
-        data: RemoteUserModel(
-          name: params.name,
-          photoUrl: photoUrl,
-          email: params.email,
-          uid: userCred.user?.uid,
-        ).toMap(),
-      );
+      cloudFirestore.getUserCollections().doc(userCred.user?.uid ?? "").set(
+            RemoteUserModel(
+              name: params.name,
+              photoUrl: photoUrl,
+              email: params.email,
+              uid: userCred.user?.uid,
+            ).toMap(),
+          );
+
       return UserEntity(
         name: params.name,
         email: params.email,

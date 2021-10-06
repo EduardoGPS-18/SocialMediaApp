@@ -14,7 +14,7 @@ class RemoteLoadUser implements LoadUser {
 
   @override
   Future<UserEntity> loadUserByUID({required String uid}) async {
-    final response = await firebaseCloudFirestore.getCollection(collectionName: 'users').doc(uid).get();
+    final response = await firebaseCloudFirestore.getUserById(id: uid);
     final userData = response.data() as Map<String, dynamic>;
     userData["uid"] = uid;
     return RemoteUserModel.fromMap(userData).toEntity();
