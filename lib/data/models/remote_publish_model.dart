@@ -35,8 +35,8 @@ class RemotePublishModel {
     return RemotePublishModel(
       userId: map['userId'],
       uid: map['uid'],
-      comments: List<RemoteCommentModel>.from(map['comments']?.map((x) => RemoteCommentModel.fromMap(x))),
-      uidOfWhoLikedIt: List<String>.from(map['uidOfWhoLikedIt']),
+      comments: map['comments'] != null ? List<RemoteCommentModel>.from(map['comments']?.map((x) => RemoteCommentModel.fromMap(x))) : [],
+      uidOfWhoLikedIt: map['uidOfWhoLikedIt'] != null ? List<String>.from(map['uidOfWhoLikedIt']) : [],
       content: map['content'],
       createdAt: DateTime.tryParse(map['createdAt']),
     );
