@@ -22,6 +22,10 @@ class RemoteCommentModel {
     this.createdAt,
   });
 
+  factory RemoteCommentModel.toSave({required String content, required String publishId, required userId}) {
+    return RemoteCommentModel(content: content, createdAt: DateTime.now(), publishId: publishId, uid: '', userId: userId);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'userId': userId,
