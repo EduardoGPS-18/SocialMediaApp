@@ -44,8 +44,13 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   Future<List<PublishEntity>> getPublishes() async {
     final response = firebaseFirestore.collection('publishes');
     final json = await response.get();
+    final publishList = json.docs.map((element) => RemotePublishModel.fromMap(element.data()).toEntity()).toList();
 
-    return json.docs.map((element) => RemotePublishModel.fromMap(element.data()).toEntity()).toList();
+    for (var publish in publishList) {
+      final commentList = await getCommentsByPublishId(publishId: publish.uid);
+      publish.comments.addAll([...commentList]);
+    }
+    return publishList;
   }
 
   @override
@@ -69,9 +74,9 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
 
   @override
   Future<List<CommentEntity>> getCommentsByPublishId({required String publishId}) async {
-    final response = await getPublishDocumentByUid(uid: publishId).get();
+    final response = await getPublishDocumentByUid(uid: publishId).collection('comments').get();
 
-    final list = List.from(response.data()?["comments"] ?? []).map((e) => RemoteCommentModel.fromMap(e).toEntity()).toList();
+    final list = response.docs.map((e) => RemoteCommentModel.fromMap(e.data()).toEntity()).toList();
     return list;
   }
 }
