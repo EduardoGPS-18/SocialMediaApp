@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../data/firebase/firebase.dart';
 import '../../data/models/models.dart';
 import '../../domain/entities/comment_entity.dart';
+import '../../domain/entities/entities.dart';
 
 class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   FirebaseFirestore firebaseFirestore;
@@ -40,28 +41,37 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   }
 
   @override
-  CollectionReference<Map<String, dynamic>> getPublishesCollectionRefByUserID({required String userId}) {
-    return firebaseFirestore.collection('publishes').doc(userId).collection('publishes');
+  Future<List<PublishEntity>> getPublishes() async {
+    final response = firebaseFirestore.collection('publishes');
+    final json = await response.get();
+    final listPublishes = json.docs.map((element) => RemotePublishModel.fromMap(element.data()).toEntity()).toList();
+    return listPublishes;
   }
 
   @override
-  DocumentReference<Map<String, dynamic>> getPublisheDocumentByUserIdAndPublishId({required String userId, required String publishId}) {
-    return getPublishesCollectionRefByUserID(userId: userId).doc(publishId);
+  Future<List<PublishEntity>> getPublishesByUserID({required String userId}) async {
+    final response = await firebaseFirestore.collection('publishes').get();
+
+    final matches = response.docs.where((element) => element.data()["userId"] == userId).toList();
+
+    return matches.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList();
   }
 
   @override
-  Future<List<CommentEntity>> getCommentsByUserIdAndPublishId({required String userId, required String publishId}) async {
-    final response = await getPublishesCollectionRefByUserID(userId: userId).get();
-    final list = response.docs.where((element) => element["uid"] == publishId).map((e) => e.data()["comments"]).toList();
-    list.removeWhere((element) => element == null);
-    return List.from(list.first).map((e) => RemoteCommentModel.fromMap(e).toEntity()).toList();
+  CollectionReference<Map<String, dynamic>> getPublishesCollection() {
+    return firebaseFirestore.collection("publishes");
   }
 
   @override
-  Future<List<String>> getUsersUID() async {
-    final response = await firebaseFirestore.collection('users').get();
-    final List<String> list = response.docs.map((e) => e.data()["uid"] as String).toList();
+  DocumentReference<Map<String, dynamic>> getPublishDocumentByUid({required String uid}) {
+    return firebaseFirestore.collection("publishes").doc(uid);
+  }
 
+  @override
+  Future<List<CommentEntity>> getCommentsByPublishId({required String publishId}) async {
+    final response = await getPublishDocumentByUid(uid: publishId).get();
+
+    final list = List.from(response.data()?["comments"] ?? []).map((e) => RemoteCommentModel.fromMap(e).toEntity()).toList();
     return list;
   }
 }

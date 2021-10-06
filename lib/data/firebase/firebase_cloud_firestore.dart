@@ -7,8 +7,11 @@ abstract class FirebaseCloudFirestore {
   Future<void> setDataDocument({required String doc, required Object data});
   Stream<QuerySnapshot> getStreamCollection({required String collectionName});
   Future<CollectionReference> getCollectionReference({required String collectionPath});
-  CollectionReference<Map<String, dynamic>> getPublishesCollectionRefByUserID({required String userId});
-  DocumentReference<Map<String, dynamic>> getPublisheDocumentByUserIdAndPublishId({required String userId, required String publishId});
-  Future<List<CommentEntity>> getCommentsByUserIdAndPublishId({required String userId, required String publishId});
-  Future<List<String>> getUsersUID();
+
+  Future<List<PublishEntity>> getPublishes();
+  CollectionReference<Map<String, dynamic>> getPublishesCollection();
+  Future<List<PublishEntity>> getPublishesByUserID({required String userId});
+  DocumentReference<Map<String, dynamic>> getPublishDocumentByUid({required String uid});
+
+  Future<List<CommentEntity>> getCommentsByPublishId({required String publishId});
 }
