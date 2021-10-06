@@ -44,8 +44,8 @@ class FirebaseCloudFirestoreAdapter implements FirebaseCloudFirestore {
   Future<List<PublishEntity>> getPublishes() async {
     final response = firebaseFirestore.collection('publishes');
     final json = await response.get();
-    final listPublishes = json.docs.map((element) => RemotePublishModel.fromMap(element.data()).toEntity()).toList();
-    return listPublishes;
+
+    return json.docs.map((element) => RemotePublishModel.fromMap(element.data()).toEntity()).toList();
   }
 
   @override
