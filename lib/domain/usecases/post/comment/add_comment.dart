@@ -1,5 +1,10 @@
-import '../../../entities/comment_entity.dart';
-
 abstract class AddComment {
-  Future<void> addComment({required CommentEntity comment});
+  Future<void> addComment({required AddCommentParams params});
+}
+
+class AddCommentParams {
+  final String content;
+  final String publishId;
+  final String userId;
+  AddCommentParams({required this.content, required this.publishId, required this.userId});
 }

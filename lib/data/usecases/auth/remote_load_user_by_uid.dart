@@ -1,7 +1,7 @@
-import '../../domain/entities/user_entity.dart';
-import '../../domain/usecases/usecases.dart';
-import '../firebase/firebase.dart';
-import '../models/models.dart';
+import '../../../domain/entities/entities.dart';
+import '../../../domain/usecases/auth/auth.dart';
+import '../../firebase/firebase.dart';
+import '../../models/models.dart';
 
 class RemoteLoadUser implements LoadUser {
   FirebaseCloudFirestore firebaseCloudFirestore;

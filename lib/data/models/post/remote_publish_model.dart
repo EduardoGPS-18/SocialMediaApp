@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import '../../domain/entities/entities.dart';
+import '../../../domain/entities/entities.dart';
 import 'remote_comment_model.dart';
 
 class RemotePublishModel {

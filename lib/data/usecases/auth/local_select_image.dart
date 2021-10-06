@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../../domain/usecases/get_image.dart';
-import '../local/local.dart';
+import '../../../domain/usecases/auth/auth.dart';
+import '../../local/local.dart';
 
 class LocalSelectImage implements GetImage {
   SelectLocalImage selectLocalImage;

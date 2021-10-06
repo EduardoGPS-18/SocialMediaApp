@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/entities/entities.dart';
+import '../../../domain/entities/entities.dart';
 
 abstract class FirebaseCloudFirestore {
   CollectionReference getCollection({required String collectionName});

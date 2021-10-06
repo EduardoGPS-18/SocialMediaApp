@@ -1,4 +1,4 @@
-import '../entities/entities.dart';
+import '../../entities/entities.dart';
 
 abstract class LoginUser {
   Future<UserEntity> loginUserWithEmailAndPassword({required LoginUserParams params});
