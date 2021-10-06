@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../../domain/entities/entities.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../../firebase/firebase.dart';
 import '../../../models/models.dart';
@@ -13,10 +12,10 @@ class RemoteAddPublish implements AddPublish {
   });
 
   @override
-  Future<void> addPublish({required PublishEntity publish}) async {
+  Future<void> addPublish({required AddPublishParams params}) async {
     try {
       final response = await firebaseCloudFirestore.getPublishesCollection().add(
-            RemotePublishModel.fromEntity(publish).toMap(),
+            RemotePublishModel.toSave(content: params.content, userId: params.userId).toMap(),
           );
       response.update({'uid': response.id});
     } on FirebaseAuthException catch (_) {
