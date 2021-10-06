@@ -1,7 +1,5 @@
-import 'package:social_media_app/data/firebase/firebase.dart';
-import 'package:social_media_app/domain/usecases/usecases.dart';
-
-
+import '../../../../domain/usecases/usecases.dart';
+import '../../../firebase/firebase.dart';
 
 class RemoteLikePublish implements LikePublish {
   FirebaseCloudFirestore firebaseFirestore;
