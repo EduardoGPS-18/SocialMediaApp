@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/shared.dart';
+import '../../components/components.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool islog = true;
   int _currentIndexBottomNavigationBar = 0;
   @override
   Widget build(BuildContext context) {
@@ -23,25 +23,26 @@ class _HomePageState extends State<HomePage> {
         appBar: const CustomAppBar(text: "Feed"),
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
-          controller: PageController(initialPage: 0),
+          controller: PageController(initialPage: 1),
           children: [
             SingleChildScrollView(
               primary: true,
-              child: Column(children: [
-                SizedBox(
-                    height: size.height * 0.15,
-                    child: Post(
-                      image: "lib/ui/assets/images/test.jpg",
-                      hintTextTextField: "Adicione uma postagem",
-                      functionBottonTextField: () {},
-                      functionImage: () {},
-                      size: size,
-                    )),
-                CustomDivider(
-                  size: size,
-                  height: 0.015,
-                ),
-                ListView.builder(
+              child: Column(
+                children: [
+                  SizedBox(
+                      height: size.height * 0.15,
+                      child: Post(
+                        image: "lib/ui/assets/images/test.jpg",
+                        hintTextTextField: "Adicione uma postagem",
+                        functionBottonTextField: () {},
+                        functionImage: () {},
+                        size: size,
+                      )),
+                  CustomDivider(
+                    size: size,
+                    height: 0.015,
+                  ),
+                  ListView.builder(
                     primary: false,
                     shrinkWrap: true,
                     itemCount: 3,
@@ -49,8 +50,16 @@ class _HomePageState extends State<HomePage> {
                       return ViewPost(
                         size: size,
                       );
-                    }),
-              ]),
+                    },
+                  ),
+                ],
+              ),
+            ),
+            ProfilePage(
+              size: size,
+              name: "Pabricio",
+              image: "lib/ui/assets/images/test.jpg",
+              postQuantity: 30,
             )
           ],
         ),
