@@ -14,11 +14,11 @@ class RemoteAddComment implements AddComment {
 
   @override
   Future<void> addComment({required CommentEntity comment}) async {
-    var commentList = await firebaseCloudFirestore.getCommentsByUserIdAndPublishId(userId: comment.userId, publishId: comment.publishId);
+    var commentList = await firebaseCloudFirestore.getCommentsByPublishId(publishId: comment.publishId);
 
-    final resp = firebaseCloudFirestore.getPublisheDocumentByUserIdAndPublishId(userId: comment.userId, publishId: comment.publishId);
-
-    resp.update({
+    final resp = await firebaseCloudFirestore.getPublishesCollection().where('uid', isEqualTo: comment.publishId).get();
+    final field = firebaseCloudFirestore.getPublishesCollection().doc(resp.docs.first.data()["uid"]);
+    field.update({
       "comments": [
         ...commentList.map((e) => RemoteCommentModel.fromEntity(e).toMap()),
         RemoteCommentModel.fromEntity(comment).setUid("'${commentList.length}'").toMap()
