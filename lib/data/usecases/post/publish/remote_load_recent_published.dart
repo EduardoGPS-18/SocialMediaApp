@@ -1,14 +1,12 @@
-import '../../../domain/entities/publish_entity.dart';
-import '../../../domain/usecases/usecases.dart';
-import '../../firebase/firebase.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../../domain/usecases/usecases.dart';
+import '../../../firebase/firebase.dart';
 
 class RemoteLoadRecentPublishes implements LoadRecentPublishes {
   FirebaseCloudFirestore firebaseCloudFirestore;
-  FirebaseAuthentication firebaseAuthentication;
 
   RemoteLoadRecentPublishes({
     required this.firebaseCloudFirestore,
-    required this.firebaseAuthentication,
   });
 
   @override

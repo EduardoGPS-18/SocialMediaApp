@@ -1,15 +1,13 @@
-import '../../../domain/entities/entities.dart';
-import '../../../domain/usecases/usecases.dart';
-import '../../firebase/firebase.dart';
-import '../../models/models.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../../domain/usecases/usecases.dart';
+import '../../../firebase/firebase.dart';
+import '../../../models/models.dart';
 
 class RemoteLoadPublishById implements LoadPublish {
   FirebaseCloudFirestore firebaseCloudFirestore;
-  FirebaseAuthentication firebaseAuthentication;
 
   RemoteLoadPublishById({
     required this.firebaseCloudFirestore,
-    required this.firebaseAuthentication,
   });
 
   @override

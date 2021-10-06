@@ -1,5 +1,5 @@
-import '../../../domain/usecases/usecases.dart';
-import '../../firebase/firebase.dart';
+import '../../../../domain/usecases/usecases.dart';
+import '../../../firebase/firebase.dart';
 
 class RemoteUnlikePublish implements UnlikePublish {
   FirebaseCloudFirestore firebaseCloudFirestore;

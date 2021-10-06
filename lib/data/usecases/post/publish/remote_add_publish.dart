@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../../domain/usecases/usecases.dart';
-import '../../firebase/firebase.dart';
-import '../../models/models.dart';
+import '../../../../domain/entities/entities.dart';
+import '../../../../domain/usecases/usecases.dart';
+import '../../../firebase/firebase.dart';
+import '../../../models/models.dart';
 
 class RemoteAddPublish implements AddPublish {
   FirebaseCloudFirestore firebaseCloudFirestore;
