@@ -1,9 +1,2 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../../domain/usecases/usecases.dart';
-
-abstract class FirebaseAuthentication {
-  Future<UserCredential> loginWithEmailAndPassword({required LoginUserParams params});
-  Future<UserCredential> registerUser({required RegisterUserParams params});
-  Future<void> logout();
-}
+export 'firebase_authentication_contract.dart';
+export 'firebase_authentication_error.dart';
