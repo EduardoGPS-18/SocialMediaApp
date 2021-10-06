@@ -19,8 +19,6 @@ class RemoteAddPublish implements AddPublish {
           .getCollection(
             collectionName: 'publishes',
           )
-          .doc(publish.userId)
-          .collection("publishes")
           .add(
             RemotePublishModel.fromEntity(publish).toMap(),
           );
