@@ -1,6 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../../data/firebase/firebase_store/firebase_store_contract.dart';
+import '../../../data/firebase/firebase_store/firebase_store_contract.dart';
 
 class FirestoreStorageAdapter implements FirebaseStore {
   FirebaseStorage firebaseStorage;

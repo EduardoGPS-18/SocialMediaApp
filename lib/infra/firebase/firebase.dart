@@ -1,3 +1,3 @@
-export 'firebase_authentication_adapter.dart';
-export 'firebase_cloud_firestore_adapter.dart';
-export 'firebase_storage_adapter.dart';
+export 'firebase_authentication/firebase_authentication.dart';
+export 'firebase_cloud_firestore/firebase_cloud_firestore.dart';
+export 'firebase_storage/firebase_storage.dart';

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../data/firebase/firebase.dart';
-import '../../domain/usecases/usecases.dart';
+import '../../../data/firebase/firebase.dart';
+import '../../../domain/usecases/usecases.dart';
 
 class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
   final FirebaseAuth firebaseAuth;
