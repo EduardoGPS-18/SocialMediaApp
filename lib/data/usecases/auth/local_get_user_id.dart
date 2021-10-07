@@ -1,6 +1,6 @@
-import '../firebase/firebase.dart';
+import '../../firebase/firebase.dart';
 
-import '../../domain/usecases/usecases.dart';
+import '../../../domain/usecases/usecases.dart';
 
 class LocalGetUserId implements GetUserId {
   FirebaseAuthentication firebaseAuthentication;

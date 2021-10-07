@@ -1,6 +1,17 @@
-import '../../factory.dart';
-
 import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/home/home.dart';
+import '../../factory.dart';
 
-HomePagePresenter makeHomePagePresenter() => GetxHomePagePresenter(localGetUserId: localGetUserId, remoteAddComment: makeAddComment(), remoteDeleteComment: remoteDeleteComment, remoteAddPublish: makeAddPublish(), remoteDeletePublish: remoteDeletePublish, remoteLikePublish: remoteLikePublish, remoteUnlikePublish: remoteUnlikePublish, remoteLoadPublish: makeLoadPublishByID(), remoteLoadPublishesByUserID: makeLoadPublishesByUserId(), remoteLoadRecentPublishes: remoteLoadRecentPublishes, remoteLoadUser: remoteLoadUser)
+HomePagePresenter makeHomePagePresenter() => GetxHomePagePresenter(
+      localGetUserId: makeLocalGetUserId(),
+      remoteAddComment: makeAddComment(),
+      remoteDeleteComment: makeDeleteComment(),
+      remoteAddPublish: makeAddPublish(),
+      remoteDeletePublish: makeDeletePublish(),
+      remoteLikePublish: makeLikePublish(),
+      remoteUnlikePublish: makeUnlikePublish(),
+      remoteLoadPublish: makeLoadPublishByID(),
+      remoteLoadPublishesByUserID: makeLoadPublishesByUserId(),
+      remoteLoadRecentPublishes: makeLoadRecentPublishes(),
+      remoteLoadUser: makeLoadUser(),
+    );
