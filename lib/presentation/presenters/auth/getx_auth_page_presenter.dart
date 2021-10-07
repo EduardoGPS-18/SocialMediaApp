@@ -36,6 +36,10 @@ class GetxAuthPagePresenter extends GetxController
     isLogin = value == 0;
   }
 
+  Rx<String> navigateTo = Rx<String>('');
+  @override
+  Stream<String> get navigateToStream => navigateTo.stream;
+
   Rx<String> handlingErrorsStreamController = Rx<String>("");
   @override
   Stream<String> get handlingError => handlingErrorsStreamController.stream;
@@ -156,6 +160,7 @@ class GetxAuthPagePresenter extends GetxController
       await remoteLoginUser.loginUserWithEmailAndPassword(
         params: LoginUserParams(email: _email, password: _password),
       );
+      navigateTo.subject.add('/home');
     } on FirebaseAuthenticationError catch (_) {
       handlingErrorsStreamController.subject
           .add(R.string.msgInvalidCredentials);

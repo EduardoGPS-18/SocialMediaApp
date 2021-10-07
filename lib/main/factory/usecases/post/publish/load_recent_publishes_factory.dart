@@ -1,8 +1,7 @@
 import '../../../../../data/usecases/post/post.dart';
-import '../../../../../domain/usecases/usecases.dart';
+import '../../../../../domain/usecases/post/publish/publish.dart';
 import '../../../factory.dart';
 
-LoadPublishesByUserID makeLoadPublishesByUserId() =>
-    RemoteLoadPublishesByUserID(
+LoadRecentPublishes makeLoadRecentPublishes() => RemoteLoadRecentPublishes(
       firebaseCloudFirestore: makeFirebaseCloudFirestore(),
     );

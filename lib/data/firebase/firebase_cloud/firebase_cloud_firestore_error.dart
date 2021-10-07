@@ -10,6 +10,10 @@ extension FirebaseCloudFirestoreErrorExtension on FirebaseCloudFirestoreError {
 
   String get code {
     switch (this) {
+      case FirebaseCloudFirestoreError.invalidData:
+        return 'invalid-data';
+      case FirebaseCloudFirestoreError.internalError:
+        return 'internal-error';
       default:
         return 'internal-error';
     }
