@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../components/components.dart';
 import '../../helpers/errors/errors.dart';
@@ -37,12 +38,17 @@ class _AuthPageState extends State<AuthPage> {
         backgroundColor: Colors.red,
       ));
     });
+    widget.presenter.navigateToStream.listen((event) {
+      if (event.isNotEmpty) {
+        Get.offAllNamed(event);
+      }
+    });
   }
 
   void registerUser() async {
     final bool registered = await widget.presenter.registerUser();
     if (registered) {
-      debugPrint('registrado');
+      widget.presenter.setPageIndex(0);
     }
   }
 

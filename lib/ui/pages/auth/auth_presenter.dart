@@ -14,6 +14,8 @@ abstract class AuthPagePresenter {
   Stream<UIError> get nameError;
   Stream<String> get handlingError;
 
+  Stream<String> get navigateToStream;
+
   void setPageIndex(int value);
 
   void setImage();
