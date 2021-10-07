@@ -3,13 +3,14 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../domain/entities/entities.dart';
 import '../../../../../../shared/widget/widget.dart';
-import 'feed_components.dart';
 import 'content_components/publish_content.dart';
+import 'feed_components.dart';
 import 'footer_components/publish_footer.dart';
 
 class ViewPost extends StatefulWidget {
   final Size size;
-  final UserEntity user;
+  final Future<UserEntity> publishUser;
+  final Future<UserEntity> currentUser;
   final PublishEntity publish;
   final Function() onContentClick;
   final Function() onLikeClick;
@@ -19,7 +20,8 @@ class ViewPost extends StatefulWidget {
   const ViewPost({
     Key? key,
     required this.size,
-    required this.user,
+    required this.publishUser,
+    required this.currentUser,
     required this.publish,
     required this.onContentClick,
     required this.onLikeClick,
@@ -107,11 +109,19 @@ class _ViewPostState extends State<ViewPost> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        PublishHeader(
-                          publish: widget.publish,
-                          user: widget.user,
-                          onUserImageClick: () {},
-                          size: widget.size,
+                        FutureBuilder<UserEntity>(
+                          future: widget.publishUser,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData && snapshot.data != null) {
+                              return PublishHeader(
+                                publish: widget.publish,
+                                user: snapshot.data!,
+                                onUserImageClick: () {},
+                                size: widget.size,
+                              );
+                            }
+                            return const Center();
+                          },
                         ),
                         Expanded(
                           child: PublishContent(
@@ -119,13 +129,16 @@ class _ViewPostState extends State<ViewPost> {
                             content: widget.publish.content,
                           ),
                         ),
-                        PublishFooter(
-                          size: widget.size,
-                          onLikeClick: widget.onLikeClick,
-                          isLiked: false,
-                          favoriteLength: widget.publish.uidOfWhoLikedIt.length,
-                          commentLength: widget.publish.comments.length,
-                          onCommentClick: widget.onCommentClick,
+                        FutureBuilder<UserEntity>(
+                          future: widget.currentUser,
+                          builder: (context, snapshot) => PublishFooter(
+                            size: widget.size,
+                            onLikeClick: widget.onLikeClick,
+                            isLiked: widget.publish.uidOfWhoLikedIt.contains(snapshot.data!.uid),
+                            favoriteLength: widget.publish.uidOfWhoLikedIt.length,
+                            commentLength: widget.publish.comments.length,
+                            onCommentClick: widget.onCommentClick,
+                          ),
                         )
                       ],
                     ),
