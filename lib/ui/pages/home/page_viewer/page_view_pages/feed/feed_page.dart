@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../domain/entities/entities.dart';
-import '../../../../../shared/widget/widget.dart';
-import '../../../../components/home/page_viewer/page_view_page/feed_components/feed_components.dart';
+import '../../../../../../domain/entities/entities.dart';
+import '../../../../../../shared/widget/widget.dart';
+import '../../../../../components/home/page_viewer/page_view_page/feed_components/feed_components.dart';
 
 class FeedPage extends StatelessWidget {
   final Size size;
