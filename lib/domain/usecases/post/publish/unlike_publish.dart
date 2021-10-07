@@ -1,10 +1,10 @@
 abstract class UnlikePublish {
-  Future<void> unlikePublish({required UlikePublishParams params});
+  Future<void> unlikePublish({required UnlikePublishParams params});
 }
 
-class UlikePublishParams {
+class UnlikePublishParams {
   final String userId;
   final String publishId;
 
-  UlikePublishParams({required this.userId, required this.publishId});
+  UnlikePublishParams({required this.userId, required this.publishId});
 }
