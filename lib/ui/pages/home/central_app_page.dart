@@ -5,20 +5,20 @@ import '../../components/components.dart';
 import '../pages.dart';
 import 'page_viewer/page_view_pages/page_view_pages.dart';
 
-class HomePage extends StatefulWidget {
+class CentralPageApp extends StatefulWidget {
   final HomePagePresenter presenter;
   final PageController pageController = PageController();
 
-  HomePage({
+  CentralPageApp({
     Key? key,
     required this.presenter,
   }) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _CentralPageAppState createState() => _CentralPageAppState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CentralPageAppState extends State<CentralPageApp> {
   int _currentIndexBottomNavigationBar = 0;
 
   @override
