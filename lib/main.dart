@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'ui/pages/home/home.dart';
 
 import 'main/factory/factory.dart';
+import 'main/factory/pages/home/home_page_factory.dart';
 import 'ui/components/components.dart';
 
 void main() async {
@@ -28,11 +28,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.cupertino,
       transitionDuration: const Duration(milliseconds: 400),
-      home: makeAuthPage(),
-      initialRoute: '/',
+      initialRoute: '/auth',
       routes: {
         '/auth': (context) => makeAuthPage(),
-        '/home': (context) => const HomePage()
+        '/home': (context) => makeHomePage(),
       },
     );
   }
