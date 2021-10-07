@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import '../../../shared/widget/widget.dart';
 import '../../components/components.dart';
 import '../pages.dart';
+import 'page_viewer/page_view_pages/feed/feed_presenter.dart';
 import 'page_viewer/page_view_pages/page_view_pages.dart';
 
 class CentralPageApp extends StatefulWidget {
   final HomePagePresenter presenter;
   final PageController pageController = PageController();
-
+  final FeedPresenter feedPresenter;
   CentralPageApp({
     Key? key,
     required this.presenter,
+    required this.feedPresenter,
   }) : super(key: key);
 
   @override
@@ -47,6 +49,7 @@ class _CentralPageAppState extends State<CentralPageApp> {
           children: [
             FeedPage(
               size: size,
+              presenter: widget.feedPresenter,
             ),
             ProfilePage(
               size: size,
