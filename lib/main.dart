@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'main/factory/factory.dart';
-import 'main/factory/pages/home/home_page_factory.dart';
 import 'ui/components/components.dart';
 
 void main() async {
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/auth',
       routes: {
         '/auth': (context) => makeAuthPage(),
-        '/home': (context) => makeHomePage(),
+        '/central-app-page': (context) => makeCentralAppPage(),
       },
     );
   }
