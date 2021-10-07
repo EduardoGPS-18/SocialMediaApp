@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/entities.dart';
-import '../../../shared/shared.dart';
+import '../../../shared/widget/widget.dart';
 import '../../components/components.dart';
-import 'home.dart';
+import '../pages.dart';
+import 'page_viewer/page_view_pages/page_view_pages.dart';
 
 class HomePage extends StatefulWidget {
   final HomePagePresenter presenter;
@@ -45,62 +45,8 @@ class _HomePageState extends State<HomePage> {
           physics: const NeverScrollableScrollPhysics(),
           controller: widget.pageController,
           children: [
-            SingleChildScrollView(
-              primary: true,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: size.height * 0.15,
-                    child: Post(
-                      image: "lib/ui/assets/images/test.jpg",
-                      hintTextTextField: "Adicione uma postagem",
-                      functionBottonTextField: () {},
-                      functionImage: () {},
-                      size: size,
-                    ),
-                  ),
-                  CustomDivider(
-                    size: size,
-                    height: 0.015,
-                  ),
-                  ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return ViewPost(
-                        size: size,
-                        user: const UserEntity(
-                          email: "eduardo@gmail.com",
-                          name: "Eduardo",
-                          photoUrl:
-                              "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
-                          uid: "asdhizxcjkn",
-                        ),
-                        publish: PublishEntity(
-                          uid: "asdiaajsd",
-                          content: "Bom dia",
-                          createdAt: DateTime.now(),
-                          uidOfWhoLikedIt: const ["asdasdj ", "asdmkasd"],
-                          userId: "asdlamsd",
-                          comments: [
-                            CommentEntity(
-                              userId: "asdajsnd",
-                              publishId: "afskasmf",
-                              uid: "",
-                              content: "content",
-                              createdAt: DateTime.now(),
-                            ),
-                          ],
-                        ),
-                        onLikeClick: () {},
-                        onUserImageClick: () {},
-                        onContentClick: () {},
-                      );
-                    },
-                  ),
-                ],
-              ),
+            FeedPage(
+              size: size,
             ),
             ProfilePage(
               size: size,
