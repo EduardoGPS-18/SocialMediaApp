@@ -12,6 +12,6 @@ class FirestoreStorageAdapter implements FirebaseStore {
   @override
   Future<String> saveImageOfPath({required SaveImageParams params}) async {
     var a = firebaseStorage.ref().child("user_images/${params.path}/").putFile(params.file);
-    return a.snapshot.ref.getDownloadURL();
+    return await a.snapshot.ref.getDownloadURL();
   }
 }
