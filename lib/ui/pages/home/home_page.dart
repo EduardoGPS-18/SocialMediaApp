@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../../shared/shared.dart';
 import '../../components/components.dart';
 import 'home.dart';
@@ -65,10 +66,36 @@ class _HomePageState extends State<HomePage> {
                   ListView.builder(
                     primary: false,
                     shrinkWrap: true,
-                    itemCount: 3,
+                    itemCount: 1,
                     itemBuilder: (context, index) {
                       return ViewPost(
                         size: size,
+                        user: const UserEntity(
+                          email: "eduardo@gmail.com",
+                          name: "Eduardo",
+                          photoUrl:
+                              "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
+                          uid: "asdhizxcjkn",
+                        ),
+                        publish: PublishEntity(
+                          uid: "asdiaajsd",
+                          content: "Bom dia",
+                          createdAt: DateTime.now(),
+                          uidOfWhoLikedIt: const ["asdasdj ", "asdmkasd"],
+                          userId: "asdlamsd",
+                          comments: [
+                            CommentEntity(
+                              userId: "asdajsnd",
+                              publishId: "afskasmf",
+                              uid: "",
+                              content: "content",
+                              createdAt: DateTime.now(),
+                            ),
+                          ],
+                        ),
+                        onLikeClick: () {},
+                        onUserImageClick: () {},
+                        onContentClick: () {},
                       );
                     },
                   ),
