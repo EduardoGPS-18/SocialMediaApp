@@ -35,22 +35,12 @@ class _PostState extends State<Post> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            /*
-                        CircleAvatar(
-                          radius: 40,
-                          child: DecorationImage(),
-                          backgroundImage:
-                              AssetImage("lib/ui/assets/icons/login_icon.png"),
-                        ),*/
             widget.image.isEmpty
                 ? Shimmer.fromColors(
                     child: CircleAvatar(
                       radius: widget.size.width * 0.09,
                     ),
-                    baseColor: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withAlpha(60),
+                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                     highlightColor: Colors.grey[100]!,
                   )
                 : InkWell(
@@ -59,11 +49,12 @@ class _PostState extends State<Post> {
                       width: widget.size.width * 0.13,
                       height: widget.size.width * 0.13,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage(widget.image),
-                          )),
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(widget.image),
+                        ),
+                      ),
                     ),
                   ),
             widget.image.isEmpty
@@ -79,10 +70,7 @@ class _PostState extends State<Post> {
                         width: widget.size.height * 0.4,
                       ),
                     ),
-                    baseColor: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withAlpha(60),
+                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                     highlightColor: Colors.grey[100]!,
                   )
                 : Padding(
@@ -96,18 +84,13 @@ class _PostState extends State<Post> {
                               ? _isEmpyt
                                   ? Icon(
                                       Icons.send,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground
-                                          .withAlpha(95),
+                                      color: Theme.of(context).colorScheme.onBackground.withAlpha(95),
                                     )
                                   : IconButton(
                                       onPressed: widget.functionBottonTextField,
                                       icon: Icon(
                                         Icons.send,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: Theme.of(context).colorScheme.primary,
                                       ),
                                     )
                               : const SizedBox(
@@ -115,7 +98,6 @@ class _PostState extends State<Post> {
                                   width: 0.01,
                                 ),
                           hintText: widget.hintTextTextField,
-                          //label: Text("Adicione uma postagem"),
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
                               width: 2,
