@@ -2,7 +2,7 @@ import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/home/home.dart';
 import '../../factory.dart';
 
-HomePagePresenter makeHomePagePresenter() => GetxHomePagePresenter(
+HomePagePresenter makeHomePagePresenter() => GetxCentralAppPagePresenter(
       localGetUserId: makeLocalGetUserId(),
       remoteAddComment: makeAddComment(),
       remoteDeleteComment: makeDeleteComment(),
