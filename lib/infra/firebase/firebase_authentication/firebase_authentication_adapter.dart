@@ -11,9 +11,11 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
   });
 
   @override
-  Future<UserCredential> loginWithEmailAndPassword({required LoginUserParams params}) async {
+  Future<UserCredential> loginWithEmailAndPassword(
+      {required LoginUserParams params}) async {
     try {
-      final userCredential = await firebaseAuth.signInWithEmailAndPassword(email: params.email, password: params.password);
+      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+          email: params.email, password: params.password);
 
       return userCredential;
     } on FirebaseAuthException catch (error) {
@@ -37,9 +39,11 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
   }
 
   @override
-  Future<UserCredential> registerUser({required RegisterUserParams params}) async {
+  Future<UserCredential> registerUser(
+      {required RegisterUserParams params}) async {
     try {
-      final userCredential = await firebaseAuth.createUserWithEmailAndPassword(email: params.email, password: params.password);
+      final userCredential = await firebaseAuth.createUserWithEmailAndPassword(
+          email: params.email, password: params.password);
       return userCredential;
     } on FirebaseAuthException catch (error) {
       if (error.code == FirebaseAuthenticationError.emailAlreadyInUse.code) {
@@ -54,5 +58,10 @@ class FirebaseAuthenticationAdapter implements FirebaseAuthentication {
         throw FirebaseAuthenticationError.internalError;
       }
     }
+  }
+
+  @override
+  String? getCurrentUserId() {
+    return firebaseAuth.currentUser?.uid;
   }
 }
