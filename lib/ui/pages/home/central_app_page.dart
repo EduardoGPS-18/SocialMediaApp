@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/shared.dart';
+import '../../../shared/widget/widget.dart';
 import '../../components/components.dart';
-import 'home.dart';
+import '../pages.dart';
+import 'page_viewer/page_view_pages/feed/feed_presenter.dart';
+import 'page_viewer/page_view_pages/page_view_pages.dart';
 
-class HomePage extends StatefulWidget {
+class CentralPageApp extends StatefulWidget {
   final HomePagePresenter presenter;
   final PageController pageController = PageController();
-
-  HomePage({
+  final FeedPresenter feedPresenter;
+  CentralPageApp({
     Key? key,
     required this.presenter,
+    required this.feedPresenter,
   }) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _CentralPageAppState createState() => _CentralPageAppState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CentralPageAppState extends State<CentralPageApp> {
   int _currentIndexBottomNavigationBar = 0;
 
   @override
@@ -45,36 +48,9 @@ class _HomePageState extends State<HomePage> {
           physics: const NeverScrollableScrollPhysics(),
           controller: widget.pageController,
           children: [
-            SingleChildScrollView(
-              primary: true,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: size.height * 0.15,
-                    child: Post(
-                      image: "lib/ui/assets/images/test.jpg",
-                      hintTextTextField: "Adicione uma postagem",
-                      functionBottonTextField: () {},
-                      functionImage: () {},
-                      size: size,
-                    ),
-                  ),
-                  CustomDivider(
-                    size: size,
-                    height: 0.015,
-                  ),
-                  ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return ViewPost(
-                        size: size,
-                      );
-                    },
-                  ),
-                ],
-              ),
+            FeedPage(
+              size: size,
+              presenter: widget.feedPresenter,
             ),
             ProfilePage(
               size: size,

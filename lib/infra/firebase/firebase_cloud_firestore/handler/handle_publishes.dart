@@ -22,6 +22,11 @@ mixin HandlePublishesImpl implements HandlePublishes {
   }
 
   @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> getPublishesStream() {
+    return getPublishesCollection().snapshots();
+  }
+
+  @override
   Future<List<PublishEntity>> getPublishesByUserID({required String userId}) async {
     final response = await firebaseFirestore.collection('publishes').get();
 

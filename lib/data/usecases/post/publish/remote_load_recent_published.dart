@@ -1,6 +1,7 @@
 import '../../../../domain/entities/entities.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../../firebase/firebase.dart';
+import '../../../models/models.dart';
 
 class RemoteLoadRecentPublishes implements LoadRecentPublishes {
   FirebaseCloudFirestore firebaseCloudFirestore;
@@ -10,8 +11,9 @@ class RemoteLoadRecentPublishes implements LoadRecentPublishes {
   });
 
   @override
-  Future<List<PublishEntity>> getPublishesByDate({required DateTime date}) async {
-    final publishes = await firebaseCloudFirestore.getPublishes();
-    return publishes.where((element) => element.createdAt.isBefore(element.createdAt)).toList();
+  Stream<List<PublishEntity>> getPublishesByDate({required DateTime date}) {
+    final publishes = firebaseCloudFirestore.getPublishesStream();
+    var res = publishes.map((event) => event.docs.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList());
+    return res.map((event) => event.where((element) => element.createdAt.isAfter(date)).toList());
   }
 }

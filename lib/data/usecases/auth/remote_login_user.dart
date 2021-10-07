@@ -19,7 +19,6 @@ class RemoteLoginUser implements LoginUser {
       final user = await cloudFirestore.getUserById(id: userCred.user?.uid);
 
       final userData = user.data() as Map<String, dynamic>;
-      userData["uid"] = userCred.user!.uid;
       return RemoteUserModel.fromMap(userData).toEntity();
     } on FirebaseAuthenticationError catch (_) {
       rethrow;
