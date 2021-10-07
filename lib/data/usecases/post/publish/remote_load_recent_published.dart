@@ -12,6 +12,6 @@ class RemoteLoadRecentPublishes implements LoadRecentPublishes {
   @override
   Future<List<PublishEntity>> getPublishesByDate({required DateTime date}) async {
     final publishes = await firebaseCloudFirestore.getPublishes();
-    return publishes.where((element) => element.createdAt.isBefore(element.createdAt)).toList();
+    return publishes.where((element) => element.createdAt.isAfter(date)).toList();
   }
 }
