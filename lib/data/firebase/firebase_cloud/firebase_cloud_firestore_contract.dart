@@ -13,6 +13,7 @@ abstract class HandleUsers {
 abstract class HandlePublishes {
   FirebaseFirestore get firebaseFirestore;
   Future<List<PublishEntity>> getPublishes();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getPublishesStream();
   CollectionReference<Map<String, dynamic>> getPublishesCollection();
   Future<List<PublishEntity>> getPublishesByUserID({required String userId});
   DocumentReference<Map<String, dynamic>> getPublishDocumentByUid({required String uid});
