@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-
 import '../../../shared/shared.dart';
 import '../../components/components.dart';
+import 'home.dart';
 
 class HomePage extends StatefulWidget {
   final HomePagePresenter presenter;
@@ -50,14 +49,15 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   SizedBox(
-                      height: size.height * 0.15,
-                      child: Post(
-                        image: "lib/ui/assets/images/test.jpg",
-                        hintTextTextField: "Adicione uma postagem",
-                        functionBottonTextField: () {},
-                        functionImage: () {},
-                        size: size,
-                      )),
+                    height: size.height * 0.15,
+                    child: Post(
+                      image: "lib/ui/assets/images/test.jpg",
+                      hintTextTextField: "Adicione uma postagem",
+                      functionBottonTextField: () {},
+                      functionImage: () {},
+                      size: size,
+                    ),
+                  ),
                   CustomDivider(
                     size: size,
                     height: 0.015,
