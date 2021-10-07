@@ -8,8 +8,7 @@ import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
 
-class GetxAuthPagePresenter extends GetxController
-    implements AuthPagePresenter {
+class GetxAuthPagePresenter extends GetxController implements AuthPagePresenter {
   LoginUser remoteLoginUser;
   RegisterUser remoteRegisterUser;
   GetImage localGetImage;
@@ -62,11 +61,9 @@ class GetxAuthPagePresenter extends GetxController
   @override
   Stream<UIError> get passwordError => _passwordErrorStreamController.stream;
 
-  final Rx<UIError> _confirmPasswordErrorStreamController =
-      (UIError.unexpected).obs;
+  final Rx<UIError> _confirmPasswordErrorStreamController = (UIError.unexpected).obs;
   @override
-  Stream<UIError> get confirmPasswordError =>
-      _confirmPasswordErrorStreamController.stream;
+  Stream<UIError> get confirmPasswordError => _confirmPasswordErrorStreamController.stream;
 
   final Rx<UIError> _nameErrorStreamController = (UIError.unexpected).obs;
   @override
@@ -88,16 +85,14 @@ class GetxAuthPagePresenter extends GetxController
     _password = password;
 
     _passwordErrorStreamController.value = _validateField('password');
-    _confirmPasswordErrorStreamController.value =
-        _validateField('confirm_password');
+    _confirmPasswordErrorStreamController.value = _validateField('confirm_password');
     _validateForm();
   }
 
   @override
   void validateConfirmPassword(String confirmPassword) {
     _confirmPassword = confirmPassword;
-    _confirmPasswordErrorStreamController.value =
-        _validateField('confirm_password');
+    _confirmPasswordErrorStreamController.value = _validateField('confirm_password');
     _validateForm();
   }
 
@@ -126,10 +121,7 @@ class GetxAuthPagePresenter extends GetxController
             _passwordErrorStreamController.value == UIError.noError &&
             _email != '' &&
             _password != ''
-        : _emailErrorStreamController.value == UIError.noError &&
-            _passwordErrorStreamController.value == UIError.noError &&
-            _email != '' &&
-            _password != '';
+        : _emailErrorStreamController.value == UIError.noError && _passwordErrorStreamController.value == UIError.noError && _email != '' && _password != '';
 
     isFormValidStreamController.subject.add(isValid);
   }
@@ -160,13 +152,11 @@ class GetxAuthPagePresenter extends GetxController
       await remoteLoginUser.loginUserWithEmailAndPassword(
         params: LoginUserParams(email: _email, password: _password),
       );
-      navigateTo.subject.add('/home');
+      navigateTo.subject.add('/central-app-page');
     } on FirebaseAuthenticationError catch (_) {
-      handlingErrorsStreamController.subject
-          .add(R.string.msgInvalidCredentials);
+      handlingErrorsStreamController.subject.add(R.string.msgInvalidCredentials);
     } catch (_) {
-      handlingErrorsStreamController.subject
-          .add("Ocorreu um erro!\nPreencha todos os dados incluindo a foto!");
+      handlingErrorsStreamController.subject.add("Ocorreu um erro!");
     }
   }
 
@@ -181,6 +171,7 @@ class GetxAuthPagePresenter extends GetxController
           userImage: _userImage!,
         ),
       );
+      navigateTo.subject.add('/central-app-page');
       return true;
     } on FirebaseAuthenticationError catch (error) {
       if (error.code == FirebaseAuthenticationError.emailAlreadyInUse.code) {
@@ -192,8 +183,7 @@ class GetxAuthPagePresenter extends GetxController
       }
       return false;
     } catch (_) {
-      handlingErrorsStreamController.subject
-          .add("Ocorreu um erro!\nPreencha todos os dados incluindo a foto!");
+      handlingErrorsStreamController.subject.add("Ocorreu um erro!\nPreencha todos os dados incluindo a foto!");
       return false;
     }
   }
