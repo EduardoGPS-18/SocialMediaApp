@@ -40,8 +40,11 @@ class _PostState extends State<Post> {
                     child: CircleAvatar(
                       radius: widget.size.width * 0.09,
                     ),
-                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
-                    highlightColor: Colors.grey[100]!,
+                    baseColor: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(60),
+                    highlightColor: Colors.grey.shade100,
                   )
                 : InkWell(
                     onTap: widget.functionImage,
@@ -70,27 +73,35 @@ class _PostState extends State<Post> {
                         width: widget.size.height * 0.4,
                       ),
                     ),
-                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
-                    highlightColor: Colors.grey[100]!,
+                    baseColor: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(60),
+                    highlightColor: Colors.grey.shade100,
                   )
                 : Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: SizedBox(
                       height: widget.size.height * 0.09,
-                      width: widget.size.height * 0.4,
+                      width: widget.size.width * 0.7,
                       child: TextField(
                         decoration: InputDecoration(
                           suffixIcon: _focado
                               ? _isEmpyt
                                   ? Icon(
                                       Icons.send,
-                                      color: Theme.of(context).colorScheme.onBackground.withAlpha(95),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withAlpha(95),
                                     )
                                   : IconButton(
                                       onPressed: widget.functionBottonTextField,
                                       icon: Icon(
                                         Icons.send,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                     )
                               : const SizedBox(
