@@ -37,7 +37,7 @@ class _FeedPageState extends State<FeedPage> {
               future: widget.presenter.user,
               builder: (context, snapshot) {
                 return Post(
-                  image: snapshot.data!.photoUrl,
+                  image: snapshot.data != null ? snapshot.data!.photoUrl : '',
                   hintTextTextField: "Adicione uma postagem",
                   functionBottonTextField: () {},
                   functionImage: () {},
@@ -61,9 +61,11 @@ class _FeedPageState extends State<FeedPage> {
                   itemBuilder: (context, index) {
                     return ViewPost(
                       size: widget.size,
-                      publishUser: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
+                      publishUser: widget.presenter.loadUserEntityById(
+                          uid: snapshot.data![index].userId),
                       publish: snapshot.data![index],
-                      onLikeClick: () => widget.presenter.likeImage(publishId: snapshot.data![index].uid),
+                      onLikeClick: () => widget.presenter
+                          .likeImage(publishId: snapshot.data![index].uid),
                       onUserImageClick: () {},
                       onContentClick: () {},
                       onCommentClick: () {},
