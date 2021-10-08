@@ -70,7 +70,7 @@ class _PostState extends State<Post> {
                           color: Colors.red,
                         ),
                         height: widget.size.height * 0.07,
-                        width: widget.size.height * 0.4,
+                        width: widget.size.width * 0.7,
                       ),
                     ),
                     baseColor: Theme.of(context)

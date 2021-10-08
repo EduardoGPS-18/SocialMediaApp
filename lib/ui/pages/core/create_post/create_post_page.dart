@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../shared/shared.dart';
+import '../../../../shared/shared.dart';
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({Key? key}) : super(key: key);

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../../../shared/shared.dart';
+import '../../../components/components.dart';
 
 import '../../../../../../domain/entities/entities.dart';
-import '../../../../../../shared/widget/widget.dart';
-import '../../../../../components/home/page_viewer/page_view_page/feed_components/feed_components.dart';
+
 import 'feed_presenter.dart';
 
 class FeedPage extends StatefulWidget {
