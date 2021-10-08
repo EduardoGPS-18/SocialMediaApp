@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import '../../../domain/entities/entities.dart';
 
 abstract class CorePresenter {
@@ -5,8 +6,7 @@ abstract class CorePresenter {
   Stream<List<PublishEntity>> get loadRecentPublishes;
   Stream<UserEntity> get loadUserData;
   Stream<String> get handlingError;
-
-  void setPageIndex(int value);
+  ValueNotifier<int> get pageIndexNotifier;
 
   Future<void> addComment(String publishId, String content);
   Future<void> deleteComment(String publishId, String commentId);
