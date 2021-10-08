@@ -48,12 +48,10 @@ class _CorePageAppState extends State<CorePageApp> {
               size: size,
               presenter: widget.feedPresenter,
             ),
-            ProfilePage(
-              size: size,
-              name: "Pabricio",
-              image: "lib/ui/assets/images/test.jpg",
-              postQuantity: 30,
-            )
+            // ProfilePage(
+            //   size: size,
+            //   presenter: ,
+            // )
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
