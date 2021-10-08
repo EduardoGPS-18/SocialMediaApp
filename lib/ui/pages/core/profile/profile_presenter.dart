@@ -1,13 +1,16 @@
 import 'dart:io';
-
+import '../../../helpers/helpers.dart';
 import '../../../../domain/entities/entities.dart';
 
 abstract class ProfilePresenter {
   Stream<UserEntity> get userData;
   Stream<int> get postsCount;
   Stream<File?> get userImage;
+  Stream<UIError> get userImageError;
+  Stream<String> get handlingError;
 
-  void setPageIndex(int value);
   void setImage();
-  Future<void> loadUserData();
+
+  void updateUserId();
+  Future<void> loadPageData();
 }

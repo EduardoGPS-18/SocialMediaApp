@@ -22,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    widget.presenter.loadUserData();
+    widget.presenter.loadPageData();
   }
 
   @override
@@ -64,17 +64,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     StreamBuilder<int>(
                         stream: widget.presenter.postsCount,
                         builder: (context, snapshot) {
-                          return Text.rich(
-                            TextSpan(
-                              text: "${snapshot.data!}",
-                              style: Theme.of(context).textTheme.headline6,
-                              children: const [
-                                TextSpan(
-                                  text: " posts",
-                                ),
-                              ],
-                            ),
-                          );
+                          if (snapshot.data != null) {
+                            return Text.rich(
+                              TextSpan(
+                                text: "${snapshot.data!}",
+                                style: Theme.of(context).textTheme.headline6,
+                                children: const [
+                                  TextSpan(
+                                    text: " posts",
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
                         }),
                   ],
                 ),
