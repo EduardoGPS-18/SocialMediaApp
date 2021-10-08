@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage(snapshot.data!.photoUrl),
+                            image: NetworkImage(snapshot.data!.photoUrl),
                           ),
                         ),
                       ),

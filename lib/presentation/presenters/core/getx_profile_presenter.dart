@@ -13,6 +13,7 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
   final GetImage localGetImage;
   final Validation validation;
   final LoadUser remoteLoadUser;
+  final SaveUserImage remoteSaveUserImage;
 
   File? _userImage;
 
@@ -23,7 +24,8 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
       required this.remoteGetPublishesByUserID,
       required this.localGetImage,
       required this.validation,
-      required this.remoteLoadUser});
+      required this.remoteLoadUser,
+      required this.remoteSaveUserImage});
 
   @override
   Future<void> loadPageData() async {
