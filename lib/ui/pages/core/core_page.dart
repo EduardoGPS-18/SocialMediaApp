@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../shared/shared.dart';
 import 'core.dart';
 
@@ -61,7 +62,11 @@ class _CorePageAppState extends State<CorePageApp> {
           backgroundColor: Theme.of(context).colorScheme.background,
           onTap: (index) {
             setState(() {
-              _currentIndexBottomNavigationBar = index;
+              if (index == 1) {
+                Navigator.of(context).pushNamed('/add-post');
+              } else {
+                _currentIndexBottomNavigationBar = index;
+              }
             });
           },
           currentIndex: _currentIndexBottomNavigationBar,
