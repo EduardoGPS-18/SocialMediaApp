@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_app/ui/components/components.dart';
 
 import '../../../shared/shared.dart';
+import '../../components/components.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({Key? key}) : super(key: key);

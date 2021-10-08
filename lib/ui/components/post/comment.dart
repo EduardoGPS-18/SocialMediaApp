@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+
+import '../../../shared/shared.dart';
 
 class Comment extends StatelessWidget {
   final Size size;
@@ -114,9 +115,11 @@ class Comment extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.more_horiz)),
+                        CustomShowModalBottomSheet(
+                            size: size, commentIsUser: true)
+                        // IconButton(
+                        //    onPressed: () {},
+                        //    icon: const Icon(Icons.more_horiz)),
                       ]),
                   const Text(
                     "Não preciso de muitos, preciso só dos melhores, preciso de você!",

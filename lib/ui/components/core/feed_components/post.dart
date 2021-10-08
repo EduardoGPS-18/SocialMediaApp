@@ -55,7 +55,7 @@ class _PostState extends State<Post> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(widget.image),
+                          image: AssetImage(widget.image),
                         ),
                       ),
                     ),
