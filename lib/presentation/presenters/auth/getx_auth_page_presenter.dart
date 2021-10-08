@@ -160,7 +160,7 @@ class GetxAuthPagePresenter extends GetxController
       await remoteLoginUser.loginUserWithEmailAndPassword(
         params: LoginUserParams(email: _email, password: _password),
       );
-      navigateTo.subject.add('/central-app-page');
+      navigateTo.subject.add('/core');
     } on FirebaseAuthenticationError catch (_) {
       handlingErrorsStreamController.subject
           .add(R.string.msgInvalidCredentials);
