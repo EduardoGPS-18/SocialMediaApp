@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../../../data/firebase/firebase.dart';
@@ -28,13 +29,7 @@ class GetxAuthPagePresenter extends GetxController
     required this.validation,
   });
 
-  final RxInt pageIndexStreamController = 0.obs;
   bool isLogin = true;
-  @override
-  void setPageIndex(int value) {
-    pageIndexStreamController.subject.add(value);
-    isLogin = value == 0;
-  }
 
   Rx<String> navigateTo = Rx<String>('');
   @override
@@ -43,9 +38,6 @@ class GetxAuthPagePresenter extends GetxController
   Rx<String> handlingErrorsStreamController = Rx<String>("");
   @override
   Stream<String> get handlingError => handlingErrorsStreamController.stream;
-
-  @override
-  Stream<int> get pageIndex => pageIndexStreamController.stream;
 
   Rx<File?> userImageStreamController = Rx<File?>(null);
   @override
@@ -160,7 +152,7 @@ class GetxAuthPagePresenter extends GetxController
       await remoteLoginUser.loginUserWithEmailAndPassword(
         params: LoginUserParams(email: _email, password: _password),
       );
-      navigateTo.subject.add('/central-app-page');
+      navigateTo.subject.add('/core');
     } on FirebaseAuthenticationError catch (_) {
       handlingErrorsStreamController.subject
           .add(R.string.msgInvalidCredentials);
@@ -197,4 +189,8 @@ class GetxAuthPagePresenter extends GetxController
       return false;
     }
   }
+
+  ValueNotifier<int> pageIndexNotifierController = ValueNotifier<int>(0);
+  @override
+  ValueNotifier<int> get pageIndexNotifier => pageIndexNotifierController;
 }
