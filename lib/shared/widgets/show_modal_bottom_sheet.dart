@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomShowModalBottomSheet extends StatefulWidget {
   Size size;
   bool commentIsUser;
@@ -23,7 +25,7 @@ class _CustomShowModalBottomSheetState
         widget.commentIsUser
             ? showModalBottomSheet(
                 // isScrollControlled: true,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(16.0),
                   ),
@@ -51,12 +53,40 @@ class _CustomShowModalBottomSheetState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
                         child: SizedBox(
                           width: widget.size.width * 08,
                           child: ElevatedButton(
-                            onPressed: () {},
-                            child: Text("Excluir"),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Icon(
+                                    Icons.warning,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    size: 40,
+                                  ),
+                                  content: const Text(
+                                    "Você deseja excluir?",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actionsAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: const Text("Não"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {},
+                                      child: const Text("Sim"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: const Text("Excluir"),
                           ),
                         ),
                       ),
@@ -67,8 +97,8 @@ class _CustomShowModalBottomSheetState
             : null;
       },
       icon: widget.commentIsUser
-          ? Icon(Icons.more_horiz)
-          : SizedBox(
+          ? const Icon(Icons.more_horiz)
+          : const SizedBox(
               height: 1,
               width: 1,
             ),
