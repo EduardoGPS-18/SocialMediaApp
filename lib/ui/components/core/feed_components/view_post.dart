@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
+import '../../../../shared/shared.dart';
 import '../../../../../../domain/entities/entities.dart';
-import '../../../../../../shared/widget/widget.dart';
-import 'content_components/publish_content.dart';
 import 'feed_components.dart';
-import 'footer_components/publish_footer.dart';
 
 class ViewPost extends StatefulWidget {
   final Size size;
@@ -52,8 +49,11 @@ class _ViewPostState extends State<ViewPost> {
               //   color: Colors.red,
               child: testSmimer.isEmpty
                   ? Shimmer.fromColors(
-                      baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
-                      highlightColor: Colors.grey[100]!,
+                      baseColor: Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withAlpha(60),
+                      highlightColor: Colors.grey.shade100,
                       child: Column(children: [
                         ListTile(
                           leading: Container(
@@ -84,7 +84,8 @@ class _ViewPostState extends State<ViewPost> {
                           height: 10,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: widget.size.width * 0.048),
+                          padding:
+                              EdgeInsets.only(left: widget.size.width * 0.048),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -134,8 +135,10 @@ class _ViewPostState extends State<ViewPost> {
                           builder: (context, snapshot) => PublishFooter(
                             size: widget.size,
                             onLikeClick: widget.onLikeClick,
-                            isLiked: widget.publish.uidOfWhoLikedIt.contains(snapshot.data!.uid),
-                            favoriteLength: widget.publish.uidOfWhoLikedIt.length,
+                            isLiked: widget.publish.uidOfWhoLikedIt
+                                .contains(snapshot.data!.uid),
+                            favoriteLength:
+                                widget.publish.uidOfWhoLikedIt.length,
                             commentLength: widget.publish.comments.length,
                             onCommentClick: widget.onCommentClick,
                           ),

@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
+import '../../../shared/shared.dart';
+import 'core.dart';
 
-import '../../../shared/widget/widget.dart';
-import '../../components/components.dart';
-import '../pages.dart';
-import 'page_viewer/page_view_pages/feed/feed_presenter.dart';
-import 'page_viewer/page_view_pages/page_view_pages.dart';
-
-class CentralPageApp extends StatefulWidget {
-  final HomePagePresenter presenter;
+class CorePageApp extends StatefulWidget {
+  final CorePresenter presenter;
   final PageController pageController = PageController();
   final FeedPresenter feedPresenter;
-  CentralPageApp({
+  CorePageApp({
     Key? key,
     required this.presenter,
     required this.feedPresenter,
   }) : super(key: key);
 
   @override
-  _CentralPageAppState createState() => _CentralPageAppState();
+  _CorePageAppState createState() => _CorePageAppState();
 }
 
-class _CentralPageAppState extends State<CentralPageApp> {
+class _CorePageAppState extends State<CorePageApp> {
   int _currentIndexBottomNavigationBar = 0;
 
   @override

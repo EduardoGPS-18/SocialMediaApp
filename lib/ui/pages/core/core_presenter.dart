@@ -1,6 +1,6 @@
 import '../../../domain/entities/entities.dart';
 
-abstract class HomePagePresenter {
+abstract class CorePresenter {
   Stream<List<PublishEntity>> get loadPublishesByUserID;
   Stream<List<PublishEntity>> get loadRecentPublishes;
   Stream<UserEntity> get loadUserData;

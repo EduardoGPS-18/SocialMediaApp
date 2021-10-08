@@ -1,8 +1,8 @@
+import '../../../../ui/pages/pages.dart';
 import '../../../../presentation/presenters/presenters.dart';
-import '../../../../ui/pages/home/home.dart';
 import '../../factory.dart';
 
-HomePagePresenter makeHomePagePresenter() => GetxCentralAppPagePresenter(
+CorePresenter makeCorePresenter() => GetxCorePresenter(
       localGetUserId: makeLocalGetUserId(),
       remoteAddComment: makeAddComment(),
       remoteDeleteComment: makeDeleteComment(),

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/auth',
       routes: {
         '/auth': (context) => makeAuthPage(),
-        '/central-app-page': (context) => makeCentralAppPage(),
+        '/core': (context) => makeCorePage(),
       },
     );
   }
