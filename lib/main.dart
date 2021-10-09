@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'main/factory/factory.dart';
+import 'main/factory/pages/post/post.dart';
 import 'ui/components/components.dart';
 
 void main() async {
@@ -29,8 +30,10 @@ class MyApp extends StatelessWidget {
       transitionDuration: const Duration(milliseconds: 400),
       initialRoute: '/auth',
       routes: {
-        '/auth': (context) => makeAuthPage(),
-        '/core': (context) => makeCorePage(),
+        '/post-detail': (_) => makePostPage(),
+        '/add-post': (_) => makeCreatePostPage(),
+        '/auth': (_) => makeAuthPage(),
+        '/core': (_) => makeCorePage(),
       },
     );
   }
