@@ -1,7 +1,8 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import '../../../data/firebase/firebase.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../protocols/protocols.dart';
-
 import '../../../domain/entities/publish_entity.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/auth/auth.dart';
@@ -81,13 +82,19 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   Future<void> addPublish() async {
     final userId = localGetUserId.getUserId();
     if (userId == null) return;
-
-    remoteAddPublish.addPublish(
-      params: AddPublishParams(
-        content: _publishContent,
-        userId: userId,
-      ),
-    );
+    try {
+      await remoteAddPublish.addPublish(
+        params: AddPublishParams(
+          content: _publishContent,
+          userId: userId,
+        ),
+      );
+      _publishContent = '';
+      publishController.clear();
+      _validateForm();
+    } on FirebaseCloudFirestoreError catch (_) {
+      rethrow;
+    }
   }
 
   void _validateForm() {
@@ -111,4 +118,8 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
         return UIError.noError;
     }
   }
+
+  TextEditingController publishController = TextEditingController();
+  @override
+  TextEditingController get publishTextFieldController => publishController;
 }

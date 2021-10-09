@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
-
 import '../../../../../../domain/entities/entities.dart';
 import '../../../../shared/shared.dart';
 import 'feed_components.dart';

@@ -1,5 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-
+import '../../../data/firebase/firebase.dart';
 import '../../../domain/entities/comment_entity.dart';
 import '../../../domain/entities/publish_entity.dart';
 import '../../../domain/entities/user_entity.dart';
@@ -51,7 +52,8 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   }
 
   @override
-  Stream<PublishEntity> getPublishById({required String id}) => remoteLoadPublish.findPublishById(publishId: id);
+  Stream<PublishEntity> getPublishById({required String id}) =>
+      remoteLoadPublish.findPublishById(publishId: id);
 
   @override
   Stream<UserEntity> loadUserById({required String id}) {
@@ -62,7 +64,16 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   Future<void> addComment({required String publishId}) async {
     var userId = localGetUserId.getUserId();
     if (userId == null) throw "Error";
-    await remoteAddComment.addComment(params: AddCommentParams(content: _commentContent, publishId: publishId, userId: userId));
+    try {
+      await remoteAddComment.addComment(
+          params: AddCommentParams(
+              content: _commentContent, publishId: publishId, userId: userId));
+      _commentContent = '';
+      commentController.clear();
+      _validateForm();
+    } on FirebaseCloudFirestoreError catch (_) {
+      rethrow;
+    }
   }
 
   @override
@@ -73,7 +84,8 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   }
 
   void _validateForm() {
-    final isValid = _commentContent.isNotEmpty && errorStreamController.value == UIError.noError;
+    final isValid = _commentContent.isNotEmpty &&
+        errorStreamController.value == UIError.noError;
     isValidCommentStreamController.subject.add(isValid);
   }
 
@@ -100,11 +112,22 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
 
   @override
   Future<void> likeClick({required String publishId}) async {
-    final publish = await remoteLoadPublish.findPublishById(publishId: publishId).first;
-    final currentUser = await remoteLoadUser.loadUserByUID(uid: localGetUserId.getUserId() ?? "").first;
+    final publish =
+        await remoteLoadPublish.findPublishById(publishId: publishId).first;
+    final currentUser = await remoteLoadUser
+        .loadUserByUID(uid: localGetUserId.getUserId() ?? "")
+        .first;
     final currentUserId = currentUser.uid;
     publish.uidOfWhoLikedIt.contains(currentUserId)
-        ? await remoteUnlikePublish.unlikePublish(params: UnlikePublishParams(userId: currentUserId, publishId: publishId))
-        : await remoteLikePublish.likePublish(params: LikePublishParams(userId: currentUserId, publishId: publishId));
+        ? await remoteUnlikePublish.unlikePublish(
+            params: UnlikePublishParams(
+                userId: currentUserId, publishId: publishId))
+        : await remoteLikePublish.likePublish(
+            params:
+                LikePublishParams(userId: currentUserId, publishId: publishId));
   }
+
+  TextEditingController commentController = TextEditingController();
+  @override
+  TextEditingController get commentTextFieldController => commentController;
 }

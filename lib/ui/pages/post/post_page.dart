@@ -88,26 +88,32 @@ class _PostPageState extends State<PostPage> {
                       StreamBuilder<UserEntity>(
                         stream: widget.presenter.currentUser,
                         builder: (context, userSnapshot) {
-                          return StreamBuilder<bool>(
-                            stream: widget.presenter.isValidComment,
-                            builder: (context, isValidSnapshot) {
-                              return Post(
-                                image: userSnapshot.data?.photoUrl ?? "",
-                                hintTextTextField: "Adicione uma comentário",
-                                functionBottonTextField: () {},
-                                functionImage: () {},
-                                onTextEditing: widget.presenter.validateComment,
-                                onEditingComplete: isValidSnapshot.hasData &&
-                                        isValidSnapshot.data == true
-                                    ? () async => await widget.presenter
-                                        .addComment(
-                                            publishId:
-                                                publishSnapshot.data?.uid ?? "")
-                                    : null,
-                                size: size,
-                              );
-                            },
-                          );
+                          if (userSnapshot.hasData) {
+                            return StreamBuilder<bool>(
+                              stream: widget.presenter.isValidComment,
+                              builder: (context, isValidSnapshot) {
+                                return Post(
+                                  image: userSnapshot.data!.photoUrl,
+                                  hintTextTextField: "Adicione um comentário",
+                                  functionButtonTextField: () =>
+                                      (isValidSnapshot.hasData &&
+                                              isValidSnapshot.data!)
+                                          ? widget.presenter
+                                              .addComment(publishId: publishId)
+                                          : null,
+                                  functionImage: () {},
+                                  onTextEditing:
+                                      widget.presenter.validateComment,
+                                  isValid: isValidSnapshot.data ?? false,
+                                  size: size,
+                                  textFieldController: widget
+                                      .presenter.commentTextFieldController,
+                                );
+                              },
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
                         },
                       ),
                     ],

@@ -21,7 +21,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    bool isFocul = _textFocus.hasFocus;
+    bool isFocus = _textFocus.hasFocus;
 
     void addPublishAndReturn() {
       widget.presenter.addPublish();
@@ -44,7 +44,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     padding: EdgeInsets.all(size.width * 0.02),
                     child: ListTile(
                       title: Text(
-                        snapshot.data?.name ?? "",
+                        snapshot.data!.name,
                       ),
                       leading: Container(
                         width: size.width * 0.13,
@@ -53,7 +53,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(snapshot.data?.photoUrl ?? ""),
+                            image: NetworkImage(snapshot.data!.photoUrl),
                           ),
                         ),
                       ),
@@ -66,7 +66,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
                         maxHeight:
-                            isFocul ? size.height * 0.285 : size.height * 0.69,
+                            isFocus ? size.height * 0.285 : size.height * 0.69,
                       ),
                       child: TextFormField(
                         focusNode: _textFocus,
