@@ -48,7 +48,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
               padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxHeight: isFocul ? size.height * 0.285 : size.height,
+                  maxHeight: isFocul ? size.height * 0.285 : size.height * 0.69,
                 ),
                 child: TextFormField(
                   focusNode: _textFocus,
@@ -66,19 +66,28 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 ),
               ),
             ),
-            // FormField(builder: ()=>)
           ],
         ),
-        bottomSheet: SizedBox(
-          height: 60,
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Text(
-              "Publicar",
-              style: Theme.of(context).textTheme.headline6?.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
+        bottomSheet: InkWell(
+          onTap: () {},
+          child: Container(
+            height: 60,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+            child: Center(
+              child: Text(
+                "Publicar",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline6?.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
+              ),
             ),
           ),
         ),
