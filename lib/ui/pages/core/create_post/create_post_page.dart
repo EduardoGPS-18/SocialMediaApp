@@ -18,21 +18,23 @@ class CreatePostPage extends StatefulWidget {
 
 class _CreatePostPageState extends State<CreatePostPage> {
   final FocusNode _textFocus = FocusNode();
+
+  void addPublishAndReturn() {
+    widget.presenter.addPublish();
+
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.presenter.updateUserId();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     bool isFocus = _textFocus.hasFocus;
-
-    void addPublishAndReturn() {
-      widget.presenter.addPublish();
-      widget.presenter.errorStream.listen((event) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(event),
-          backgroundColor: Colors.red,
-        ));
-      });
-      Navigator.of(context).pop();
-    }
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
@@ -40,62 +42,64 @@ class _CreatePostPageState extends State<CreatePostPage> {
         appBar: const CustomAppBar(
           text: "Criar postagem",
         ),
-        body: StreamBuilder<UserEntity>(
-          stream: widget.presenter.user,
-          builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data != null) {
-              return Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.02),
-                    child: ListTile(
-                      title: Text(
-                        snapshot.data!.name,
-                      ),
-                      leading: Container(
-                        width: size.width * 0.13,
-                        height: size.width * 0.13,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(snapshot.data!.photoUrl),
+        body: SafeArea(
+          child: StreamBuilder<UserEntity>(
+            stream: widget.presenter.user,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(size.width * 0.02),
+                      child: ListTile(
+                        title: Text(
+                          snapshot.data!.name,
+                        ),
+                        leading: Container(
+                          width: size.width * 0.13,
+                          height: size.width * 0.13,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(snapshot.data!.photoUrl),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  CustomDivider(height: 0.002, size: size),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: isFocus ? size.height * 0.285 : size.height * 0.69,
-                      ),
-                      child: TextFormField(
-                        focusNode: _textFocus,
-                        style: const TextStyle(
-                          fontSize: 20,
+                    CustomDivider(height: 0.002, size: size),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: isFocus ? size.height * 0.285 : size.height * 0.69,
                         ),
-                        minLines: 2,
-                        onChanged: widget.presenter.validPublishContent,
-                        maxLines: 10, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
-                        keyboardType: TextInputType.multiline,
-                        decoration: const InputDecoration(
-                          hintStyle: TextStyle(fontSize: 20),
-                          hintText: "Adicione o texto da sua postagem",
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
+                        child: TextFormField(
+                          focusNode: _textFocus,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                          minLines: 2,
+                          onChanged: widget.presenter.validPublishContent,
+                          maxLines: 10,
+                          keyboardType: TextInputType.multiline,
+                          decoration: const InputDecoration(
+                            hintStyle: TextStyle(fontSize: 20),
+                            hintText: "Adicione o texto da sua postagem",
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
+                  ],
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
         ),
         bottomSheet: SizedBox(
           height: 60,

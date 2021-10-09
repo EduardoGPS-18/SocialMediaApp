@@ -11,4 +11,6 @@ abstract class CreatePostPresenter {
   Stream<bool> get isValidPublish;
   Stream<UIError> get postErrorStream;
   Stream<String> get errorStream;
+
+  void updateUserId();
 }

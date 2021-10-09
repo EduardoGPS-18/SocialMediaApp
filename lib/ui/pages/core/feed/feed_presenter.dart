@@ -17,6 +17,7 @@ abstract class FeedPresenter {
 
   TextEditingController get publishTextFieldController;
 
+  void updateUserId();
   void likeClick({required String publishId});
   void validPublishContent(String value);
 }

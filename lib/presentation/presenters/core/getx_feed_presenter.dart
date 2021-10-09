@@ -1,17 +1,19 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../../../data/firebase/firebase.dart';
-import '../../../ui/helpers/helpers.dart';
-import '../../protocols/protocols.dart';
+
 import '../../../domain/entities/publish_entity.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/auth/auth.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
+import '../../protocols/protocols.dart';
+import '../shared/shared.dart';
 
-class GetxFeedPresenter extends GetxController implements FeedPresenter {
+class GetxFeedPresenter extends GetxController with UpdateUserId implements FeedPresenter {
   AddPublish remoteAddPublish;
   LoadUser remoteLoadUser;
+  @override
   GetUserId localGetUserId;
   LoadRecentPublishes remoteLoadRecentPublishes;
   LikePublish remoteLikePublish;
@@ -22,18 +24,20 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
 
   Rx<String> userCommunicateStreamController = Rx("");
   @override
-  Stream<String> get userCommunicateStream =>
-      userCommunicateStreamController.stream;
+  Stream<String> get userCommunicateStream => userCommunicateStreamController.stream;
   Rx<List<PublishEntity>> publishStreamController = Rx([]);
 
   Validation validation;
 
   String _publishContent = "";
+  String? _userId;
+  @override
+  String? get userId => _userId;
+  @override
+  set userId(String? userId) => _userId = userId;
 
   @override
-  Stream<List<PublishEntity>> get publishStream =>
-      remoteLoadRecentPublishes.getPublishesByDate(
-          date: DateTime.now().subtract(const Duration(days: 7)));
+  Stream<List<PublishEntity>> get publishStream => remoteLoadRecentPublishes.getPublishesByDate(date: DateTime.now().subtract(const Duration(days: 7)));
 
   GetxFeedPresenter({
     required this.remoteLoadUser,
@@ -48,16 +52,22 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   });
 
   @override
-  Stream<UserEntity> get user =>
-      remoteLoadUser.loadUserByUID(uid: localGetUserId.getUserId() ?? "");
+  Stream<UserEntity> get user {
+    updateUserId();
+    return remoteLoadUser.loadUserByUID(uid: _userId!);
+  }
 
   @override
-  Stream<UserEntity> loadUserEntityById({required String uid}) =>
-      remoteLoadUser.loadUserByUID(uid: uid);
+  Stream<UserEntity> loadUserEntityById({required String uid}) => remoteLoadUser.loadUserByUID(uid: uid);
 
-  Rx<UIError> errorStreamController = Rx(UIError.noError);
+  Rx<UIError> publishErrorStreamController = Rx(UIError.noError);
   @override
-  Stream<UIError> get errorStream => errorStreamController.stream;
+  Stream<UIError> get publishErrorStream => publishErrorStreamController.stream;
+
+  @override
+  Rx<String> errorStreamController = Rx("");
+  @override
+  Stream<String> get errorStream => errorStreamController.stream;
 
   Rx<bool> isValidPublishStreamController = Rx(false);
   @override
@@ -66,47 +76,45 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   @override
   void validPublishContent(String value) {
     _publishContent = value;
-    errorStreamController.value = _validateField('publish_content');
+    publishErrorStreamController.value = _validateField('publish_content');
     _validateForm();
   }
 
   @override
   void likeClick({required String publishId}) async {
-    final publish =
-        await remoteLoadPublish.findPublishById(publishId: publishId).first;
-    final currentUser = await (user).first;
-    final currentUserId = currentUser.uid;
-    publish.uidOfWhoLikedIt.contains(currentUserId)
-        ? await remoteUnlikePublish.unlikePublish(
-            params: UnlikePublishParams(
-                userId: currentUserId, publishId: publishId))
-        : await remoteLikePublish.likePublish(
-            params:
-                LikePublishParams(userId: currentUserId, publishId: publishId));
+    try {
+      updateUserId();
+      final publish = await remoteLoadPublish.findPublishById(publishId: publishId).first;
+      final currentUser = await (user).first;
+      final currentUserId = currentUser.uid;
+      publish.uidOfWhoLikedIt.contains(currentUserId)
+          ? await remoteUnlikePublish.unlikePublish(params: UnlikePublishParams(userId: currentUserId, publishId: publishId))
+          : await remoteLikePublish.likePublish(params: LikePublishParams(userId: currentUserId, publishId: publishId));
+    } catch (e) {
+      errorStreamController.subject.add(R.string.msgUnexpectedError);
+    }
   }
 
   @override
   Future<void> addPublish() async {
-    final userId = localGetUserId.getUserId();
-    if (userId == null) return;
     try {
+      updateUserId();
       await remoteAddPublish.addPublish(
         params: AddPublishParams(
           content: _publishContent,
-          userId: userId,
+          userId: _userId!,
         ),
       );
       _publishContent = '';
       publishController.clear();
       _validateForm();
-    } on FirebaseCloudFirestoreError catch (_) {
-      rethrow;
+    } catch (_) {
+      errorStreamController.subject.add(R.string.msgUnexpectedError);
     }
   }
 
   void _validateForm() {
-    final isValid = _publishContent.isNotEmpty &&
-        errorStreamController.value == UIError.noError;
+    final isValid = _publishContent.isNotEmpty && publishErrorStreamController.value == UIError.noError;
     isValidPublishStreamController.subject.add(isValid);
   }
 
@@ -129,10 +137,13 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   TextEditingController publishController = TextEditingController();
   @override
   TextEditingController get publishTextFieldController => publishController;
+  @override
   Future<void> removePublish({required String publishId}) async {
     try {
       await deletePublish.deletePublish(publishId: publishId);
       userCommunicateStreamController.subject.add(R.string.successOnDelete);
-    } catch (_) {}
+    } catch (_) {
+      errorStreamController.subject.add(R.string.msgUnexpectedError);
+    }
   }
 }

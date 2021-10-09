@@ -9,12 +9,7 @@ class CorePageApp extends StatefulWidget {
   final FeedPresenter feedPresenter;
   final ProfilePresenter profilePresenter;
 
-  CorePageApp(
-      {Key? key,
-      required this.presenter,
-      required this.feedPresenter,
-      required this.profilePresenter})
-      : super(key: key);
+  CorePageApp({Key? key, required this.presenter, required this.feedPresenter, required this.profilePresenter}) : super(key: key);
 
   @override
   _CorePageAppState createState() => _CorePageAppState();

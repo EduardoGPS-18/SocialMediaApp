@@ -6,22 +6,40 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
+import '../shared/shared.dart';
 
-class GetxCreatePostPresenter extends GetxController implements CreatePostPresenter {
+class GetxCreatePostPresenter extends GetxController with UpdateUserId implements CreatePostPresenter {
   AddPublish remoteAddPublish;
+
+  @override
   GetUserId localGetUserId;
   LoadUser remoteLoadUser;
-
   Validation validation;
+
+  String? _userId;
+  @override
+  set userId(String? id) {
+    _userId = id;
+  }
+
+  @override
+  String get userId {
+    updateUserId();
+    return _userId!;
+  }
 
   String _publishContent = "";
 
-  Rx<UIError> errorStreamController = Rx(UIError.noError);
+  Rx<UIError> postErrorStreamController = Rx(UIError.noError);
   @override
-  Stream<UIError> get errorStream => errorStreamController.stream;
+  Stream<UIError> get postErrorStream => postErrorStreamController.stream;
   Rx<bool> isValidPublishStreamController = Rx(false);
   @override
   Stream<bool> get isValidPublish => isValidPublishStreamController.stream;
+  @override
+  Rx<String> errorStreamController = Rx("");
+  @override
+  Stream<String> get errorStream => errorStreamController.stream;
 
   GetxCreatePostPresenter({
     required this.remoteAddPublish,
@@ -32,35 +50,35 @@ class GetxCreatePostPresenter extends GetxController implements CreatePostPresen
 
   @override
   Future<void> addPublish() async {
-    final userId = localGetUserId.getUserId();
-    if (userId == null) return;
+    try {
+      updateUserId();
 
-    remoteAddPublish.addPublish(
-      params: AddPublishParams(
-        content: _publishContent,
-        userId: userId,
-      ),
-    );
+      await remoteAddPublish.addPublish(
+        params: AddPublishParams(
+          content: _publishContent,
+          userId: _userId!,
+        ),
+      );
+    } catch (e) {
+      errorStreamController.subject.add(R.string.msgUnexpectedError);
+    }
   }
 
   @override
-  Stream<UserEntity> get user {
-    final userId = localGetUserId.getUserId();
-    if (userId == null) {
-      throw "Error!";
-    }
-    return remoteLoadUser.loadUserByUID(uid: userId);
+  Stream<UserEntity>? get user {
+    updateUserId();
+    return remoteLoadUser.loadUserByUID(uid: _userId!);
   }
 
   @override
   void validPublishContent(String value) {
     _publishContent = value;
-    errorStreamController.value = _validateField('publish_content');
+    postErrorStreamController.value = _validateField('publish_content');
     _validateForm();
   }
 
   void _validateForm() {
-    final isValid = _publishContent.isNotEmpty && errorStreamController.value == UIError.noError;
+    final isValid = _publishContent.isNotEmpty && postErrorStreamController.value == UIError.noError;
     isValidPublishStreamController.subject.add(isValid);
   }
 

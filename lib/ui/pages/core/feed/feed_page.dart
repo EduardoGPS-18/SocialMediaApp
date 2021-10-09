@@ -23,6 +23,7 @@ class _FeedPageState extends State<FeedPage> {
   @override
   void initState() {
     super.initState();
+    widget.presenter.updateUserId();
     widget.presenter.userCommunicateStream.listen((event) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -60,19 +61,20 @@ class _FeedPageState extends State<FeedPage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
                   return StreamBuilder<bool>(
-                      stream: widget.presenter.isValidPublish,
-                      builder: (context, isValidSnapshot) {
-                        return Post(
-                          image: snapshot.data != null ? snapshot.data!.photoUrl : '',
-                          hintTextTextField: "Adicione uma postagem",
-                          functionButtonTextField: widget.presenter.addPublish,
-                          functionImage: () {},
-                          size: widget.size,
-                          onTextEditing: widget.presenter.validPublishContent,
-                          isValid: isValidSnapshot.data ?? false,
-                          textFieldController: widget.presenter.publishTextFieldController,
-                        );
-                      });
+                    stream: widget.presenter.isValidPublish,
+                    builder: (context, isValidSnapshot) {
+                      return Post(
+                        image: snapshot.data != null ? snapshot.data!.photoUrl : '',
+                        hintTextTextField: "Adicione uma postagem",
+                        functionButtonTextField: widget.presenter.addPublish,
+                        functionImage: () {},
+                        size: widget.size,
+                        onTextEditing: widget.presenter.validPublishContent,
+                        isValid: isValidSnapshot.data ?? false,
+                        textFieldController: widget.presenter.publishTextFieldController,
+                      );
+                    },
+                  );
                 }
                 return const CircleAvatar();
               },
