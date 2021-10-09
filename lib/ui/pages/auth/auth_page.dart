@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:social_media_app/ui/components/app_images.dart';
-
+import '../../components/app_images.dart';
 import '../../components/components.dart';
 import '../../helpers/errors/errors.dart';
 import 'auth.dart';
@@ -154,7 +152,7 @@ class _AuthPageState extends State<AuthPage> {
                             onChanged: presenter.validateEmail,
                             size: size,
                             labelText: "E-mail",
-                            prefixIcon: Icons.email,
+                            prefixIcon: Icons.email_outlined,
                           );
                         },
                       ),
@@ -172,7 +170,7 @@ class _AuthPageState extends State<AuthPage> {
                           size: size,
                           labelText: "Senha",
                           onChanged: presenter.validatePassword,
-                          prefixIcon: Icons.lock_sharp,
+                          prefixIcon: Icons.lock_outline_sharp,
                         );
                       },
                     ),
@@ -277,7 +275,7 @@ class _AuthPageState extends State<AuthPage> {
                               size: size,
                               labelText: "Nome",
                               onChanged: presenter.validateName,
-                              prefixIcon: Icons.person,
+                              prefixIcon: Icons.person_outline,
                             );
                           }),
                     ),
@@ -299,7 +297,7 @@ class _AuthPageState extends State<AuthPage> {
                               size: size,
                               labelText: "E-mail",
                               onChanged: presenter.validateEmail,
-                              prefixIcon: Icons.email,
+                              prefixIcon: Icons.email_outlined,
                             ),
                           );
                         }),
@@ -320,7 +318,7 @@ class _AuthPageState extends State<AuthPage> {
                             segureText: true,
                             size: size,
                             labelText: "Senha",
-                            prefixIcon: Icons.lock_sharp,
+                            prefixIcon: Icons.lock_outline_sharp,
                           ),
                         );
                       },
@@ -338,7 +336,7 @@ class _AuthPageState extends State<AuthPage> {
                             size: size,
                             labelText: "Repita a senha",
                             onChanged: presenter.validateConfirmPassword,
-                            prefixIcon: Icons.lock_sharp,
+                            prefixIcon: Icons.lock_outline_sharp,
                           );
                         }),
                     Padding(
