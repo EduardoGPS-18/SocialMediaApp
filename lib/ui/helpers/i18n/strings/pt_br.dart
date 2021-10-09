@@ -43,4 +43,10 @@ class PtBr implements Translation {
 
   @override
   String get successOnOperation => 'Operação concluida com sucesso!';
+  @override
+  String get empty => 'Sem operações realizadas';
+  @override
+  String get successOnDelete => 'Deletado com sucesso!';
+  @override
+  String get successOnAdd => 'Adicionado com sucesso!';
 }

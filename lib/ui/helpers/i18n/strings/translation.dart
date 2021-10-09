@@ -21,4 +21,7 @@ abstract class Translation {
   String get wait;
 
   String get successOnOperation;
+  String get empty;
+  String get successOnAdd;
+  String get successOnDelete;
 }

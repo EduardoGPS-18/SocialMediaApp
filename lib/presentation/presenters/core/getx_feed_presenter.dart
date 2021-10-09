@@ -4,6 +4,7 @@ import '../../../domain/entities/publish_entity.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/auth/auth.dart';
 import '../../../domain/usecases/usecases.dart';
+import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 
 class GetxFeedPresenter extends GetxController implements FeedPresenter {
@@ -53,7 +54,7 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   Future<void> removePublish({required String publishId}) async {
     try {
       await deletePublish.deletePublish(publishId: publishId);
-      userCommunicateStreamController.subject.add("Removida com sucesso!");
+      userCommunicateStreamController.subject.add(R.string.successOnDelete);
     } catch (_) {}
   }
 }
