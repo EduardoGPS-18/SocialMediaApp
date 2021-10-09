@@ -9,7 +9,7 @@ import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
 import '../shared/shared.dart';
 
-class GetxProfilePresenter extends GetxController with UpdateUserId implements ProfilePresenter {
+class GetxProfilePresenter extends GetxController with UpdateUserId, NavigationImpl implements ProfilePresenter {
   @override
   final GetUserId localGetUserId;
   final LoadPublishesByUserID remoteGetPublishesByUserID;

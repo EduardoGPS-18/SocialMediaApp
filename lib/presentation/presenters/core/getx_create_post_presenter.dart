@@ -8,7 +8,7 @@ import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
 import '../shared/shared.dart';
 
-class GetxCreatePostPresenter extends GetxController with UpdateUserId implements CreatePostPresenter {
+class GetxCreatePostPresenter extends GetxController with UpdateUserId, NavigationImpl implements CreatePostPresenter {
   AddPublish remoteAddPublish;
 
   @override

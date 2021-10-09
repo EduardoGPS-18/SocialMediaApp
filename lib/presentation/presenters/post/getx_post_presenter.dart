@@ -13,7 +13,7 @@ import '../../../ui/pages/post/post_presenter.dart';
 import '../../protocols/protocols.dart';
 import '../shared/shared.dart';
 
-class GetxPostPresenter extends GetxController with UpdateUserId implements PostPresenter {
+class GetxPostPresenter extends GetxController with UpdateUserId, NavigationImpl implements PostPresenter {
   LoadUser remoteLoadUser;
   @override
   GetUserId localGetUserId;
