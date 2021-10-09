@@ -40,4 +40,7 @@ class PtBr implements Translation {
   String get signUp => 'Cadastrar';
   @override
   String get wait => 'Aguarde...';
+
+  @override
+  String get successOnOperation => 'Operação concluida com sucesso!';
 }

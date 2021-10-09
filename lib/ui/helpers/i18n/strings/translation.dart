@@ -19,4 +19,6 @@ abstract class Translation {
   String get reload;
   String get signUp;
   String get wait;
+
+  String get successOnOperation;
 }
