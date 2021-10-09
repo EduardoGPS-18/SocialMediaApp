@@ -34,13 +34,15 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     try {
       updateUserId();
 
-      final posts = await remoteGetPublishesByUserID.getPublishesByUserID(userId: _userId);
+      final posts = await remoteGetPublishesByUserID.getPublishesByUserID(
+          userId: _userId);
       postsCountController.value = posts.length;
 
       final userData = await remoteLoadUser.loadUserByUID(uid: _userId).first;
       userDataController.value = userData;
     } on FirebaseCloudFirestoreError catch (_) {
-      handlingErrorsStreamController.subject.add(R.string.msgInvalidCredentials);
+      handlingErrorsStreamController.subject
+          .add(R.string.msgInvalidCredentials);
     } catch (_) {
       handlingErrorsStreamController.subject.add("Ocorreu um erro!");
     }
@@ -59,7 +61,8 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     _userId = localGetUserId.getUserId() ?? '';
   }
 
-  Rx<UserEntity> userDataController = const UserEntity(uid: '', email: '', name: '', photoUrl: '').obs;
+  Rx<UserEntity> userDataController =
+      const UserEntity(uid: '', email: '', name: '', photoUrl: '').obs;
   @override
   Stream<UserEntity> get userData => userDataController.stream;
 
@@ -70,8 +73,9 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     userImageStreamController.subject.add(image);
     var error = _validateField('image');
     _userImageErrorStreamController.value = _validateField('image');
-    if (error == UIError.noError) {
-      // remoteSaveUserImage.saveUserImage(userId: userId, userImage: userImage);
+    if (error == UIError.noError && _userImage != null) {
+      remoteSaveUserImage.saveUserImage(
+          userId: _userId, userImage: _userImage!);
     }
   }
 
