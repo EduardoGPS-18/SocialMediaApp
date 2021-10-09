@@ -73,16 +73,20 @@ class _FeedPageState extends State<FeedPage> {
                 return ListView.builder(
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: snapshot.data?.length,
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return ViewPost(
                       size: widget.size,
-                      publishUser: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
+                      publishUser: widget.presenter.loadUserEntityById(
+                          uid: snapshot.data![index].userId),
                       publish: snapshot.data![index],
-                      onLikeClick: () => widget.presenter.likeClick(publishId: snapshot.data![index].uid),
+                      onLikeClick: () => widget.presenter
+                          .likeClick(publishId: snapshot.data![index].uid),
                       onUserImageClick: () {},
-                      onContentClick: () => navigateToPostPage(publishId: snapshot.data?[index].uid ?? ""),
-                      onCommentClick: () => navigateToPostPage(publishId: snapshot.data?[index].uid ?? ""),
+                      onContentClick: () => navigateToPostPage(
+                          publishId: snapshot.data![index].uid),
+                      onCommentClick: () => navigateToPostPage(
+                          publishId: snapshot.data![index].uid),
                       currentUser: widget.presenter.user,
                     );
                   },
