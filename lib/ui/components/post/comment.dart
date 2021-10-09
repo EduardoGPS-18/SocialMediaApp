@@ -40,8 +40,7 @@ class Comment extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image:
-                              NetworkImage(userSnapshot.data?.photoUrl ?? ""),
+                          image: NetworkImage(userSnapshot.data!.photoUrl),
                         ),
                       ),
                     ),
@@ -54,7 +53,7 @@ class Comment extends StatelessWidget {
                             constraints:
                                 BoxConstraints(maxWidth: size.width * 0.6),
                             child: Text(
-                              userSnapshot.data?.name ?? "",
+                              userSnapshot.data!.name,
                               overflow: TextOverflow.ellipsis,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
@@ -84,9 +83,9 @@ class Comment extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: size.height * 0.02),
                   child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text("$commentDate"),
-                  ),
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                          "${commentDate.day}/${commentDate.month}/${commentDate.year} - ${commentDate.hour}:${commentDate.minute}")),
                 ),
               ],
             );
