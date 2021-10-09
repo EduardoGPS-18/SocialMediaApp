@@ -10,7 +10,8 @@ abstract class FeedPresenter {
 
   Stream<bool> get isValidPublish;
   Stream<String> get userCommunicateStream;
-  Stream<UIError> get errorStream;
+  Stream<UIError> get publishErrorStream;
+  Stream<String> get errorStream;
   Stream<UserEntity> get user;
   Stream<List<PublishEntity>> get publishStream;
 

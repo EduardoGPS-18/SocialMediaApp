@@ -25,6 +25,12 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
     void addPublishAndReturn() {
       widget.presenter.addPublish();
+      widget.presenter.errorStream.listen((event) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(event),
+          backgroundColor: Colors.red,
+        ));
+      });
       Navigator.of(context).pop();
     }
 
@@ -61,12 +67,10 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                   CustomDivider(height: 0.002, size: size),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
                     child: ConstrainedBox(
                       constraints: BoxConstraints(
-                        maxHeight:
-                            isFocus ? size.height * 0.285 : size.height * 0.69,
+                        maxHeight: isFocus ? size.height * 0.285 : size.height * 0.69,
                       ),
                       child: TextFormField(
                         focusNode: _textFocus,
@@ -75,8 +79,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
                         ),
                         minLines: 2,
                         onChanged: widget.presenter.validPublishContent,
-                        maxLines:
-                            10, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
+                        maxLines: 10, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(
                           hintStyle: TextStyle(fontSize: 20),
@@ -102,11 +105,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             stream: widget.presenter.isValidPublish,
             builder: (context, snapshot) {
               return ElevatedButton(
-                onPressed: snapshot.hasData &&
-                        snapshot.data != null &&
-                        snapshot.data == true
-                    ? addPublishAndReturn
-                    : null,
+                onPressed: snapshot.hasData && snapshot.data != null && snapshot.data == true ? addPublishAndReturn : null,
                 child: Text(
                   "Publicar",
                   style: Theme.of(context).textTheme.headline6?.copyWith(

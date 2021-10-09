@@ -32,6 +32,15 @@ class _FeedPageState extends State<FeedPage> {
         ),
       );
     });
+    widget.presenter.errorStream.listen((event) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(event),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 5),
+        ),
+      );
+    });
   }
 
   void navigateToPostPage({required String publishId}) {
@@ -54,17 +63,14 @@ class _FeedPageState extends State<FeedPage> {
                       stream: widget.presenter.isValidPublish,
                       builder: (context, isValidSnapshot) {
                         return Post(
-                          image: snapshot.data != null
-                              ? snapshot.data!.photoUrl
-                              : '',
+                          image: snapshot.data != null ? snapshot.data!.photoUrl : '',
                           hintTextTextField: "Adicione uma postagem",
                           functionButtonTextField: widget.presenter.addPublish,
                           functionImage: () {},
                           size: widget.size,
                           onTextEditing: widget.presenter.validPublishContent,
                           isValid: isValidSnapshot.data ?? false,
-                          textFieldController:
-                              widget.presenter.publishTextFieldController,
+                          textFieldController: widget.presenter.publishTextFieldController,
                         );
                       });
                 }
