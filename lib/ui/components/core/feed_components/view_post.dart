@@ -56,6 +56,7 @@ class _ViewPostState extends State<ViewPost> {
                                 publishUser: snapshot.data!,
                                 onUserImageClick: () {},
                                 size: widget.size,
+                                onConfirmDelete: widget.onConfirmDelete,
                               );
                             }
                             return const Center();
