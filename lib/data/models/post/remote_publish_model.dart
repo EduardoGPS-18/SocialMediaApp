@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import '../../../domain/entities/entities.dart';
-import 'remote_comment_model.dart';
 
 class RemotePublishModel {
   final String? userId;
   final String? uid;
-  final List<RemoteCommentModel>? comments;
+  final int? commentsCount;
   final List<String>? uidOfWhoLikedIt;
   final String? content;
   final DateTime? createdAt;
@@ -14,21 +13,21 @@ class RemotePublishModel {
   RemotePublishModel({
     this.userId,
     this.uid,
-    this.comments,
+    this.commentsCount,
     this.uidOfWhoLikedIt,
     this.content,
     this.createdAt,
   });
 
   factory RemotePublishModel.toSave({required String content, required String userId}) {
-    return RemotePublishModel(comments: [], content: content, createdAt: DateTime.now(), uidOfWhoLikedIt: [], uid: '', userId: userId);
+    return RemotePublishModel(commentsCount: 0, content: content, createdAt: DateTime.now(), uidOfWhoLikedIt: [], uid: '', userId: userId);
   }
 
   Map<String, dynamic> toMap() {
     return {
       'userId': userId,
       'uid': uid,
-      'comments': comments?.map((x) => x.toMap()).toList(),
+      'commentsCount': commentsCount,
       'uidOfWhoLikedIt': uidOfWhoLikedIt,
       'content': content,
       'createdAt': createdAt?.toString(),
@@ -39,7 +38,7 @@ class RemotePublishModel {
     return RemotePublishModel(
       userId: map['userId'],
       uid: map['uid'],
-      comments: map['comments'] != null ? List<RemoteCommentModel>.from(map['comments']?.map((x) => RemoteCommentModel.fromMap(x))) : [],
+      commentsCount: map['commentsCount'],
       uidOfWhoLikedIt: map['uidOfWhoLikedIt'] != null ? List<String>.from(map['uidOfWhoLikedIt']) : [],
       content: map['content'],
       createdAt: DateTime.tryParse(map['createdAt']),
@@ -53,7 +52,7 @@ class RemotePublishModel {
   PublishEntity toEntity() => PublishEntity(
         userId: userId ?? '',
         uid: uid ?? '',
-        comments: comments?.map((comment) => comment.toEntity()).toList() ?? <CommentEntity>[],
+        commentsCount: commentsCount ?? 0,
         createdAt: createdAt ?? DateTime.now(),
         content: content ?? '',
         uidOfWhoLikedIt: uidOfWhoLikedIt ?? <String>[],
@@ -65,6 +64,6 @@ class RemotePublishModel {
         uidOfWhoLikedIt: entity.uidOfWhoLikedIt,
         createdAt: entity.createdAt,
         content: entity.content,
-        comments: entity.comments.map((commentEntity) => RemoteCommentModel.fromEntity(commentEntity)).toList(),
+        commentsCount: entity.commentsCount,
       );
 }
