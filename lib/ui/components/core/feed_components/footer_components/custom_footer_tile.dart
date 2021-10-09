@@ -19,16 +19,11 @@ class CustomTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: EdgeInsets.only(
-            left: size.width * 0.05,
-          ),
-          child: IconButton(
-            iconSize: size.width * 0.07,
-            onPressed: onTap,
-            icon: Icon(
-              icon,
-            ),
+        IconButton(
+          iconSize: size.width * 0.07,
+          onPressed: onTap,
+          icon: Icon(
+            icon,
           ),
         ),
         InkWell(
