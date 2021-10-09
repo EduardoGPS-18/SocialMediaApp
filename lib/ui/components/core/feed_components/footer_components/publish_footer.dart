@@ -21,28 +21,26 @@ class PublishFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: size.width * 0.015,
-      ),
-      child: Row(
-        children: [
-          CustomTile(
-            size: size,
-            content: favoriteLength,
-            onTap: onLikeClick,
-            label: "curtidas",
-            icon: isLiked ? Icons.favorite_outlined : Icons.favorite_border_outlined,
-          ),
-          CustomTile(
-            size: size,
-            content: commentLength,
-            onTap: onCommentClick,
-            label: "comentários",
-            icon: Icons.mode_comment_outlined,
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        CustomTile(
+          size: size,
+          content: favoriteLength,
+          onTap: onLikeClick,
+          label: "curtidas",
+          icon: isLiked
+              ? Icons.favorite_outlined
+              : Icons.favorite_border_outlined,
+        ),
+        CustomTile(
+          size: size,
+          content: commentLength,
+          onTap: onCommentClick,
+          label: "comentários",
+          icon: Icons.mode_comment_outlined,
+        ),
+      ],
     );
   }
 }
