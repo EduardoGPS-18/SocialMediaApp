@@ -41,7 +41,8 @@ class _PostPageState extends State<PostPage> {
                       size: size,
                       currentUser: widget.presenter.currentUser,
                       publish: publishSnapshot.data!,
-                      publishUser: widget.presenter.loadUserById(id: publishSnapshot.data!.userId),
+                      publishUser: widget.presenter
+                          .loadUserById(id: publishSnapshot.data!.userId),
                     ),
                     CustomDivider(height: 0.002, size: size),
                     StreamBuilder<List<CommentEntity>>(
@@ -52,7 +53,9 @@ class _PostPageState extends State<PostPage> {
                             primary: false,
                             shrinkWrap: true,
                             itemCount: commentsSnapshot.data?.length ?? 0,
-                            separatorBuilder: (BuildContext context, int index) => CustomDivider(
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    CustomDivider(
                               height: 0.002,
                               size: size,
                             ),
@@ -65,9 +68,16 @@ class _PostPageState extends State<PostPage> {
                                 child: Comment(
                                   size: size,
                                   onUserImageClick: () {},
-                                  user: widget.presenter.loadUserById(id: commentsSnapshot.data?[index].userId ?? ""),
-                                  commentContent: commentsSnapshot.data?[index].content ?? "Sem conteudo!",
-                                  commentDate: commentsSnapshot.data?[index].createdAt ?? DateTime.now(),
+                                  user: widget.presenter.loadUserById(
+                                      id: commentsSnapshot
+                                              .data?[index].userId ??
+                                          ""),
+                                  commentContent:
+                                      commentsSnapshot.data?[index].content ??
+                                          "Sem conteudo!",
+                                  commentDate:
+                                      commentsSnapshot.data?[index].createdAt ??
+                                          DateTime.now(),
                                 ),
                               );
                             },
@@ -88,8 +98,12 @@ class _PostPageState extends State<PostPage> {
                               functionBottonTextField: () {},
                               functionImage: () {},
                               onTextEditing: widget.presenter.validateComment,
-                              onEditingComplete: isValidSnapshot.hasData && isValidSnapshot.data == true
-                                  ? () async => await widget.presenter.addComment(publishId: publishSnapshot.data?.uid ?? "")
+                              onEditingComplete: isValidSnapshot.hasData &&
+                                      isValidSnapshot.data == true
+                                  ? () async => await widget.presenter
+                                      .addComment(
+                                          publishId:
+                                              publishSnapshot.data?.uid ?? "")
                                   : null,
                               size: size,
                             );

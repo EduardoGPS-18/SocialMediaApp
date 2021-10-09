@@ -34,8 +34,7 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     try {
       updateUserId();
 
-      final posts = await remoteGetPublishesByUserID.getPublishesByUserID(userId: _userId);
-      postsCountController.value = posts.length;
+      final posts = remoteGetPublishesByUserID.getPublishesByUserID(userId: _userId).map((event) => event.length);
 
       final userData = await remoteLoadUser.loadUserByUID(uid: _userId).first;
       userDataController.value = userData;
@@ -52,7 +51,7 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
 
   final RxInt postsCountController = 0.obs;
   @override
-  Stream<int> get postsCount => postsCountController.stream;
+  Stream<int> get postsCount => remoteGetPublishesByUserID.getPublishesByUserID(userId: _userId).map((event) => event.length);
 
   @override
   void updateUserId() {
@@ -69,6 +68,10 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     _userImage = image;
     userImageStreamController.subject.add(image);
     var error = _validateField('image');
+    if (localGetUserId.getUserId() == null || image == null) {
+      throw "Error";
+    }
+    remoteSaveUserImage.saveUserImage(userId: localGetUserId.getUserId()!, userImage: image);
     _userImageErrorStreamController.value = _validateField('image');
     if (error == UIError.noError) {
       // remoteSaveUserImage.saveUserImage(userId: userId, userImage: userImage);
@@ -97,4 +100,7 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
         return UIError.noError;
     }
   }
+
+  @override
+  Stream<UserEntity> get user => remoteLoadUser.loadUserByUID(uid: localGetUserId.getUserId() ?? "");
 }
