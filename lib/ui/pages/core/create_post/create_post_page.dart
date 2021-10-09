@@ -17,10 +17,11 @@ class CreatePostPage extends StatefulWidget {
 }
 
 class _CreatePostPageState extends State<CreatePostPage> {
+  final FocusNode _textFocus = FocusNode();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    bool isFocul = true;
+    bool isFocul = _textFocus.hasFocus;
 
     void addPublishAndReturn() {
       widget.presenter.addPublish();
@@ -60,24 +61,29 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   ),
                   CustomDivider(height: 0.002, size: size),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.06,
-                      vertical: size.width * 0.04,
-                    ),
-                    child: TextFormField(
-                      // focusNode: _focusNode,
-                      style: const TextStyle(
-                        fontSize: 20,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: size.width * 0.06),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight:
+                            isFocul ? size.height * 0.285 : size.height * 0.69,
                       ),
-                      minLines: 2,
-                      onChanged: widget.presenter.validPublishContent,
-                      maxLines: isFocul ? 4 : 13, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
-                      keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
-                        hintStyle: TextStyle(fontSize: 20),
-                        hintText: "Adicione o texto da sua postagem",
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
+                      child: TextFormField(
+                        focusNode: _textFocus,
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                        minLines: 2,
+                        onChanged: widget.presenter.validPublishContent,
+                        maxLines:
+                            10, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          hintStyle: TextStyle(fontSize: 20),
+                          hintText: "Adicione o texto da sua postagem",
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
                       ),
                     ),
                   ),
@@ -96,7 +102,11 @@ class _CreatePostPageState extends State<CreatePostPage> {
             stream: widget.presenter.isValidPublish,
             builder: (context, snapshot) {
               return ElevatedButton(
-                onPressed: snapshot.hasData && snapshot.data != null && snapshot.data == true ? addPublishAndReturn : null,
+                onPressed: snapshot.hasData &&
+                        snapshot.data != null &&
+                        snapshot.data == true
+                    ? addPublishAndReturn
+                    : null,
                 child: Text(
                   "Publicar",
                   style: Theme.of(context).textTheme.headline6?.copyWith(
