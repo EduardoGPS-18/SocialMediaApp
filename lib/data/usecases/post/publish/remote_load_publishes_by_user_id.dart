@@ -1,6 +1,7 @@
 import '../../../../domain/entities/entities.dart';
 import '../../../../domain/usecases/usecases.dart';
 import '../../../firebase/firebase.dart';
+import '../../../models/models.dart';
 
 class RemoteLoadPublishesByUserID implements LoadPublishesByUserID {
   FirebaseCloudFirestore firebaseCloudFirestore;
@@ -10,10 +11,9 @@ class RemoteLoadPublishesByUserID implements LoadPublishesByUserID {
   });
 
   @override
-  Future<List<PublishEntity>> getPublishesByUserID({required String userId}) async {
-    final response = await firebaseCloudFirestore.getPublishes();
-    final publishes = response.where((element) => element.userId == userId).toList();
+  Stream<List<PublishEntity>> getPublishesByUserID({required String userId}) {
+    final response = firebaseCloudFirestore.getPublishesCollection().where('userId', isEqualTo: userId).snapshots();
 
-    return publishes;
+    return response.map((event) => event.docs.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList());
   }
 }
