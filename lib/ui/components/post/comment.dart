@@ -20,75 +20,72 @@ class Comment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxHeight: 200.0,
-      ),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.04, vertical: size.width * 0.02),
       child: StreamBuilder<UserEntity>(
         stream: user,
         builder: (ctx, userSnapshot) {
           if (userSnapshot.hasData && userSnapshot.data != null) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            return Column(
               children: [
-                Container(
-                  width: size.width * 0.13,
-                  height: size.width * 0.13,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(userSnapshot.data?.photoUrl ?? ""),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: size.width * 0.13,
+                      height: size.width * 0.13,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image:
+                              NetworkImage(userSnapshot.data?.photoUrl ?? ""),
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(left: size.height * 0.02),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ConstrainedBox(
+                            constraints:
+                                BoxConstraints(maxWidth: size.width * 0.6),
+                            child: Text(
+                              userSnapshot.data?.name ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.more_horiz)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    Text(commentContent,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                        textAlign: TextAlign.start),
+                  ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: size.height * 0.008),
-                  child: SizedBox(
-                    width: size.width * 0.75,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: size.height * 0.015,
-                                    top: size.height * 0.008),
-                                child: SizedBox(
-                                  width: size.height * 0.37,
-                                  child: Text(
-                                    userSnapshot.data?.name ?? "",
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.more_horiz)),
-                            ]),
-                        Text(
-                          commentContent,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: size.height * 0.02),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: Text("$commentDate"),
-                          ),
-                        ),
-                      ],
-                    ),
+                  padding: EdgeInsets.only(top: size.height * 0.02),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Text("$commentDate"),
                   ),
-                )
+                ),
               ],
             );
           } else {
