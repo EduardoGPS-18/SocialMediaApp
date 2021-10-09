@@ -1,13 +1,14 @@
 import 'dart:io';
+
 import '../../domain/usecases/usecases.dart';
 import '../firebase/firebase.dart';
 
 class RemoteSaveUserImage implements SaveUserImage {
   FirebaseStore firebaseStore;
-  FirebaseCloudFirestore cloudFirestore;
+  FirebaseCloudFirestore firebaseCloudFirestore;
 
   RemoteSaveUserImage({
-    required this.cloudFirestore,
+    required this.firebaseCloudFirestore,
     required this.firebaseStore,
   });
 
@@ -17,8 +18,7 @@ class RemoteSaveUserImage implements SaveUserImage {
     required File userImage,
   }) async {
     try {
-      final photoUrl = await firebaseStore.saveImageOfPath(
-          params: SaveImageParams(path: userId, file: userImage));
+      final photoUrl = await firebaseStore.saveImageOfPath(params: SaveImageParams(path: userId, file: userImage));
 
       return photoUrl;
     } on FirebaseCloudFirestoreError catch (_) {

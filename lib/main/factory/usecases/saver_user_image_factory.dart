@@ -3,6 +3,6 @@ import '../../../domain/usecases/usecases.dart';
 import '../factory.dart';
 
 SaveUserImage makeSaveUserImage() => RemoteSaveUserImage(
-      cloudFirestore: makeFirebaseCloudFirestore(),
+      firebaseCloudFirestore: makeFirebaseCloudFirestore(),
       firebaseStore: makeFirebaseStore(),
     );
