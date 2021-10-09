@@ -7,7 +7,7 @@ class PublishContent extends StatelessWidget {
     required this.content,
   }) : super(key: key);
 
-  final Function() onContentClick;
+  final Function()? onContentClick;
   final String content;
 
   @override

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../../shared/shared.dart';
+
 import '../../../../../../domain/entities/entities.dart';
+import '../../../../shared/shared.dart';
 import 'feed_components.dart';
 
 class ViewPost extends StatefulWidget {
   final Size size;
-  final Future<UserEntity> publishUser;
-  final Future<UserEntity> currentUser;
+  final Stream<UserEntity> publishUser;
+  final Stream<UserEntity> currentUser;
   final PublishEntity publish;
-  final Function() onContentClick;
-  final Function() onLikeClick;
-  final Function() onUserImageClick;
-  final Function() onCommentClick;
+  final Function()? onContentClick;
+  final Function()? onLikeClick;
+  final Function()? onUserImageClick;
+  final Function()? onCommentClick;
 
   const ViewPost({
     Key? key,
@@ -20,10 +21,10 @@ class ViewPost extends StatefulWidget {
     required this.publishUser,
     required this.currentUser,
     required this.publish,
-    required this.onContentClick,
-    required this.onLikeClick,
-    required this.onUserImageClick,
-    required this.onCommentClick,
+    this.onContentClick,
+    this.onLikeClick,
+    this.onUserImageClick,
+    this.onCommentClick,
   }) : super(key: key);
 
   @override
@@ -46,13 +47,9 @@ class _ViewPostState extends State<ViewPost> {
               vertical: widget.size.height * 0.002,
             ),
             child: Container(
-              //   color: Colors.red,
               child: testSmimer.isEmpty
                   ? Shimmer.fromColors(
-                      baseColor: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withAlpha(60),
+                      baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                       highlightColor: Colors.grey.shade100,
                       child: Column(children: [
                         ListTile(
@@ -84,8 +81,7 @@ class _ViewPostState extends State<ViewPost> {
                           height: 10,
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(left: widget.size.width * 0.048),
+                          padding: EdgeInsets.only(left: widget.size.width * 0.048),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -110,8 +106,8 @@ class _ViewPostState extends State<ViewPost> {
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FutureBuilder<UserEntity>(
-                          future: widget.publishUser,
+                        StreamBuilder<UserEntity>(
+                          stream: widget.publishUser,
                           builder: (context, snapshot) {
                             if (snapshot.hasData && snapshot.data != null) {
                               return PublishHeader(
@@ -130,16 +126,14 @@ class _ViewPostState extends State<ViewPost> {
                             content: widget.publish.content,
                           ),
                         ),
-                        FutureBuilder<UserEntity>(
-                          future: widget.currentUser,
+                        StreamBuilder<UserEntity>(
+                          stream: widget.currentUser,
                           builder: (context, snapshot) => PublishFooter(
                             size: widget.size,
                             onLikeClick: widget.onLikeClick,
-                            isLiked: widget.publish.uidOfWhoLikedIt
-                                .contains(snapshot.data!.uid),
-                            favoriteLength:
-                                widget.publish.uidOfWhoLikedIt.length,
-                            commentLength: widget.publish.comments.length,
+                            isLiked: widget.publish.uidOfWhoLikedIt.contains(snapshot.data!.uid),
+                            favoriteLength: widget.publish.uidOfWhoLikedIt.length,
+                            commentLength: widget.publish.commentsCount,
                             onCommentClick: widget.onCommentClick,
                           ),
                         )

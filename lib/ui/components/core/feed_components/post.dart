@@ -6,6 +6,8 @@ class Post extends StatefulWidget {
   final String hintTextTextField;
   final Function() functionImage;
   final Function() functionBottonTextField;
+  final Function()? onEditingComplete;
+  final Function(String)? onTextEditing;
   final Size size;
 
   const Post({
@@ -14,6 +16,8 @@ class Post extends StatefulWidget {
     required this.hintTextTextField,
     required this.functionImage,
     required this.functionBottonTextField,
+    this.onEditingComplete,
+    this.onTextEditing,
     required this.size,
   }) : super(key: key);
 
@@ -40,10 +44,7 @@ class _PostState extends State<Post> {
                     child: CircleAvatar(
                       radius: widget.size.width * 0.09,
                     ),
-                    baseColor: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withAlpha(60),
+                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                     highlightColor: Colors.grey.shade100,
                   )
                 : InkWell(
@@ -73,10 +74,7 @@ class _PostState extends State<Post> {
                         width: widget.size.width * 0.7,
                       ),
                     ),
-                    baseColor: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withAlpha(60),
+                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                     highlightColor: Colors.grey.shade100,
                   )
                 : Padding(
@@ -85,23 +83,20 @@ class _PostState extends State<Post> {
                       height: widget.size.height * 0.09,
                       width: widget.size.width * 0.7,
                       child: TextField(
+                        onChanged: widget.onTextEditing,
+                        onEditingComplete: widget.onEditingComplete,
                         decoration: InputDecoration(
                           suffixIcon: _focado
                               ? _isEmpyt
                                   ? Icon(
                                       Icons.send,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onBackground
-                                          .withAlpha(95),
+                                      color: Theme.of(context).colorScheme.onBackground.withAlpha(95),
                                     )
                                   : IconButton(
                                       onPressed: widget.functionBottonTextField,
                                       icon: Icon(
                                         Icons.send,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                        color: Theme.of(context).colorScheme.primary,
                                       ),
                                     )
                               : const SizedBox(

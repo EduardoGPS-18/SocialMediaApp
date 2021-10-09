@@ -13,9 +13,9 @@ class PublishFooter extends StatelessWidget {
     required this.commentLength,
   }) : super(key: key);
 
-  final Function() onCommentClick;
+  final Function()? onCommentClick;
+  final Function()? onLikeClick;
   final Size size;
-  final Function() onLikeClick;
   final bool isLiked;
   final int commentLength, favoriteLength;
 

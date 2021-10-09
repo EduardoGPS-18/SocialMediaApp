@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomTile extends StatelessWidget {
   final int content;
-  final Function() onTap;
+  final Function()? onTap;
   final String label;
   final Size size;
   final IconData icon;
