@@ -69,6 +69,10 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     _userImage = image;
     userImageStreamController.subject.add(image);
     var error = _validateField('image');
+    if (localGetUserId.getUserId() == null || image == null) {
+      throw "Error";
+    }
+    remoteSaveUserImage.saveUserImage(userId: localGetUserId.getUserId()!, userImage: image);
     _userImageErrorStreamController.value = _validateField('image');
     if (error == UIError.noError) {
       // remoteSaveUserImage.saveUserImage(userId: userId, userImage: userImage);
@@ -97,4 +101,7 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
         return UIError.noError;
     }
   }
+
+  @override
+  Stream<UserEntity> get user => remoteLoadUser.loadUserByUID(uid: localGetUserId.getUserId() ?? "");
 }

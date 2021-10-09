@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../../domain/entities/entities.dart';
 
+import '../../../../domain/entities/entities.dart';
 import 'profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UserEntity>(
-        stream: widget.presenter.userData,
+        stream: widget.presenter.user,
         builder: (context, snapshot) {
           if (snapshot.data != null) {
             return Stack(
@@ -52,8 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: widget.size.height * 0.04),
+                      padding: EdgeInsets.symmetric(vertical: widget.size.height * 0.04),
                       child: Text(
                         snapshot.data!.name,
                         style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -109,10 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Shimmer.fromColors(
-                      baseColor: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withAlpha(60),
+                      baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                       highlightColor: Colors.grey.shade100,
                       child: Container(
                         width: widget.size.width * 0.40,
@@ -128,10 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         vertical: widget.size.height * 0.04,
                       ),
                       child: Shimmer.fromColors(
-                        baseColor: Theme.of(context)
-                            .colorScheme
-                            .onBackground
-                            .withAlpha(60),
+                        baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                         highlightColor: Colors.grey.shade100,
                         child: Container(
                           height: widget.size.height * 0.04,
@@ -146,18 +139,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     Shimmer.fromColors(
-                      baseColor: Theme.of(context)
-                          .colorScheme
-                          .onBackground
-                          .withAlpha(60),
+                      baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                       highlightColor: Colors.grey.shade100,
                       child: Container(
                         height: widget.size.height * 0.04,
                         width: widget.size.width * 0.3,
                         decoration: BoxDecoration(
                           color: Colors.red,
-                          borderRadius:
-                              BorderRadius.circular(widget.size.width * 0.02),
+                          borderRadius: BorderRadius.circular(widget.size.width * 0.02),
                         ),
                       ),
                     ),
@@ -166,10 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Positioned(
                   right: widget.size.width * 0.29,
                   child: Shimmer.fromColors(
-                    baseColor: Theme.of(context)
-                        .colorScheme
-                        .onBackground
-                        .withAlpha(60),
+                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
                     highlightColor: Colors.grey.shade100,
                     child: Container(
                       height: widget.size.height * 0.05,
