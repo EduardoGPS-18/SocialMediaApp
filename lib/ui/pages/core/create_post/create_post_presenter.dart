@@ -1,7 +1,8 @@
 import '../../../../domain/entities/entities.dart';
+import '../../../../presentation/presenters/shared/shared.dart';
 import '../../../helpers/errors/errors.dart';
 
-abstract class CreatePostPresenter {
+abstract class CreatePostPresenter implements Navigation {
   Stream<UserEntity>? get user;
 
   void validPublishContent(String value);

@@ -1,9 +1,10 @@
 import 'package:flutter/widgets.dart';
+import 'package:social_media_app/presentation/presenters/shared/shared.dart';
 
 import '../../../../../../domain/entities/entities.dart';
 import '../../../helpers/helpers.dart';
 
-abstract class FeedPresenter {
+abstract class FeedPresenter implements Navigation{
   Future<void> addPublish();
   Future<void> removePublish({required String publishId});
   Stream<UserEntity> loadUserEntityById({required String uid});

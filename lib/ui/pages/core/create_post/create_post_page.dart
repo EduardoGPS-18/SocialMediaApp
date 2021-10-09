@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../domain/entities/entities.dart';
+import '../../../../presentation/presenters/shared/shared.dart';
 import '../../../../shared/shared.dart';
 import 'create_post.dart';
 
@@ -16,7 +17,7 @@ class CreatePostPage extends StatefulWidget {
   State<CreatePostPage> createState() => _CreatePostPageState();
 }
 
-class _CreatePostPageState extends State<CreatePostPage> {
+class _CreatePostPageState extends State<CreatePostPage> with NavigationController {
   final FocusNode _textFocus = FocusNode();
 
   void addPublishAndReturn() {
@@ -26,8 +27,12 @@ class _CreatePostPageState extends State<CreatePostPage> {
   }
 
   @override
+  Stream<String> get pathStream => widget.presenter.pathStream;
+
+  @override
   void initState() {
     super.initState();
+    navigate(context);
     widget.presenter.updateUserId();
   }
 

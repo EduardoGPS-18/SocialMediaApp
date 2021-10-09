@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/entities.dart';
+import '../../../presentation/presenters/shared/shared.dart';
 import '../../../shared/shared.dart';
 import '../../components/components.dart';
 import 'post_presenter.dart';
@@ -16,12 +17,16 @@ class PostPage extends StatefulWidget {
   State<PostPage> createState() => _PostPageState();
 }
 
-class _PostPageState extends State<PostPage> {
+class _PostPageState extends State<PostPage> with NavigationController {
   @override
   void initState() {
     super.initState();
+    navigate(context);
     widget.presenter.updateUserId();
   }
+
+  @override
+  Stream<String> get pathStream => widget.presenter.pathStream;
 
   @override
   Widget build(BuildContext context) {
