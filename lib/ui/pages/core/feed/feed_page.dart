@@ -40,13 +40,16 @@ class _FeedPageState extends State<FeedPage> {
             child: StreamBuilder<UserEntity>(
               stream: widget.presenter.user,
               builder: (context, snapshot) {
-                return Post(
-                  image: snapshot.data != null ? snapshot.data!.photoUrl : '',
-                  hintTextTextField: "Adicione uma postagem",
-                  functionBottonTextField: () {},
-                  functionImage: () {},
-                  size: widget.size,
-                );
+                if (snapshot.hasData && snapshot.data != null) {
+                  return Post(
+                    image: snapshot.data != null ? snapshot.data!.photoUrl : '',
+                    hintTextTextField: "Adicione uma postagem",
+                    functionBottonTextField: () {},
+                    functionImage: () {},
+                    size: widget.size,
+                  );
+                }
+                return const CircleAvatar();
               },
             ),
           ),

@@ -128,14 +128,19 @@ class _ViewPostState extends State<ViewPost> {
                         ),
                         StreamBuilder<UserEntity>(
                           stream: widget.currentUser,
-                          builder: (context, snapshot) => PublishFooter(
-                            size: widget.size,
-                            onLikeClick: widget.onLikeClick,
-                            isLiked: widget.publish.uidOfWhoLikedIt.contains(snapshot.data!.uid),
-                            favoriteLength: widget.publish.uidOfWhoLikedIt.length,
-                            commentLength: widget.publish.commentsCount,
-                            onCommentClick: widget.onCommentClick,
-                          ),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData && snapshot.data != null) {
+                              return PublishFooter(
+                                size: widget.size,
+                                onLikeClick: widget.onLikeClick,
+                                isLiked: widget.publish.uidOfWhoLikedIt.contains(snapshot.data!.uid),
+                                favoriteLength: widget.publish.uidOfWhoLikedIt.length,
+                                commentLength: widget.publish.commentsCount,
+                                onCommentClick: widget.onCommentClick,
+                              );
+                            }
+                            return const SizedBox();
+                          },
                         )
                       ],
                     ),
