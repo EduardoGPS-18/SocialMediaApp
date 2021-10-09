@@ -108,16 +108,34 @@ class _FeedPageState extends State<FeedPage> with NavigationController {
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return ViewPost(
-                      onConfirmDelete: () => widget.presenter.removePublish(publishId: snapshot.data![index].uid),
-                      size: widget.size,
-                      publishUser: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
-                      publish: snapshot.data![index],
-                      onLikeClick: () => widget.presenter.likeClick(publishId: snapshot.data![index].uid),
-                      onUserImageClick: () {},
-                      onContentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
-                      onCommentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
-                      currentUser: widget.presenter.user,
+                    return StreamBuilder<UserEntity>(
+                      stream: widget.presenter.user,
+                      builder: (context, currentUserSnapshot) {
+                        if (currentUserSnapshot.hasData && currentUserSnapshot.data != null) {
+                          return StreamBuilder<UserEntity>(
+                            stream: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
+                            builder: (context, publishUserSnapshot) {
+                              if (publishUserSnapshot.hasData && publishUserSnapshot.data != null) {
+                                return ViewPost(
+                                  onConfirmDelete: () => widget.presenter.removePublish(publishId: snapshot.data![index].uid),
+                                  size: widget.size,
+                                  publishUser: publishUserSnapshot.data!,
+                                  publish: snapshot.data![index],
+                                  onLikeClick: () => widget.presenter.likeClick(publishId: snapshot.data![index].uid),
+                                  onUserImageClick: () {},
+                                  onContentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
+                                  onCommentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
+                                  currentUser: currentUserSnapshot.data!,
+                                );
+                              } else {
+                                return const Center();
+                              }
+                            },
+                          );
+                        } else {
+                          return const Center();
+                        }
+                      },
                     );
                   },
                 );

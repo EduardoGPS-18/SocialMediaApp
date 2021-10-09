@@ -49,11 +49,29 @@ class _PostPageState extends State<PostPage> with NavigationController {
                 child: SizedBox.expand(
                   child: Column(
                     children: [
-                      ViewPost(
-                        size: size,
-                        currentUser: widget.presenter.currentUser,
-                        publish: publishSnapshot.data!,
-                        publishUser: widget.presenter.loadUserById(id: publishSnapshot.data!.userId),
+                      StreamBuilder<UserEntity>(
+                        stream: widget.presenter.currentUser,
+                        builder: (context, currentUserSnapshot) {
+                          if (currentUserSnapshot.hasData && currentUserSnapshot.data != null) {
+                            return StreamBuilder<UserEntity>(
+                              stream: widget.presenter.loadUserById(id: publishSnapshot.data!.userId),
+                              builder: (context, publishUserSnapshot) {
+                                if (publishUserSnapshot.hasData && publishUserSnapshot.data != null) {
+                                  return ViewPost(
+                                    size: size,
+                                    currentUser: currentUserSnapshot.data!,
+                                    publish: publishSnapshot.data!,
+                                    publishUser: publishUserSnapshot.data!,
+                                  );
+                                } else {
+                                  return const Center();
+                                }
+                              },
+                            );
+                          } else {
+                            return const Center();
+                          }
+                        },
                       ),
                       CustomDivider(height: 0.002, size: size),
                       StreamBuilder<List<CommentEntity>>(
