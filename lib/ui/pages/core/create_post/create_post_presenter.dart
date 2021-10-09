@@ -1,9 +1,8 @@
-import 'package:social_media_app/ui/helpers/errors/errors.dart';
-
 import '../../../../domain/entities/entities.dart';
+import '../../../helpers/errors/errors.dart';
 
 abstract class CreatePostPresenter {
-  Future<UserEntity> get user;
+  Stream<UserEntity> get user;
 
   void validPublishContent(String value);
 

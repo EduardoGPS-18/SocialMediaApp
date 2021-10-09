@@ -28,8 +28,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
         appBar: const CustomAppBar(
           text: "Criar postagem",
         ),
-        body: FutureBuilder<UserEntity>(
-          future: widget.presenter.user,
+        body: StreamBuilder<UserEntity>(
+          stream: widget.presenter.user,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return Column(
@@ -87,19 +87,20 @@ class _CreatePostPageState extends State<CreatePostPage> {
           height: 60,
           width: double.infinity,
           child: StreamBuilder<bool>(
-              initialData: false,
-              stream: widget.presenter.isValidPublish,
-              builder: (context, snapshot) {
-                return ElevatedButton(
-                  onPressed: snapshot.hasData && snapshot.data != null && snapshot.data == true ? widget.presenter.addPublish : null,
-                  child: Text(
-                    "Publicar",
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
-                          fontWeight: FontWeight.w900,
-                        ),
-                  ),
-                );
-              }),
+            initialData: false,
+            stream: widget.presenter.isValidPublish,
+            builder: (context, snapshot) {
+              return ElevatedButton(
+                onPressed: snapshot.hasData && snapshot.data != null && snapshot.data == true ? widget.presenter.addPublish : null,
+                child: Text(
+                  "Publicar",
+                  style: Theme.of(context).textTheme.headline6?.copyWith(
+                        fontWeight: FontWeight.w900,
+                      ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

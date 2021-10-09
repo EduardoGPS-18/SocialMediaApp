@@ -44,7 +44,7 @@ class GetxCreatePostPresenter extends GetxController implements CreatePostPresen
   }
 
   @override
-  Future<UserEntity> get user async {
+  Stream<UserEntity> get user {
     final userId = localGetUserId.getUserId();
     if (userId == null) {
       throw "Error!";
