@@ -19,14 +19,6 @@ class _CorePageAppState extends State<CorePageApp> {
   @override
   void initState() {
     super.initState();
-    widget.presenter.handlingError.listen((event) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(event),
-        backgroundColor: Colors.red,
-      ));
-    });
-
-    widget.presenter.updateUserId();
 
     widget.presenter.pageIndexNotifier.addListener(() {
       widget.pageController.animateToPage(
@@ -54,10 +46,11 @@ class _CorePageAppState extends State<CorePageApp> {
               size: size,
               presenter: widget.feedPresenter,
             ),
+            const Center(),
             ProfilePage(
               size: size,
               presenter: widget.profilePresenter,
-            )
+            ),
           ],
         ),
         bottomNavigationBar: ValueListenableBuilder<int>(
@@ -66,7 +59,11 @@ class _CorePageAppState extends State<CorePageApp> {
             elevation: 15,
             backgroundColor: Theme.of(context).colorScheme.background,
             onTap: (index) {
-              widget.presenter.pageIndexNotifier.value = index;
+              if (index == 1) {
+                Navigator.of(context).pushNamed('/add-post');
+              } else {
+                widget.presenter.pageIndexNotifier.value = index;
+              }
             },
             currentIndex: value,
             items: const [
