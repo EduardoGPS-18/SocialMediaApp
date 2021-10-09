@@ -73,10 +73,12 @@ class Comment extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(commentContent,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
-                        textAlign: TextAlign.start),
+                    Flexible(
+                      child: Text(commentContent,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 10,
+                          textAlign: TextAlign.start),
+                    ),
                   ],
                 ),
                 Padding(

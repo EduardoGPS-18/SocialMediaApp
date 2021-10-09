@@ -16,14 +16,20 @@ class PublishContent extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: InkWell(
         onTap: onContentClick,
-        child: Text(
-          content,
-          style: const TextStyle(
-            fontSize: 18,
-          ),
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.left,
+        child: Row(
+          children: [
+            Flexible(
+              child: Text(
+                content,
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.left,
+                maxLines: 10,
+              ),
+            ),
+          ],
         ),
       ),
     );
