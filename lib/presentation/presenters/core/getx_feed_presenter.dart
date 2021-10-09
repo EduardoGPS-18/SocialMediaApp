@@ -18,6 +18,12 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   UnlikePublish remoteUnlikePublish;
   LoadPublish remoteLoadPublish;
 
+  DeletePublish deletePublish;
+
+  Rx<String> userCommunicateStreamController = Rx("");
+  @override
+  Stream<String> get userCommunicateStream =>
+      userCommunicateStreamController.stream;
   Rx<List<PublishEntity>> publishStreamController = Rx([]);
 
   Validation validation;
@@ -38,6 +44,7 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
     required this.remoteLoadPublish,
     required this.remoteAddPublish,
     required this.validation,
+    required this.deletePublish,
   });
 
   @override
@@ -122,4 +129,10 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   TextEditingController publishController = TextEditingController();
   @override
   TextEditingController get publishTextFieldController => publishController;
+  Future<void> removePublish({required String publishId}) async {
+    try {
+      await deletePublish.deletePublish(publishId: publishId);
+      userCommunicateStreamController.subject.add(R.string.successOnDelete);
+    } catch (_) {}
+  }
 }

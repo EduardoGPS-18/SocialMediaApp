@@ -20,6 +20,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   LoadComments remoteLoadComments;
   LikePublish remoteLikePublish;
   UnlikePublish remoteUnlikePublish;
+  DeleteComment remoteDeleteComment;
 
   Rx<UIError> errorStreamController = Rx(UIError.noError);
   @override
@@ -38,6 +39,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
     required this.remoteLoadComments,
     required this.remoteLikePublish,
     required this.remoteUnlikePublish,
+    required this.remoteDeleteComment,
   });
 
   String _commentContent = "";
@@ -130,4 +132,11 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   TextEditingController commentController = TextEditingController();
   @override
   TextEditingController get commentTextFieldController => commentController;
+  
+  @override
+  Future<void> deleteComment({required String commentId, required String publishId}) async {
+    try {
+      await remoteDeleteComment.deleteComment(params: DeleteCommentParams(commentId: commentId, publishId: publishId));
+    } catch (_) {}
+  }
 }

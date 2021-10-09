@@ -12,7 +12,7 @@ class ViewPost extends StatefulWidget {
   final Function()? onLikeClick;
   final Function()? onUserImageClick;
   final Function()? onCommentClick;
-
+  final Function()? onConfirmDelete;
   const ViewPost({
     Key? key,
     required this.size,
@@ -23,6 +23,7 @@ class ViewPost extends StatefulWidget {
     this.onLikeClick,
     this.onUserImageClick,
     this.onCommentClick,
+    this.onConfirmDelete,
   }) : super(key: key);
 
   @override
@@ -30,8 +31,6 @@ class ViewPost extends StatefulWidget {
 }
 
 class _ViewPostState extends State<ViewPost> {
-  bool onPressedFavorite = true;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,12 +47,22 @@ class _ViewPostState extends State<ViewPost> {
                   stream: widget.publishUser,
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
-                      return PublishHeader(
-                        publish: widget.publish,
-                        user: snapshot.data!,
-                        onUserImageClick: () {},
-                        size: widget.size,
-                      );
+                      return StreamBuilder<UserEntity>(
+                          stream: widget.currentUser,
+                          builder: (context, currenUserSnapshot) {
+                            if (currenUserSnapshot.hasData &&
+                                currenUserSnapshot.data != null) {
+                              return PublishHeader(
+                                currentUser: currenUserSnapshot.data!,
+                                publish: widget.publish,
+                                publishUser: snapshot.data!,
+                                onUserImageClick: () {},
+                                size: widget.size,
+                                onConfirmDelete: widget.onConfirmDelete,
+                              );
+                            }
+                            return const Center();
+                          });
                     }
                     return const Center();
                   },

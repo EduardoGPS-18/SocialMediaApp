@@ -8,6 +8,7 @@ class Comment extends StatelessWidget {
   final String commentContent;
   final DateTime commentDate;
   final Function() onUserImageClick;
+  final Widget configButton;
 
   const Comment({
     Key? key,
@@ -16,6 +17,7 @@ class Comment extends StatelessWidget {
     required this.commentContent,
     required this.commentDate,
     required this.onUserImageClick,
+    required this.configButton,
   }) : super(key: key);
 
   @override
@@ -59,12 +61,11 @@ class Comment extends StatelessWidget {
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.more_horiz)),
                         ],
                       ),
                     ),
+                    const Expanded(child: Center()),
+                    configButton
                   ],
                 ),
                 const SizedBox(
@@ -97,63 +98,3 @@ class Comment extends StatelessWidget {
     );
   }
 }
-  // Shimmer.fromColors(
-          //     baseColor:
-          //         Theme.of(context).colorScheme.onBackground.withAlpha(60),
-          //     highlightColor: Colors.grey.shade100,
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Container(
-          //           width: size.width * 0.13,
-          //           height: size.width * 0.13,
-          //           decoration: const BoxDecoration(
-          //               shape: BoxShape.circle, color: Colors.red),
-          //         ),
-          //         Padding(
-          //           padding: EdgeInsets.only(left: size.height * 0.008),
-          //           child: SizedBox(
-          //             width: size.width * 0.75,
-          //             child: Column(
-          //               mainAxisAlignment: MainAxisAlignment.start,
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               mainAxisSize: MainAxisSize.min,
-          //               children: [
-          //                 Padding(
-          //                     padding: EdgeInsets.only(
-          //                         bottom: size.height * 0.015,
-          //                         top: size.height * 0.008),
-          //                     child: Container(
-          //                       decoration: BoxDecoration(
-          //                           color: Colors.red,
-          //                           borderRadius: BorderRadius.circular(12)),
-          //                       height: size.height * 0.03,
-          //                       width: size.width * 0.4,
-          //                     )),
-          //                 Container(
-          //                   decoration: BoxDecoration(
-          //                       color: Colors.red,
-          //                       borderRadius: BorderRadius.circular(12)),
-          //                   height: size.height * 0.08,
-          //                   width: size.width * 0.8,
-          //                 ),
-          //                 Padding(
-          //                   padding: EdgeInsets.only(top: size.height * 0.02),
-          //                   child: Align(
-          //                       alignment: Alignment.bottomRight,
-          //                       child: Container(
-          //                         decoration: BoxDecoration(
-          //                             color: Colors.red,
-          //                             borderRadius: BorderRadius.circular(12)),
-          //                         height: size.height * 0.03,
-          //                         width: size.width * 0.2,
-          //                       )),
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         )
-          //       ],
-          //     ),
-          //   )
