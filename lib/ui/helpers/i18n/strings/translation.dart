@@ -5,6 +5,7 @@ abstract class Translation {
   String get msgRequiredField;
   String get msgUnexpectedError;
   String get msgWeakPassword;
+  String get expiredUser;
 
   String get addAccount;
   String get confirmPassword;

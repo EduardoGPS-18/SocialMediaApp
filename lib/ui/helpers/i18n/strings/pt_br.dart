@@ -49,4 +49,6 @@ class PtBr implements Translation {
   String get successOnDelete => 'Deletado com sucesso!';
   @override
   String get successOnAdd => 'Adicionado com sucesso!';
+  @override
+  String get expiredUser => 'Usuário expirado!';
 }
