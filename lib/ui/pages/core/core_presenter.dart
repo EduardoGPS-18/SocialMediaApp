@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import '../../../domain/entities/entities.dart';
 
 abstract class CorePresenter {
