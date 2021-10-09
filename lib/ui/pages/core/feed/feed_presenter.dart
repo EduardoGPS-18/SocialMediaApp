@@ -1,20 +1,21 @@
 import 'package:flutter/widgets.dart';
-import '../../../helpers/helpers.dart';
+
 import '../../../../../../domain/entities/entities.dart';
+import '../../../helpers/helpers.dart';
 
 abstract class FeedPresenter {
-  Stream<UserEntity> loadUserEntityById({required String uid});
-  void likeClick({required String publishId});
+  Future<void> addPublish();
   Future<void> removePublish({required String publishId});
+  Stream<UserEntity> loadUserEntityById({required String uid});
 
+  Stream<bool> get isValidPublish;
   Stream<String> get userCommunicateStream;
+  Stream<UIError> get errorStream;
   Stream<UserEntity> get user;
   Stream<List<PublishEntity>> get publishStream;
-  Stream<bool> get isValidPublish;
-  Stream<UIError> get errorStream;
 
   TextEditingController get publishTextFieldController;
 
-  Future<void> addPublish();
+  void likeClick({required String publishId});
   void validPublishContent(String value);
 }
