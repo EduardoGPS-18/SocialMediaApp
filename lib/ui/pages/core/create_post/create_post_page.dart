@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import '../../../../shared/shared.dart';
 
 class CreatePostPage extends StatefulWidget {
@@ -9,10 +11,11 @@ class CreatePostPage extends StatefulWidget {
 }
 
 class _CreatePostPageState extends State<CreatePostPage> {
+  final FocusNode _textFocus = FocusNode();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    bool isFocul = true;
+    bool isFocul = _textFocus.hasFocus;
 
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
@@ -20,7 +23,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
         appBar: const CustomAppBar(
           text: "Criar postagem",
         ),
-        body: Column(
+        body: ListView(
           children: [
             Padding(
               padding: EdgeInsets.all(size.width * 0.02),
@@ -42,28 +45,28 @@ class _CreatePostPageState extends State<CreatePostPage> {
             ),
             CustomDivider(height: 0.002, size: size),
             Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.06,
-                vertical: size.width * 0.04,
-              ),
-              child: TextFormField(
-                // focusNode: _focusNode,
-                style: const TextStyle(
-                  fontSize: 20,
+              padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: isFocul ? size.height * 0.285 : size.height,
                 ),
-                minLines: 2,
-                maxLines: isFocul
-                    ? 4
-                    : 13, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
-                  hintStyle: TextStyle(fontSize: 20),
-                  hintText: "Adicione o texto da sua postagem",
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
+                child: TextFormField(
+                  focusNode: _textFocus,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                  maxLines: 100,
+                  keyboardType: TextInputType.multiline,
+                  decoration: const InputDecoration(
+                    hintStyle: TextStyle(fontSize: 20),
+                    hintText: "Adicione o texto da sua postagem",
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
                 ),
               ),
             ),
+            // FormField(builder: ()=>)
           ],
         ),
         bottomSheet: SizedBox(
