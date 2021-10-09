@@ -1,8 +1,7 @@
-import '../../factory.dart';
-import 'post.dart';
-
 import '../../../../presentation/presenters/presenters.dart';
 import '../../../../ui/pages/pages.dart';
+import '../../factory.dart';
+import 'post.dart';
 
 PostPresenter makePostPresenter() => GetxPostPresenter(
       remoteLoadUser: makeLoadUser(),
@@ -13,4 +12,5 @@ PostPresenter makePostPresenter() => GetxPostPresenter(
       remoteLikePublish: makeLikePublish(),
       remoteUnlikePublish: makeUnlikePublish(),
       validation: makePostValidation(),
+      remoteDeleteComment: makeDeleteComment(),
     );

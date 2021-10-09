@@ -8,6 +8,7 @@ class Comment extends StatelessWidget {
   final String commentContent;
   final DateTime commentDate;
   final Function() onUserImageClick;
+  final Widget configButton;
 
   const Comment({
     Key? key,
@@ -16,6 +17,7 @@ class Comment extends StatelessWidget {
     required this.commentContent,
     required this.commentDate,
     required this.onUserImageClick,
+    required this.configButton,
   }) : super(key: key);
 
   @override
@@ -56,10 +58,11 @@ class Comment extends StatelessWidget {
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
-                          IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
                         ],
                       ),
                     ),
+                    const Expanded(child: Center()),
+                    configButton
                   ],
                 ),
                 const SizedBox(

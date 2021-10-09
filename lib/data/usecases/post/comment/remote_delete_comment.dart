@@ -10,6 +10,9 @@ class RemoteDeleteComment implements DeleteComment {
 
   @override
   Future<void> deleteComment({required DeleteCommentParams params}) async {
-    await firebaseCloudFirestore.getPublishesCollection().doc(params.publishId).collection('comments').doc(params.commentId).delete();
+    final publishDocument = firebaseCloudFirestore.getPublishesCollection().doc(params.publishId);
+    final data = await publishDocument.get();
+    await publishDocument.update({"commentsCount": (data.data()?["commentsCount"] - 1)});
+    await publishDocument.collection('comments').doc(params.commentId).delete();
   }
 }

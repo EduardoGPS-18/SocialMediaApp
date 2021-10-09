@@ -19,6 +19,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   LoadComments remoteLoadComments;
   LikePublish remoteLikePublish;
   UnlikePublish remoteUnlikePublish;
+  DeleteComment remoteDeleteComment;
 
   Rx<UIError> errorStreamController = Rx(UIError.noError);
   @override
@@ -37,6 +38,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
     required this.remoteLoadComments,
     required this.remoteLikePublish,
     required this.remoteUnlikePublish,
+    required this.remoteDeleteComment,
   });
 
   String _commentContent = "";
@@ -106,5 +108,12 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
     publish.uidOfWhoLikedIt.contains(currentUserId)
         ? await remoteUnlikePublish.unlikePublish(params: UnlikePublishParams(userId: currentUserId, publishId: publishId))
         : await remoteLikePublish.likePublish(params: LikePublishParams(userId: currentUserId, publishId: publishId));
+  }
+
+  @override
+  Future<void> deleteComment({required String commentId, required String publishId}) async {
+    try {
+      await remoteDeleteComment.deleteComment(params: DeleteCommentParams(commentId: commentId, publishId: publishId));
+    } catch (_) {}
   }
 }

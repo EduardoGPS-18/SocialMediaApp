@@ -59,12 +59,29 @@ class _PostPageState extends State<PostPage> {
                                   size: size,
                                 ),
                                 itemBuilder: (context, index) {
-                                  return Comment(
-                                    size: size,
-                                    onUserImageClick: () {},
-                                    user: widget.presenter.loadUserById(id: commentsSnapshot.data?[index].userId ?? ""),
-                                    commentContent: commentsSnapshot.data?[index].content ?? "Sem conteudo!",
-                                    commentDate: commentsSnapshot.data?[index].createdAt ?? DateTime.now(),
+                                  return StreamBuilder<UserEntity>(
+                                    stream: widget.presenter.currentUser,
+                                    builder: (context, currentUserSnapshot) {
+                                      if (currentUserSnapshot.hasData && currentUserSnapshot.data != null) {
+                                        return Comment(
+                                          configButton: CustomShowModalBottomSheet(
+                                            size: size,
+                                            onConfirmDelete: () => widget.presenter.deleteComment(
+                                              commentId: commentsSnapshot.data![index].uid,
+                                              publishId: publishSnapshot.data!.uid,
+                                            ),
+                                            commentIsUser: commentsSnapshot.data![index].userId == currentUserSnapshot.data!.uid,
+                                          ),
+                                          size: size,
+                                          onUserImageClick: () {},
+                                          user: widget.presenter.loadUserById(id: commentsSnapshot.data?[index].userId ?? ""),
+                                          commentContent: commentsSnapshot.data?[index].content ?? "Sem conteudo!",
+                                          commentDate: commentsSnapshot.data?[index].createdAt ?? DateTime.now(),
+                                        );
+                                      } else {
+                                        return const Center();
+                                      }
+                                    },
                                   );
                                 },
                               ),
