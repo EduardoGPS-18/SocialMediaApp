@@ -11,13 +11,6 @@ mixin HandlePublishesImpl implements HandlePublishes {
     final json = await response.get();
     final publishList = json.docs.map((element) => RemotePublishModel.fromMap(element.data()).toEntity()).toList();
 
-    for (var publish in publishList) {
-      final response = await firebaseFirestore.collection("publishes").doc(publish.uid).collection('comments').get();
-
-      final list = response.docs.map((e) => RemoteCommentModel.fromMap(e.data()).toEntity()).toList();
-
-      publish.comments.addAll([...list]);
-    }
     return publishList;
   }
 
