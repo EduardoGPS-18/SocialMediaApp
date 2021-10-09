@@ -22,6 +22,11 @@ class _CreatePostPageState extends State<CreatePostPage> {
     final size = MediaQuery.of(context).size;
     bool isFocul = true;
 
+    void addPublishAndReturn() {
+      widget.presenter.addPublish();
+      Navigator.of(context).pop();
+    }
+
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
@@ -91,7 +96,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
             stream: widget.presenter.isValidPublish,
             builder: (context, snapshot) {
               return ElevatedButton(
-                onPressed: snapshot.hasData && snapshot.data != null && snapshot.data == true ? widget.presenter.addPublish : null,
+                onPressed: snapshot.hasData && snapshot.data != null && snapshot.data == true ? addPublishAndReturn : null,
                 child: Text(
                   "Publicar",
                   style: Theme.of(context).textTheme.headline6?.copyWith(
