@@ -1,3 +1,4 @@
+import 'package:flutter/src/foundation/change_notifier.dart';
 import 'package:get/get.dart';
 import '../../../ui/pages/pages.dart';
 
@@ -97,12 +98,6 @@ class GetxCorePresenter extends GetxController implements CorePresenter {
     }
   }
 
-  final RxInt pageIndexStreamController = 0.obs;
-  @override
-  void setPageIndex(int value) {
-    pageIndexStreamController.subject.add(value);
-  }
-
   @override
   Future<void> unlikePublish(String publishId) async {
     try {
@@ -140,4 +135,8 @@ class GetxCorePresenter extends GetxController implements CorePresenter {
   void updateUserId() {
     _userId = localGetUserId.getUserId() ?? '';
   }
+
+  ValueNotifier<int> pageIndexNofifierController = ValueNotifier<int>(0);
+  @override
+  ValueNotifier<int> get pageIndexNotifier => pageIndexNofifierController;
 }

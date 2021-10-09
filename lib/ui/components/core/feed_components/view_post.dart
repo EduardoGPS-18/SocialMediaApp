@@ -136,7 +136,7 @@ class _ViewPostState extends State<ViewPost> {
                             size: widget.size,
                             onLikeClick: widget.onLikeClick,
                             isLiked: widget.publish.uidOfWhoLikedIt
-                                .contains(snapshot.data!.uid),
+                                .contains(snapshot.data?.uid),
                             favoriteLength:
                                 widget.publish.uidOfWhoLikedIt.length,
                             commentLength: widget.publish.comments.length,
