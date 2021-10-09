@@ -1,6 +1,5 @@
-import '../../firebase/firebase.dart';
-
 import '../../../domain/usecases/usecases.dart';
+import '../../firebase/firebase.dart';
 
 class LocalGetUserId implements GetUserId {
   FirebaseAuthentication firebaseAuthentication;
@@ -11,6 +10,10 @@ class LocalGetUserId implements GetUserId {
 
   @override
   String? getUserId() {
-    return firebaseAuthentication.getCurrentUserId();
+    try {
+      return firebaseAuthentication.getCurrentUserId();
+    } catch (_) {
+      rethrow;
+    }
   }
 }

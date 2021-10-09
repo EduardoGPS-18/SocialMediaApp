@@ -10,8 +10,12 @@ class RemoteLoadComments implements LoadComments {
   });
   @override
   Stream<List<CommentEntity>> loadCommentsByPublishId({required String publishId}) {
-    final commentsStream = firebaseCloudFirestore.getCommentsStreamByPublishId(publishId: publishId);
-    final commentList = commentsStream.map((event) => event.docs.map((e) => RemoteCommentModel.fromMap(e.data()).toEntity()).toList());
-    return commentList;
+    try {
+      final commentsStream = firebaseCloudFirestore.getCommentsStreamByPublishId(publishId: publishId);
+      final commentList = commentsStream.map((event) => event.docs.map((e) => RemoteCommentModel.fromMap(e.data()).toEntity()).toList());
+      return commentList;
+    } catch (_) {
+      rethrow;
+    }
   }
 }

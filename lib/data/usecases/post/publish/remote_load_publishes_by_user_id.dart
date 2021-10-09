@@ -12,8 +12,12 @@ class RemoteLoadPublishesByUserID implements LoadPublishesByUserID {
 
   @override
   Stream<List<PublishEntity>> getPublishesByUserID({required String userId}) {
-    final response = firebaseCloudFirestore.getPublishesCollection().where('userId', isEqualTo: userId).snapshots();
+    try {
+      final response = firebaseCloudFirestore.getPublishesCollection().where('userId', isEqualTo: userId).snapshots();
 
-    return response.map((event) => event.docs.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList());
+      return response.map((event) => event.docs.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList());
+    } catch (e) {
+      rethrow;
+    }
   }
 }

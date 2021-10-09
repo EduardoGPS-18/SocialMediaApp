@@ -10,6 +10,10 @@ class LocalSelectImage implements GetImage {
 
   @override
   Future<File?> getImage() async {
-    return await selectLocalImage.takeAPicture();
+    try {
+      return await selectLocalImage.takeAPicture();
+    } catch (_) {
+      rethrow;
+    }
   }
 }

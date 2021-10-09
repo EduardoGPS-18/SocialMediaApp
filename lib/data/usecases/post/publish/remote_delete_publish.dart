@@ -8,6 +8,10 @@ class RemoteDeletePublish implements DeletePublish {
   });
   @override
   Future<void> deletePublish({required String publishId}) async {
-    await firebaseCloudFirestore.getPublishesCollection().doc(publishId).delete();
+    try {
+      await firebaseCloudFirestore.getPublishesCollection().doc(publishId).delete();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
