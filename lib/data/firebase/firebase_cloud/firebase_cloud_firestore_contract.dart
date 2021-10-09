@@ -7,7 +7,7 @@ abstract class FirebaseCloudFirestore implements HandlePublishes, HandleComments
 abstract class HandleUsers {
   FirebaseFirestore get firebaseFirestore;
   CollectionReference<Map<String, dynamic>> getUserCollections();
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserById({String? id});
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserById({String? id});
 }
 
 abstract class HandlePublishes {
@@ -22,4 +22,5 @@ abstract class HandlePublishes {
 abstract class HandleComments {
   FirebaseFirestore get firebaseFirestore;
   Future<List<CommentEntity>> getCommentsByPublishId({required String publishId});
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCommentsStreamByPublishId({required String publishId});
 }

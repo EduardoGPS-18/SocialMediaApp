@@ -4,8 +4,8 @@ import '../../../../data/firebase/firebase.dart';
 
 mixin HandleUsersImpls implements HandleUsers {
   @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserById({String? id}) async {
-    return await getUserCollections().doc(id).get();
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getUserById({String? id})  {
+    return getUserCollections().doc(id).snapshots();
   }
 
   @override
