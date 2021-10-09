@@ -69,7 +69,11 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     File? image = await localGetImage.getImage();
     _userImage = image;
     userImageStreamController.subject.add(image);
+    var error = _validateField('image');
     _userImageErrorStreamController.value = _validateField('image');
+    if (error == UIError.noError) {
+      // remoteSaveUserImage.saveUserImage(userId: userId, userImage: userImage);
+    }
   }
 
   Rx<File?> userImageStreamController = Rx<File?>(null);
