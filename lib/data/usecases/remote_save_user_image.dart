@@ -20,6 +20,7 @@ class RemoteSaveUserImage implements SaveUserImage {
     try {
       final photoUrl = await firebaseStore.saveImageOfPath(params: SaveImageParams(path: userId, file: userImage));
 
+      await firebaseCloudFirestore.getUserCollections().doc(userId).update({"photoUrl": photoUrl});
       return photoUrl;
     } on FirebaseCloudFirestoreError catch (_) {
       rethrow;
