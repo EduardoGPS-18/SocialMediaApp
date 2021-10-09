@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../../domain/entities/entities.dart';
 import '../../../../../shared/shared.dart';
@@ -28,16 +30,23 @@ class PublishHeader extends StatelessWidget {
     return ListTile(
       leading: InkWell(
         onTap: onUserImageClick,
-        child: Container(
-          width: size.width * 0.13,
+        child: CachedNetworkImage(
+          imageUrl: publishUser.photoUrl,
           height: size.width * 0.13,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(publishUser.photoUrl),
+          width: size.width * 0.13,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Shimmer.fromColors(
+            baseColor: Theme.of(context).colorScheme.primary,
+            highlightColor: Theme.of(context).colorScheme.secondary,
+            child: const CircleAvatar(
+              minRadius: 32,
             ),
           ),
+          imageBuilder: (context, imageProvider) {
+            return CircleAvatar(
+              backgroundImage: imageProvider,
+            );
+          },
         ),
       ),
       title: Padding(
