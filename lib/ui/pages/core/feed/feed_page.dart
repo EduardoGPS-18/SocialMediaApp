@@ -23,6 +23,15 @@ class _FeedPageState extends State<FeedPage> {
   @override
   void initState() {
     super.initState();
+    widget.presenter.userCommunicateStream.listen((event) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(event),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    });
   }
 
   void navigateToPostPage({required String publishId}) {
@@ -76,17 +85,14 @@ class _FeedPageState extends State<FeedPage> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return ViewPost(
+                      onConfirmDelete: () => widget.presenter.removePublish(publishId: snapshot.data![index].uid),
                       size: widget.size,
-                      publishUser: widget.presenter.loadUserEntityById(
-                          uid: snapshot.data![index].userId),
+                      publishUser: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
                       publish: snapshot.data![index],
-                      onLikeClick: () => widget.presenter
-                          .likeClick(publishId: snapshot.data![index].uid),
+                      onLikeClick: () => widget.presenter.likeClick(publishId: snapshot.data![index].uid),
                       onUserImageClick: () {},
-                      onContentClick: () => navigateToPostPage(
-                          publishId: snapshot.data![index].uid),
-                      onCommentClick: () => navigateToPostPage(
-                          publishId: snapshot.data![index].uid),
+                      onContentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
+                      onCommentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
                       currentUser: widget.presenter.user,
                     );
                   },

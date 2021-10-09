@@ -13,7 +13,11 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
   LikePublish likePublish;
   UnlikePublish unlikePublish;
   LoadPublish loadPublish;
+  DeletePublish deletePublish;
 
+  Rx<String> userCommunicateStreamController = Rx("");
+  @override
+  Stream<String> get userCommunicateStream => userCommunicateStreamController.stream;
   Rx<List<PublishEntity>> publishStreamController = Rx([]);
 
   @override
@@ -26,6 +30,7 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
     required this.likePublish,
     required this.unlikePublish,
     required this.loadPublish,
+    required this.deletePublish,
   });
 
   @override
@@ -42,5 +47,13 @@ class GetxFeedPresenter extends GetxController implements FeedPresenter {
     publish.uidOfWhoLikedIt.contains(currentUserId)
         ? await unlikePublish.unlikePublish(params: UnlikePublishParams(userId: currentUserId, publishId: publishId))
         : await likePublish.likePublish(params: LikePublishParams(userId: currentUserId, publishId: publishId));
+  }
+
+  @override
+  Future<void> removePublish({required String publishId}) async {
+    try {
+      await deletePublish.deletePublish(publishId: publishId);
+      userCommunicateStreamController.subject.add("Removida com sucesso!");
+    } catch (_) {}
   }
 }
