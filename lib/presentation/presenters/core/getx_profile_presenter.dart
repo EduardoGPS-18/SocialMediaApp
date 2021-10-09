@@ -1,8 +1,5 @@
 import 'dart:io';
-
 import 'package:get/get.dart';
-
-import '../../../data/firebase/firebase.dart';
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
@@ -29,32 +26,15 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
       required this.remoteLoadUser,
       required this.remoteSaveUserImage});
 
-  @override
-  Future<void> loadPageData() async {
-    try {
-      updateUserId();
-
-      final posts = await remoteGetPublishesByUserID.getPublishesByUserID(
-          userId: _userId);
-      postsCountController.value = posts.length;
-
-      final userData = await remoteLoadUser.loadUserByUID(uid: _userId).first;
-      userDataController.value = userData;
-    } on FirebaseCloudFirestoreError catch (_) {
-      handlingErrorsStreamController.subject
-          .add(R.string.msgInvalidCredentials);
-    } catch (_) {
-      handlingErrorsStreamController.subject.add("Ocorreu um erro!");
-    }
-  }
-
   Rx<String> handlingErrorsStreamController = Rx<String>("");
   @override
   Stream<String> get handlingError => handlingErrorsStreamController.stream;
 
   final RxInt postsCountController = 0.obs;
   @override
-  Stream<int> get postsCount => postsCountController.stream;
+  Stream<int> get postsCount => remoteGetPublishesByUserID
+      .getPublishesByUserID(userId: _userId)
+      .map((event) => event.length);
 
   @override
   void updateUserId() {
@@ -72,6 +52,11 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
     _userImage = image;
     userImageStreamController.subject.add(image);
     var error = _validateField('image');
+    if (localGetUserId.getUserId() == null || image == null) {
+      throw "Error";
+    }
+    remoteSaveUserImage.saveUserImage(
+        userId: localGetUserId.getUserId()!, userImage: image);
     _userImageErrorStreamController.value = _validateField('image');
     if (error == UIError.noError && _userImage != null) {
       remoteSaveUserImage.saveUserImage(
@@ -101,4 +86,7 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
         return UIError.noError;
     }
   }
+
+  @override
+  Stream<UserEntity> get user => remoteLoadUser.loadUserByUID(uid: _userId);
 }

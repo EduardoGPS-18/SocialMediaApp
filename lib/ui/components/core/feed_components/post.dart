@@ -34,7 +34,7 @@ class _PostState extends State<Post> {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: widget.size.height * 0.12,
+        height: widget.size.height * 0.10,
         width: widget.size.width * 0.85,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -44,7 +44,10 @@ class _PostState extends State<Post> {
                     child: CircleAvatar(
                       radius: widget.size.width * 0.09,
                     ),
-                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
+                    baseColor: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(60),
                     highlightColor: Colors.grey.shade100,
                   )
                 : InkWell(
@@ -56,7 +59,7 @@ class _PostState extends State<Post> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(widget.image),
+                          image: NetworkImage(widget.image),
                         ),
                       ),
                     ),
@@ -74,7 +77,10 @@ class _PostState extends State<Post> {
                         width: widget.size.width * 0.7,
                       ),
                     ),
-                    baseColor: Theme.of(context).colorScheme.onBackground.withAlpha(60),
+                    baseColor: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(60),
                     highlightColor: Colors.grey.shade100,
                   )
                 : Padding(
@@ -90,13 +96,18 @@ class _PostState extends State<Post> {
                               ? _isEmpyt
                                   ? Icon(
                                       Icons.send,
-                                      color: Theme.of(context).colorScheme.onBackground.withAlpha(95),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onBackground
+                                          .withAlpha(95),
                                     )
                                   : IconButton(
                                       onPressed: widget.functionBottonTextField,
                                       icon: Icon(
                                         Icons.send,
-                                        color: Theme.of(context).colorScheme.primary,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                       ),
                                     )
                               : const SizedBox(

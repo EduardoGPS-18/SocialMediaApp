@@ -52,17 +52,27 @@ class Comment extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                          Padding(
-                            padding: EdgeInsets.only(bottom: size.height * 0.015, top: size.height * 0.008),
-                            child: Text(
-                              userSnapshot.data?.name ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          IconButton(onPressed: () {}, icon: const Icon(Icons.more_horiz)),
-                        ]),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: size.height * 0.015,
+                                    top: size.height * 0.008),
+                                child: SizedBox(
+                                  width: size.height * 0.37,
+                                  child: Text(
+                                    userSnapshot.data?.name ?? "",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.more_horiz)),
+                            ]),
                         Text(
                           commentContent,
                           overflow: TextOverflow.ellipsis,

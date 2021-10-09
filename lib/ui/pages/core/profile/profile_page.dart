@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../../domain/entities/entities.dart';
 
+import '../../../../domain/entities/entities.dart';
 import 'profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -22,13 +22,13 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    widget.presenter.loadPageData();
+    widget.presenter.updateUserId();
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UserEntity>(
-        stream: widget.presenter.userData,
+        stream: widget.presenter.user,
         builder: (context, snapshot) {
           if (snapshot.data != null) {
             return Stack(
