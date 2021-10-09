@@ -4,11 +4,13 @@ import '../../factory.dart';
 import '../../usecases/auth/auth.dart';
 
 FeedPresenter makeFeedPresenter() => GetxFeedPresenter(
-      getUser: makeLocalGetUserId(),
-      loadRecentPublishes: makeLoadRecentPublishes(),
-      loadUser: makeLoadUser(),
-      loadPublish: makeLoadPublishByID(),
-      unlikePublish: makeUnlikePublish(),
-      likePublish: makeLikePublish(),
+      localGetUserId: makeLocalGetUserId(),
+      remoteLoadRecentPublishes: makeLoadRecentPublishes(),
+      remoteLoadUser: makeLoadUser(),
+      remoteLoadPublish: makeLoadPublishByID(),
+      remoteUnlikePublish: makeUnlikePublish(),
+      remoteLikePublish: makeLikePublish(),
+      remoteAddPublish: makeAddPublish(),
+      validation: makeCreatePostValidations(),
       deletePublish: makeDeletePublish(),
     );

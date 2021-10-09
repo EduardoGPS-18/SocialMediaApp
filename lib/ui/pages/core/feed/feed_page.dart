@@ -50,13 +50,23 @@ class _FeedPageState extends State<FeedPage> {
               stream: widget.presenter.user,
               builder: (context, snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  return Post(
-                    image: snapshot.data != null ? snapshot.data!.photoUrl : '',
-                    hintTextTextField: "Adicione uma postagem",
-                    functionBottonTextField: () {},
-                    functionImage: () {},
-                    size: widget.size,
-                  );
+                  return StreamBuilder<bool>(
+                      stream: widget.presenter.isValidPublish,
+                      builder: (context, isValidSnapshot) {
+                        return Post(
+                          image: snapshot.data != null
+                              ? snapshot.data!.photoUrl
+                              : '',
+                          hintTextTextField: "Adicione uma postagem",
+                          functionButtonTextField: widget.presenter.addPublish,
+                          functionImage: () {},
+                          size: widget.size,
+                          onTextEditing: widget.presenter.validPublishContent,
+                          isValid: isValidSnapshot.data ?? false,
+                          textFieldController:
+                              widget.presenter.publishTextFieldController,
+                        );
+                      });
                 }
                 return const CircleAvatar();
               },

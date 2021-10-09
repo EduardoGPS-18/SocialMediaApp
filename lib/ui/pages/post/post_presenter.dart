@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import '../../../domain/entities/entities.dart';
 import '../../helpers/errors/errors.dart';
 
@@ -11,7 +12,10 @@ abstract class PostPresenter {
   Stream<PublishEntity> getPublishById({required String id});
   Stream<UserEntity> loadUserById({required String id});
 
-  Future<void> deleteComment({required String commentId, required String publishId});
+  Future<void> deleteComment(
+      {required String commentId, required String publishId});
   Future<void> likeClick({required String publishId});
   Future<void> addComment({required String publishId});
+
+  TextEditingController get commentTextFieldController;
 }

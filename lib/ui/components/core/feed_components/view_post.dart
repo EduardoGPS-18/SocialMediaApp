@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../../domain/entities/entities.dart';
 import '../../../../shared/shared.dart';
 import 'feed_components.dart';
@@ -38,7 +37,9 @@ class _ViewPostState extends State<ViewPost> {
       children: [
         SizedBox(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: widget.size.height * 0.002, horizontal: widget.size.width * 0.004),
+            padding: EdgeInsets.symmetric(
+                vertical: widget.size.height * 0.002,
+                horizontal: widget.size.width * 0.004),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,7 +50,8 @@ class _ViewPostState extends State<ViewPost> {
                       return StreamBuilder<UserEntity>(
                           stream: widget.currentUser,
                           builder: (context, currenUserSnapshot) {
-                            if (currenUserSnapshot.hasData && currenUserSnapshot.data != null) {
+                            if (currenUserSnapshot.hasData &&
+                                currenUserSnapshot.data != null) {
                               return PublishHeader(
                                 currentUser: currenUserSnapshot.data!,
                                 publish: widget.publish,
@@ -76,7 +78,8 @@ class _ViewPostState extends State<ViewPost> {
                       return PublishFooter(
                         size: widget.size,
                         onLikeClick: widget.onLikeClick,
-                        isLiked: widget.publish.uidOfWhoLikedIt.contains(snapshot.data!.uid),
+                        isLiked: widget.publish.uidOfWhoLikedIt
+                            .contains(snapshot.data!.uid),
                         favoriteLength: widget.publish.uidOfWhoLikedIt.length,
                         commentLength: widget.publish.commentsCount,
                         onCommentClick: widget.onCommentClick,

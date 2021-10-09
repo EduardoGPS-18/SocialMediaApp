@@ -23,7 +23,8 @@ class Comment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: size.width * 0.04, vertical: size.width * 0.02),
+      padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.04, vertical: size.width * 0.02),
       child: StreamBuilder<UserEntity>(
         stream: user,
         builder: (ctx, userSnapshot) {
@@ -41,7 +42,7 @@ class Comment extends StatelessWidget {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(userSnapshot.data?.photoUrl ?? ""),
+                          image: NetworkImage(userSnapshot.data!.photoUrl),
                         ),
                       ),
                     ),
@@ -51,11 +52,13 @@ class Comment extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ConstrainedBox(
-                            constraints: BoxConstraints(maxWidth: size.width * 0.6),
+                            constraints:
+                                BoxConstraints(maxWidth: size.width * 0.6),
                             child: Text(
-                              userSnapshot.data?.name ?? "",
+                              userSnapshot.data!.name,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                         ],
@@ -71,16 +74,19 @@ class Comment extends StatelessWidget {
                 Row(
                   children: [
                     Flexible(
-                      child: Text(commentContent, overflow: TextOverflow.ellipsis, maxLines: 10, textAlign: TextAlign.start),
+                      child: Text(commentContent,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 10,
+                          textAlign: TextAlign.start),
                     ),
                   ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: size.height * 0.02),
                   child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Text("$commentDate"),
-                  ),
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                          "${commentDate.day}/${commentDate.month}/${commentDate.year} - ${commentDate.hour}:${commentDate.minute}")),
                 ),
               ],
             );

@@ -6,16 +6,29 @@ import '../../../../domain/entities/entities.dart';
 
 mixin HandleCommentsImpl implements HandleComments {
   @override
-  Future<List<CommentEntity>> getCommentsByPublishId({required String publishId}) async {
-    final response = await firebaseFirestore.collection("publishes").doc(publishId).collection('comments').get();
+  Future<List<CommentEntity>> getCommentsByPublishId(
+      {required String publishId}) async {
+    final response = await firebaseFirestore
+        .collection("publishes")
+        .doc(publishId)
+        .collection('comments')
+        .get();
 
-    final list = response.docs.map((e) => RemoteCommentModel.fromMap(e.data()).toEntity()).toList();
+    final list = response.docs
+        .map((e) => RemoteCommentModel.fromMap(e.data()).toEntity())
+        .toList();
     return list;
   }
 
   @override
-  Stream<QuerySnapshot<Map<String, dynamic>>> getCommentsStreamByPublishId({required String publishId}) {
-    final response = firebaseFirestore.collection("publishes").doc(publishId).collection('comments').snapshots();
+  Stream<QuerySnapshot<Map<String, dynamic>>> getCommentsStreamByPublishId(
+      {required String publishId}) {
+    final response = firebaseFirestore
+        .collection("publishes")
+        .doc(publishId)
+        .collection('comments')
+        .orderBy('createdAt')
+        .snapshots();
     return response;
   }
 }

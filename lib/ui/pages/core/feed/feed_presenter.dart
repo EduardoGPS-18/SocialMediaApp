@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import '../../../helpers/helpers.dart';
 import '../../../../../../domain/entities/entities.dart';
 
 abstract class FeedPresenter {
@@ -8,4 +10,11 @@ abstract class FeedPresenter {
   Stream<String> get userCommunicateStream;
   Stream<UserEntity> get user;
   Stream<List<PublishEntity>> get publishStream;
+  Stream<bool> get isValidPublish;
+  Stream<UIError> get errorStream;
+
+  TextEditingController get publishTextFieldController;
+
+  Future<void> addPublish();
+  void validPublishContent(String value);
 }
