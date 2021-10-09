@@ -1,5 +1,5 @@
 import '../../../entities/entities.dart';
 
 abstract class LoadPublish {
-  Future<PublishEntity> findPublishById({required String publishId});
+  Stream<PublishEntity> findPublishById({required String publishId});
 }
