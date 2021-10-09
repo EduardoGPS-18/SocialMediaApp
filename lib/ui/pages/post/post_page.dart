@@ -22,7 +22,7 @@ class _PostPageState extends State<PostPage> {
     Size size = MediaQuery.of(context).size;
     String publishId = ModalRoute.of(context)?.settings.arguments as String;
     if (publishId.isEmpty) {
-      Navigator.of(context).pop();
+      Navigator.pop(context);
     }
     return StreamBuilder<PublishEntity>(
       stream: widget.presenter.getPublishById(id: publishId),
@@ -39,7 +39,6 @@ class _PostPageState extends State<PostPage> {
                   children: [
                     ViewPost(
                       size: size,
-                      
                       currentUser: widget.presenter.currentUser,
                       publish: publishSnapshot.data!,
                       publishUser: widget.presenter.loadUserById(id: publishSnapshot.data!.userId),

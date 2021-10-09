@@ -35,7 +35,7 @@ class _PostState extends State<Post> {
     return Center(
       child: SizedBox(
         height: widget.size.height * 0.12,
-        width: widget.size.width * 0.9,
+        width: widget.size.width * 0.85,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -56,7 +56,7 @@ class _PostState extends State<Post> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: NetworkImage(widget.image),
+                          image: AssetImage(widget.image),
                         ),
                       ),
                     ),
@@ -81,7 +81,7 @@ class _PostState extends State<Post> {
                     padding: const EdgeInsets.only(left: 10),
                     child: SizedBox(
                       height: widget.size.height * 0.09,
-                      width: widget.size.width * 0.7,
+                      width: widget.size.width * 0.65,
                       child: TextField(
                         onChanged: widget.onTextEditing,
                         onEditingComplete: widget.onEditingComplete,

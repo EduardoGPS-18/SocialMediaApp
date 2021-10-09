@@ -6,4 +6,5 @@ import 'core.dart';
 Widget makeCorePage() => CorePageApp(
       presenter: makeCorePresenter(),
       feedPresenter: makeFeedPresenter(),
+      profilePresenter: makeProfilePresenter(),
     );

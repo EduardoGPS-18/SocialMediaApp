@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import '../../helpers/helpers.dart';
 
 abstract class AuthPagePresenter {
   Stream<bool> get isFormValid;
-  Stream<int> get pageIndex;
+  ValueNotifier<int> get pageIndexNotifier;
 
   Stream<File?> get userImage;
   Stream<UIError> get userImageError;
@@ -15,8 +17,6 @@ abstract class AuthPagePresenter {
   Stream<String> get handlingError;
 
   Stream<String> get navigateToStream;
-
-  void setPageIndex(int value);
 
   void setImage();
   void validateEmail(String email);

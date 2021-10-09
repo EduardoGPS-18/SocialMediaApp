@@ -7,19 +7,15 @@ class CorePageApp extends StatefulWidget {
   final CorePresenter presenter;
   final PageController pageController = PageController();
   final FeedPresenter feedPresenter;
-  CorePageApp({
-    Key? key,
-    required this.presenter,
-    required this.feedPresenter,
-  }) : super(key: key);
+  final ProfilePresenter profilePresenter;
+
+  CorePageApp({Key? key, required this.presenter, required this.feedPresenter, required this.profilePresenter}) : super(key: key);
 
   @override
   _CorePageAppState createState() => _CorePageAppState();
 }
 
 class _CorePageAppState extends State<CorePageApp> {
-  int _currentIndexBottomNavigationBar = 0;
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +25,16 @@ class _CorePageAppState extends State<CorePageApp> {
         backgroundColor: Colors.red,
       ));
     });
+
     widget.presenter.updateUserId();
+
+    widget.presenter.pageIndexNotifier.addListener(() {
+      widget.pageController.animateToPage(
+        widget.presenter.pageIndexNotifier.value,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -51,39 +56,34 @@ class _CorePageAppState extends State<CorePageApp> {
             ),
             ProfilePage(
               size: size,
-              name: "Pabricio",
-              image: "lib/ui/assets/images/test.jpg",
-              postQuantity: 30,
+              presenter: widget.profilePresenter,
             )
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 15,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          onTap: (index) {
-            setState(() {
-              if (index == 1) {
-                Navigator.of(context).pushNamed('/add-post');
-              } else {
-                _currentIndexBottomNavigationBar = index;
-              }
-            });
-          },
-          currentIndex: _currentIndexBottomNavigationBar,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Feed',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_outline),
-              label: 'Postar',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Perfil',
-            ),
-          ],
+        bottomNavigationBar: ValueListenableBuilder<int>(
+          valueListenable: widget.presenter.pageIndexNotifier,
+          builder: (context, value, _) => BottomNavigationBar(
+            elevation: 15,
+            backgroundColor: Theme.of(context).colorScheme.background,
+            onTap: (index) {
+              widget.presenter.pageIndexNotifier.value = index;
+            },
+            currentIndex: value,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Feed',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_circle_outline),
+                label: 'Postar',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_circle),
+                label: 'Perfil',
+              ),
+            ],
+          ),
         ),
       ),
     );
