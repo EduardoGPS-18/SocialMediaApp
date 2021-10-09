@@ -9,7 +9,12 @@ class CorePageApp extends StatefulWidget {
   final FeedPresenter feedPresenter;
   final ProfilePresenter profilePresenter;
 
-  CorePageApp({Key? key, required this.presenter, required this.feedPresenter, required this.profilePresenter}) : super(key: key);
+  CorePageApp(
+      {Key? key,
+      required this.presenter,
+      required this.feedPresenter,
+      required this.profilePresenter})
+      : super(key: key);
 
   @override
   _CorePageAppState createState() => _CorePageAppState();
@@ -37,7 +42,10 @@ class _CorePageAppState extends State<CorePageApp> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(text: "Feed"),
+        appBar: CustomPageViewAppBar(
+          pageViewNames: const ["Feed", "Criar postagem", "Perfil"],
+          index: widget.presenter.pageIndexNotifier,
+        ),
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: widget.pageController,
