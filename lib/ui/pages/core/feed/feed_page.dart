@@ -61,6 +61,15 @@ class _FeedPageState extends State<FeedPage> {
             stream: widget.presenter.publishStream,
             builder: (context, snapshot) {
               if (snapshot.data != null && snapshot.hasData) {
+                snapshot.data?.sort(
+                  (a, b) {
+                    return a.createdAt.isBefore(b.createdAt)
+                        ? 1
+                        : a.createdAt.isAtSameMomentAs(b.createdAt)
+                            ? 0
+                            : -1;
+                  },
+                );
                 return ListView.builder(
                   primary: false,
                   shrinkWrap: true,
