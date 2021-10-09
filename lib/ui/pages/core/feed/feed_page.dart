@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../shared/shared.dart';
-import '../../../components/components.dart';
 
 import '../../../../../../domain/entities/entities.dart';
-
+import '../../../../shared/shared.dart';
+import '../../../components/components.dart';
 import 'feed_presenter.dart';
 
 class FeedPage extends StatefulWidget {
@@ -26,6 +25,10 @@ class _FeedPageState extends State<FeedPage> {
     super.initState();
   }
 
+  void navigateToPostPage({required String publishId}) {
+    Navigator.of(context).pushNamed('/post-detail', arguments: publishId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,8 +37,8 @@ class _FeedPageState extends State<FeedPage> {
         children: [
           SizedBox(
             height: widget.size.height * 0.15,
-            child: FutureBuilder<UserEntity>(
-              future: widget.presenter.user,
+            child: StreamBuilder<UserEntity>(
+              stream: widget.presenter.user,
               builder: (context, snapshot) {
                 return Post(
                   image: snapshot.data != null ? snapshot.data!.photoUrl : '',
@@ -62,14 +65,12 @@ class _FeedPageState extends State<FeedPage> {
                   itemBuilder: (context, index) {
                     return ViewPost(
                       size: widget.size,
-                      publishUser: widget.presenter.loadUserEntityById(
-                          uid: snapshot.data![index].userId),
+                      publishUser: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
                       publish: snapshot.data![index],
-                      onLikeClick: () => widget.presenter
-                          .likeImage(publishId: snapshot.data![index].uid),
+                      onLikeClick: () => widget.presenter.likeClick(publishId: snapshot.data![index].uid),
                       onUserImageClick: () {},
-                      onContentClick: () {},
-                      onCommentClick: () {},
+                      onContentClick: () => navigateToPostPage(publishId: snapshot.data?[index].uid ?? ""),
+                      onCommentClick: () => navigateToPostPage(publishId: snapshot.data?[index].uid ?? ""),
                       currentUser: widget.presenter.user,
                     );
                   },
