@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../domain/entities/entities.dart';
-import '../../../../presentation/presenters/shared/shared.dart';
 import '../../../../shared/shared.dart';
 import '../../../components/components.dart';
 import 'feed_presenter.dart';
@@ -20,14 +19,11 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> with NavigationController {
-  @override
-  Stream<String> get pathStream => widget.presenter.pathStream;
-
+class _FeedPageState extends State<FeedPage> {
   @override
   void initState() {
     super.initState();
-    navigate(context);
+    
 
     widget.presenter.updateUserId();
     widget.presenter.userCommunicateStream.listen((event) {

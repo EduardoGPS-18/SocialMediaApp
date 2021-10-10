@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../domain/entities/entities.dart';
-import '../../../../presentation/presenters/shared/shared.dart';
 import 'profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,17 +18,13 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> with NavigationController {
+class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    navigate(context);
 
     widget.presenter.updateUserId();
   }
-
-  @override
-  Stream<String> get pathStream => widget.presenter.pathStream;
 
   @override
   Widget build(BuildContext context) {
