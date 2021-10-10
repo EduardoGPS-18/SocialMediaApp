@@ -22,6 +22,10 @@ dependencies:
   firebase_auth: ^3.1.2
   firebase_core: ^1.7.0
   firebase_crashlytics: ^2.2.1
+  get: ^4.3.8
+  flutter_native_splash: ^1.2.4
+  firebase_storage: ^10.0.4
+  cached_network_image: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +37,7 @@ flutter:
   uses-material-design: true
   assets:
     - lib/ui/assets/images/
+    - lib/ui/assets/icons/
 
 flutter_icons:
   android: true

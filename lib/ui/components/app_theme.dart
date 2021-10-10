@@ -8,8 +8,7 @@ mixin AppTheme {
   static final Color _lightFocusColor = _lightFillColor.withOpacity(0.12);
   static final Color _darkFocusColor = _darkFillColor.withOpacity(0.12);
 
-  static ThemeData lightThemeData =
-      themeData(lightColorScheme, _lightFocusColor);
+  static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
   static ThemeData darkThemeData = themeData(darkColorScheme, _darkFocusColor);
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
@@ -22,7 +21,7 @@ mixin AppTheme {
       elevatedButtonTheme: elevatedButtonThemeData(colorScheme),
       errorColor: colorScheme.error,
       focusColor: focusColor,
-      fontFamily: 'Poppins',
+      fontFamily: 'Lato',
       highlightColor: Colors.transparent,
       iconTheme: IconThemeData(color: colorScheme.onPrimary),
       inputDecorationTheme: inputDecorationTheme(colorScheme),
@@ -36,17 +35,17 @@ mixin AppTheme {
   static const ColorScheme lightColorScheme = ColorScheme(
     background: Color(0xFFFCFCFC),
     brightness: Brightness.light,
-    error: Color(0xFFD83838),
-    onBackground: Color(0xFF303030),
+    error: Color(0xFFFC2A36),
+    onBackground: Color(0xFF000000), //preto total por cima do fundo
     onError: Color(0xFFFCFCFC),
-    onPrimary: Color(0xFFFCFCFC),
-    onSecondary: Color(0xFFFCFCFC),
-    onSurface: Color(0xFF303030),
-    primary: Color(0xFF31844A),
-    primaryVariant: Color(0xFF63B476),
-    secondary: Color(0xFF367E9B),
-    secondaryVariant: Color(0xFF6AADCC),
-    surface: Color(0xFFFFFFFF),
+    onPrimary: Color(0xFF262626), //para letras em cima do primario
+    onSecondary: Color(0xFFFFFFFF), //por cima de cores desativas
+    onSurface: Color(0xFF000000),
+    primary: Color(0xFFF6CB46),
+    primaryVariant: Color(0xFFFFEE00), //amarelo mais forte
+    secondary: Color(0xFFD4D4D4), //cores desativas
+    secondaryVariant: Color(0xFF489ae3), //cores a parte
+    surface: Color(0xFFD4D4D4),
   );
 
   static const ColorScheme darkColorScheme = ColorScheme(
@@ -65,8 +64,7 @@ mixin AppTheme {
     surface: Color(0xFF303030),
   );
 
-  static ElevatedButtonThemeData elevatedButtonThemeData(
-      ColorScheme colorScheme) {
+  static ElevatedButtonThemeData elevatedButtonThemeData(ColorScheme colorScheme) {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0.0,
@@ -124,65 +122,65 @@ mixin AppTheme {
   static const _medium = FontWeight.w500;
 
   static final TextTheme _textTheme = TextTheme(
-    headline1: GoogleFonts.poppins(
-      fontSize: 93,
+    headline1: GoogleFonts.lato(
+      fontSize: 101,
       fontWeight: _light,
       letterSpacing: -1.5,
     ),
-    headline2: GoogleFonts.poppins(
-      fontSize: 58,
+    headline2: GoogleFonts.lato(
+      fontSize: 63,
       fontWeight: _light,
       letterSpacing: -0.5,
     ),
-    headline3: GoogleFonts.poppins(
-      fontSize: 46,
+    headline3: GoogleFonts.lato(
+      fontSize: 50,
       fontWeight: _regular,
     ),
-    headline4: GoogleFonts.poppins(
-      fontSize: 33,
+    headline4: GoogleFonts.lato(
+      fontSize: 36,
       fontWeight: _regular,
       letterSpacing: 0.25,
     ),
-    headline5: GoogleFonts.poppins(
-      fontSize: 23,
+    headline5: GoogleFonts.lato(
+      fontSize: 25,
       fontWeight: _regular,
     ),
-    headline6: GoogleFonts.poppins(
-      fontSize: 19,
+    headline6: GoogleFonts.lato(
+      fontSize: 21,
       fontWeight: _medium,
       letterSpacing: 0.15,
     ),
-    subtitle1: GoogleFonts.poppins(
-      fontSize: 15,
+    subtitle1: GoogleFonts.lato(
+      fontSize: 17,
       fontWeight: _regular,
       letterSpacing: 0.15,
     ),
-    subtitle2: GoogleFonts.poppins(
-      fontSize: 13,
+    subtitle2: GoogleFonts.lato(
+      fontSize: 15,
       fontWeight: _medium,
       letterSpacing: 0.1,
     ),
-    bodyText1: GoogleFonts.poppins(
-      fontSize: 15,
+    bodyText1: GoogleFonts.lato(
+      fontSize: 17,
       fontWeight: _regular,
       letterSpacing: 0.5,
     ),
-    bodyText2: GoogleFonts.poppins(
-      fontSize: 13,
+    bodyText2: GoogleFonts.lato(
+      fontSize: 15,
       fontWeight: _regular,
       letterSpacing: 0.25,
     ),
-    button: GoogleFonts.poppins(
-      fontSize: 13,
+    button: GoogleFonts.lato(
+      fontSize: 15,
       fontWeight: _medium,
       letterSpacing: 1.25,
     ),
-    caption: GoogleFonts.poppins(
-      fontSize: 12,
+    caption: GoogleFonts.lato(
+      fontSize: 13,
       fontWeight: _regular,
       letterSpacing: 0.4,
     ),
-    overline: GoogleFonts.poppins(
+    overline: GoogleFonts.lato(
       fontSize: 10,
       fontWeight: _regular,
       letterSpacing: 1.5,
