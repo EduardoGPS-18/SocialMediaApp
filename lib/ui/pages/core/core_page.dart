@@ -40,6 +40,12 @@ class _CorePageAppState extends State<CorePageApp> {
         appBar: CustomPageViewAppBar(
           pageViewNames: const ["Feed", "Criar postagem", "Perfil"],
           index: widget.presenter.pageIndexNotifier,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
