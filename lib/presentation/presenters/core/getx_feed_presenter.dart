@@ -10,7 +10,7 @@ import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
 import '../shared/shared.dart';
 
-class GetxFeedPresenter extends GetxController with UpdateUserId, NavigationImpl implements FeedPresenter {
+class GetxFeedPresenter extends GetxController with UpdateUserId implements FeedPresenter {
   AddPublish remoteAddPublish;
   LoadUser remoteLoadUser;
   @override
