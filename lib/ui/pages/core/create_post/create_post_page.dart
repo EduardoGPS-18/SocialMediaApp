@@ -38,7 +38,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
           stream: widget.presenter.user,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              return Column(
+              return ListView(
                 children: [
                   Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
@@ -65,22 +65,19 @@ class _CreatePostPageState extends State<CreatePostPage> {
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: size.width * 0.06),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight:
-                            isFocus ? size.height * 0.285 : size.height * 0.69,
-                      ),
+                    child: SizedBox(
+                      height: size.height * 0.73,
                       child: TextFormField(
+                        maxLines: 100,
                         focusNode: _textFocus,
                         style: const TextStyle(
                           fontSize: 20,
                         ),
-                        minLines: 2,
                         onChanged: widget.presenter.validPublishContent,
-                        maxLines:
-                            10, //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
+                        //Eu quero que mando esteja focado fique apenas 4 linha quando não tiver fica 13
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(
+                          isDense: true,
                           hintStyle: TextStyle(fontSize: 20),
                           hintText: "Adicione o texto da sua postagem",
                           enabledBorder: InputBorder.none,
