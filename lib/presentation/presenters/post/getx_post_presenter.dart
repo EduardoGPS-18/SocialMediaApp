@@ -13,7 +13,7 @@ import '../../../ui/pages/post/post_presenter.dart';
 import '../../protocols/protocols.dart';
 import '../shared/shared.dart';
 
-class GetxPostPresenter extends GetxController with UpdateUserId, NavigationImpl implements PostPresenter {
+class GetxPostPresenter extends GetxController with UpdateUserId implements PostPresenter {
   LoadUser remoteLoadUser;
   @override
   GetUserId localGetUserId;
@@ -33,6 +33,7 @@ class GetxPostPresenter extends GetxController with UpdateUserId, NavigationImpl
 
   Rx<UIError> commentErrorStreamController = Rx(UIError.noError);
   Stream<UIError> get commentErrorStream => commentErrorStreamController.stream;
+
 
   @override
   Rx<String> errorStreamController = Rx("");
