@@ -1,12 +1,16 @@
 import 'dart:io';
+
 import 'package:get/get.dart';
+
 import '../../../domain/entities/user_entity.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
+import '../shared/shared.dart';
 
-class GetxProfilePresenter extends GetxController implements ProfilePresenter {
+class GetxProfilePresenter extends GetxController with UpdateUserId implements ProfilePresenter {
+  @override
   final GetUserId localGetUserId;
   final LoadPublishesByUserID remoteGetPublishesByUserID;
   final GetImage localGetImage;
@@ -16,51 +20,54 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
 
   File? _userImage;
 
-  String _userId = '';
+  String? _userId;
 
-  GetxProfilePresenter(
-      {required this.localGetUserId,
-      required this.remoteGetPublishesByUserID,
-      required this.localGetImage,
-      required this.validation,
-      required this.remoteLoadUser,
-      required this.remoteSaveUserImage});
-
-  Rx<String> handlingErrorsStreamController = Rx<String>("");
   @override
-  Stream<String> get handlingError => handlingErrorsStreamController.stream;
+  String? get userId => _userId;
+  @override
+  set userId(String? userId) => _userId = userId;
+
+  GetxProfilePresenter({
+    required this.localGetUserId,
+    required this.remoteGetPublishesByUserID,
+    required this.localGetImage,
+    required this.validation,
+    required this.remoteLoadUser,
+    required this.remoteSaveUserImage,
+  });
+
+  @override
+  Rx<String> errorStreamController = Rx<String>("");
+  @override
+  Stream<String> get errorStream => errorStreamController.stream;
 
   final RxInt postsCountController = 0.obs;
   @override
-  Stream<int> get postsCount => remoteGetPublishesByUserID
-      .getPublishesByUserID(userId: _userId)
-      .map((event) => event.length);
-
-  @override
-  void updateUserId() {
-    _userId = localGetUserId.getUserId() ?? '';
+  Stream<int> get postsCount {
+    updateUserId();
+    return remoteGetPublishesByUserID.getPublishesByUserID(userId: _userId!).map((event) => event.length);
   }
-
-  Rx<UserEntity> userDataController =
-      const UserEntity(uid: '', email: '', name: '', photoUrl: '').obs;
-  @override
-  Stream<UserEntity> get userData => userDataController.stream;
 
   @override
   Future<void> setImage() async {
-    File? image = await localGetImage.getImage();
-    _userImage = image;
-    userImageStreamController.subject.add(image);
-    var error = _validateField('image');
-    if (localGetUserId.getUserId() == null || image == null) {
-      throw "Error";
-    }
-    remoteSaveUserImage.saveUserImage(
-        userId: localGetUserId.getUserId()!, userImage: image);
-    _userImageErrorStreamController.value = _validateField('image');
-    if (error == UIError.noError && _userImage != null) {
-      remoteSaveUserImage.saveUserImage(
-          userId: _userId, userImage: _userImage!);
+    try {
+      File? image = await localGetImage.getImage();
+      _userImage = image;
+      userImageStreamController.subject.add(image);
+      var error = _validateField('image');
+
+      if (image == null) {
+        return;
+      }
+      updateUserId();
+
+      remoteSaveUserImage.saveUserImage(userId: _userId!, userImage: image);
+      _userImageErrorStreamController.value = _validateField('image');
+      if (error == UIError.noError && _userImage != null) {
+        remoteSaveUserImage.saveUserImage(userId: _userId!, userImage: _userImage!);
+      }
+    } catch (e) {
+      errorStreamController.subject.add(R.string.msgUnexpectedError);
     }
   }
 
@@ -88,5 +95,8 @@ class GetxProfilePresenter extends GetxController implements ProfilePresenter {
   }
 
   @override
-  Stream<UserEntity> get user => remoteLoadUser.loadUserByUID(uid: _userId);
+  Stream<UserEntity> get user {
+    updateUserId();
+    return remoteLoadUser.loadUserByUID(uid: _userId!);
+  }
 }

@@ -10,11 +10,15 @@ class RemoteLikePublish implements LikePublish {
 
   @override
   Future<void> likePublish({required LikePublishParams params}) async {
-    final publish = firebaseFirestore.getPublishDocumentByUid(uid: params.publishId);
-    final listLikes = (await publish.get()).data()?["uidOfWhoLikedIt"] ?? [];
+    try {
+      final publish = firebaseFirestore.getPublishDocumentByUid(uid: params.publishId);
+      final listLikes = (await publish.get()).data()?["uidOfWhoLikedIt"] ?? [];
 
-    publish.update({
-      'uidOfWhoLikedIt': [...listLikes, params.userId]
-    });
+      publish.update({
+        'uidOfWhoLikedIt': [...listLikes, params.userId]
+      });
+    } catch (_) {
+      rethrow;
+    }
   }
 }

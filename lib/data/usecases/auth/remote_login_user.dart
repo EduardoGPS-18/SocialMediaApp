@@ -19,7 +19,7 @@ class RemoteLoginUser implements LoginUser {
       final user = cloudFirestore.getUserById(id: userCred.user?.uid);
       var userData = await user.map((event) => event.data() ?? {}).first;
       return RemoteUserModel.fromMap(userData).toEntity();
-    } on FirebaseAuthenticationError catch (_) {
+    } catch (_) {
       rethrow;
     }
   }

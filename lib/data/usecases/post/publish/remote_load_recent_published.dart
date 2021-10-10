@@ -12,9 +12,13 @@ class RemoteLoadRecentPublishes implements LoadRecentPublishes {
 
   @override
   Stream<List<PublishEntity>> getPublishesByDate({required DateTime date}) {
-    final publishes = firebaseCloudFirestore.getPublishesStream();
-    var publishesStream = publishes.map((event) => event.docs.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList());
+    try {
+      final publishes = firebaseCloudFirestore.getPublishesStream();
+      var publishesStream = publishes.map((event) => event.docs.map((e) => RemotePublishModel.fromMap(e.data()).toEntity()).toList());
 
-    return publishesStream.map((event) => event.where((element) => element.createdAt.isAfter(date)).toList());
+      return publishesStream.map((event) => event.where((element) => element.createdAt.isAfter(date)).toList());
+    } catch (_) {
+      rethrow;
+    }
   }
 }

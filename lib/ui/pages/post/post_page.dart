@@ -18,6 +18,13 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   @override
+  void initState() {
+    super.initState();
+
+    widget.presenter.updateUserId();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     String publishId = ModalRoute.of(context)?.settings.arguments as String;
@@ -38,12 +45,30 @@ class _PostPageState extends State<PostPage> {
                 child: SizedBox.expand(
                   child: Column(
                     children: [
-                      ViewPost(
-                        size: size,
-                        currentUser: widget.presenter.currentUser,
-                        publish: publishSnapshot.data!,
-                        publishUser: widget.presenter
-                            .loadUserById(id: publishSnapshot.data!.userId),
+                      StreamBuilder<UserEntity>(
+                        stream: widget.presenter.currentUser,
+                        builder: (context, currentUserSnapshot) {
+                          if (currentUserSnapshot.hasData && currentUserSnapshot.data != null) {
+                            return StreamBuilder<UserEntity>(
+                              stream: widget.presenter.loadUserById(id: publishSnapshot.data!.userId),
+                              builder: (context, publishUserSnapshot) {
+                                if (publishUserSnapshot.hasData && publishUserSnapshot.data != null) {
+                                  return ViewPost(
+                                    size: size,
+                                    currentUser: currentUserSnapshot.data!,
+                                    publish: publishSnapshot.data!,
+                                    publishUser: publishUserSnapshot.data!,
+                                    onLikeClick: () => widget.presenter.likeClick(publishId: publishId),
+                                  );
+                                } else {
+                                  return const Center();
+                                }
+                              },
+                            );
+                          } else {
+                            return const Center();
+                          }
+                        },
                       ),
                       CustomDivider(height: 0.002, size: size),
                       StreamBuilder<List<CommentEntity>>(
@@ -55,9 +80,7 @@ class _PostPageState extends State<PostPage> {
                                 primary: false,
                                 shrinkWrap: true,
                                 itemCount: commentsSnapshot.data?.length ?? 0,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        CustomDivider(
+                                separatorBuilder: (BuildContext context, int index) => CustomDivider(
                                   height: 0.005,
                                   size: size,
                                 ),
@@ -65,35 +88,21 @@ class _PostPageState extends State<PostPage> {
                                   return StreamBuilder<UserEntity>(
                                     stream: widget.presenter.currentUser,
                                     builder: (context, currentUserSnapshot) {
-                                      if (currentUserSnapshot.hasData &&
-                                          currentUserSnapshot.data != null) {
+                                      if (currentUserSnapshot.hasData && currentUserSnapshot.data != null) {
                                         return Comment(
-                                          configButton:
-                                              CustomShowModalBottomSheet(
+                                          configButton: CustomShowModalBottomSheet(
                                             size: size,
-                                            onConfirmDelete: () =>
-                                                widget.presenter.deleteComment(
-                                              commentId: commentsSnapshot
-                                                  .data![index].uid,
-                                              publishId:
-                                                  publishSnapshot.data!.uid,
+                                            onConfirmDelete: () => widget.presenter.deleteComment(
+                                              commentId: commentsSnapshot.data![index].uid,
+                                              publishId: publishSnapshot.data!.uid,
                                             ),
-                                            commentIsUser: commentsSnapshot
-                                                    .data![index].userId ==
-                                                currentUserSnapshot.data!.uid,
+                                            commentIsUser: commentsSnapshot.data![index].userId == currentUserSnapshot.data!.uid,
                                           ),
                                           size: size,
                                           onUserImageClick: () {},
-                                          user: widget.presenter.loadUserById(
-                                              id: commentsSnapshot
-                                                      .data?[index].userId ??
-                                                  ""),
-                                          commentContent: commentsSnapshot
-                                                  .data?[index].content ??
-                                              "Sem conteudo!",
-                                          commentDate: commentsSnapshot
-                                                  .data?[index].createdAt ??
-                                              DateTime.now(),
+                                          user: widget.presenter.loadUserById(id: commentsSnapshot.data?[index].userId ?? ""),
+                                          commentContent: commentsSnapshot.data?[index].content ?? "Sem conteudo!",
+                                          commentDate: commentsSnapshot.data?[index].createdAt ?? DateTime.now(),
                                         );
                                       } else {
                                         return const Center();
@@ -120,18 +129,12 @@ class _PostPageState extends State<PostPage> {
                                   image: userSnapshot.data!.photoUrl,
                                   hintTextTextField: "Adicione um comentário",
                                   functionButtonTextField: () =>
-                                      (isValidSnapshot.hasData &&
-                                              isValidSnapshot.data!)
-                                          ? widget.presenter
-                                              .addComment(publishId: publishId)
-                                          : null,
+                                      (isValidSnapshot.hasData && isValidSnapshot.data!) ? widget.presenter.addComment(publishId: publishId) : null,
                                   functionImage: () {},
-                                  onTextEditing:
-                                      widget.presenter.validateComment,
+                                  onTextEditing: widget.presenter.validateComment,
                                   isValid: isValidSnapshot.data ?? false,
                                   size: size,
-                                  textFieldController: widget
-                                      .presenter.commentTextFieldController,
+                                  textFieldController: widget.presenter.commentTextFieldController,
                                 );
                               },
                             );

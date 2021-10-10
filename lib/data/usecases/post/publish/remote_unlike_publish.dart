@@ -7,13 +7,17 @@ class RemoteUnlikePublish implements UnlikePublish {
 
   @override
   Future<void> unlikePublish({required UnlikePublishParams params}) async {
-    final publish = firebaseCloudFirestore.getPublishesCollection().doc(params.publishId);
-    final listLikes = List.from((await publish.get()).data()?["uidOfWhoLikedIt"] ?? []);
+    try {
+      final publish = firebaseCloudFirestore.getPublishesCollection().doc(params.publishId);
+      final listLikes = List.from((await publish.get()).data()?["uidOfWhoLikedIt"] ?? []);
 
-    listLikes.contains(params.userId) ? listLikes.removeWhere((user) => user == params.userId) : null;
+      listLikes.contains(params.userId) ? listLikes.removeWhere((user) => user == params.userId) : null;
 
-    publish.update({
-      "uidOfWhoLikedIt": [...listLikes]
-    });
+      publish.update({
+        "uidOfWhoLikedIt": [...listLikes]
+      });
+    } catch (_) {
+      rethrow;
+    }
   }
 }

@@ -14,8 +14,12 @@ class RemoteLoadUser implements LoadUser {
 
   @override
   Stream<UserEntity> loadUserByUID({required String uid}) {
-    final response = firebaseCloudFirestore.getUserById(id: uid);
-    final userStream = response.map((event) => RemoteUserModel.fromMap(event.data() ?? {}).toEntity());
-    return userStream;
+    try {
+      final response = firebaseCloudFirestore.getUserById(id: uid);
+      final userStream = response.map((event) => RemoteUserModel.fromMap(event.data() ?? {}).toEntity());
+      return userStream;
+    } catch (_) {
+      rethrow;
+    }
   }
 }

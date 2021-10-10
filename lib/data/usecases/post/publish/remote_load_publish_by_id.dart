@@ -12,9 +12,13 @@ class RemoteLoadPublishById implements LoadPublish {
 
   @override
   Stream<PublishEntity> findPublishById({required String publishId}) {
-    final response = firebaseCloudFirestore.getPublishesCollection().doc(publishId).snapshots();
-    final stream = response.map((event) => RemotePublishModel.fromMap(event.data() ?? {}).toEntity());
+    try {
+      final response = firebaseCloudFirestore.getPublishesCollection().doc(publishId).snapshots();
+      final stream = response.map((event) => RemotePublishModel.fromMap(event.data() ?? {}).toEntity());
 
-    return stream;
+      return stream;
+    } catch (_) {
+      rethrow;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+
 import '../../../data/firebase/firebase.dart';
 import '../../../domain/entities/comment_entity.dart';
 import '../../../domain/entities/publish_entity.dart';
@@ -10,9 +11,11 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/post/post_presenter.dart';
 import '../../protocols/protocols.dart';
+import '../shared/shared.dart';
 
-class GetxPostPresenter extends GetxController implements PostPresenter {
+class GetxPostPresenter extends GetxController with UpdateUserId implements PostPresenter {
   LoadUser remoteLoadUser;
+  @override
   GetUserId localGetUserId;
   LoadPublish remoteLoadPublish;
   AddComment remoteAddComment;
@@ -22,9 +25,20 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   UnlikePublish remoteUnlikePublish;
   DeleteComment remoteDeleteComment;
 
-  Rx<UIError> errorStreamController = Rx(UIError.noError);
+  String? _userId;
   @override
-  Stream<UIError> get errorStream => errorStreamController.stream;
+  String? get userId => _userId;
+  @override
+  set userId(String? v) => _userId = v;
+
+  Rx<UIError> commentErrorStreamController = Rx(UIError.noError);
+  Stream<UIError> get commentErrorStream => commentErrorStreamController.stream;
+
+
+  @override
+  Rx<String> errorStreamController = Rx("");
+  @override
+  Stream<String> get errorStream => errorStreamController.stream;
 
   RxBool isValidCommentStreamController = RxBool(false);
   @override
@@ -54,8 +68,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   }
 
   @override
-  Stream<PublishEntity> getPublishById({required String id}) =>
-      remoteLoadPublish.findPublishById(publishId: id);
+  Stream<PublishEntity> getPublishById({required String id}) => remoteLoadPublish.findPublishById(publishId: id);
 
   @override
   Stream<UserEntity> loadUserById({required String id}) {
@@ -67,9 +80,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
     var userId = localGetUserId.getUserId();
     if (userId == null) throw "Error";
     try {
-      await remoteAddComment.addComment(
-          params: AddCommentParams(
-              content: _commentContent, publishId: publishId, userId: userId));
+      await remoteAddComment.addComment(params: AddCommentParams(content: _commentContent, publishId: publishId, userId: userId));
       _commentContent = '';
       commentController.clear();
       _validateForm();
@@ -86,8 +97,7 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
   }
 
   void _validateForm() {
-    final isValid = _commentContent.isNotEmpty &&
-        errorStreamController.value == UIError.noError;
+    final isValid = _commentContent.isNotEmpty && commentErrorStreamController.value == UIError.noError;
     isValidCommentStreamController.subject.add(isValid);
   }
 
@@ -114,25 +124,18 @@ class GetxPostPresenter extends GetxController implements PostPresenter {
 
   @override
   Future<void> likeClick({required String publishId}) async {
-    final publish =
-        await remoteLoadPublish.findPublishById(publishId: publishId).first;
-    final currentUser = await remoteLoadUser
-        .loadUserByUID(uid: localGetUserId.getUserId() ?? "")
-        .first;
+    final publish = await remoteLoadPublish.findPublishById(publishId: publishId).first;
+    final currentUser = await remoteLoadUser.loadUserByUID(uid: localGetUserId.getUserId() ?? "").first;
     final currentUserId = currentUser.uid;
     publish.uidOfWhoLikedIt.contains(currentUserId)
-        ? await remoteUnlikePublish.unlikePublish(
-            params: UnlikePublishParams(
-                userId: currentUserId, publishId: publishId))
-        : await remoteLikePublish.likePublish(
-            params:
-                LikePublishParams(userId: currentUserId, publishId: publishId));
+        ? await remoteUnlikePublish.unlikePublish(params: UnlikePublishParams(userId: currentUserId, publishId: publishId))
+        : await remoteLikePublish.likePublish(params: LikePublishParams(userId: currentUserId, publishId: publishId));
   }
 
   TextEditingController commentController = TextEditingController();
   @override
   TextEditingController get commentTextFieldController => commentController;
-  
+
   @override
   Future<void> deleteComment({required String commentId, required String publishId}) async {
     try {

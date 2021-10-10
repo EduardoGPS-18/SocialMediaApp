@@ -34,7 +34,7 @@ class RemoteRegisterUser implements RegisterUser {
         photoUrl: photoUrl,
         uid: userCred.user!.uid,
       );
-    } on FirebaseAuthenticationError catch (_) {
+    } catch (_) {
       rethrow;
     }
   }

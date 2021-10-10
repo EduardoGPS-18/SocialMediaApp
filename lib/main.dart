@@ -23,18 +23,17 @@ class MyApp extends StatelessWidget {
       navigatorKey: _navigatorKey,
       title: 'Social Media App',
       theme: AppTheme.lightThemeData,
-      //darkTheme: AppTheme.darkThemeData,
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       defaultTransition: Transition.cupertino,
       transitionDuration: const Duration(milliseconds: 400),
       initialRoute: '/auth',
-      routes: {
-        '/post-detail': (_) => makePostPage(),
-        '/add-post': (_) => makeCreatePostPage(),
-        '/auth': (_) => makeAuthPage(),
-        '/core': (_) => makeCorePage(),
-      },
+      getPages: [
+        GetPage(name: '/post-detail', page: makePostPage),
+        GetPage(name: '/add-post', page: makeCreatePostPage),
+        GetPage(name: '/auth', page: makeAuthPage),
+        GetPage(name: '/core', page: makeCorePage),
+      ],
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../../../domain/usecases/usecases.dart';
 import '../../../firebase/firebase.dart';
 import '../../../models/models.dart';
@@ -18,7 +16,7 @@ class RemoteAddPublish implements AddPublish {
             RemotePublishModel.toSave(content: params.content, userId: params.userId).toMap(),
           );
       response.update({'uid': response.id});
-    } on FirebaseAuthException catch (_) {
+    } catch (_) {
       rethrow;
     }
   }

@@ -25,6 +25,7 @@ dependencies:
   get: ^4.3.8
   flutter_native_splash: ^1.2.4
   firebase_storage: ^10.0.4
+  cached_network_image: ^3.1.0
 
 dev_dependencies:
   flutter_test:

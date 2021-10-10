@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../../domain/entities/entities.dart';
 import '../../../../shared/shared.dart';
 import 'feed_components.dart';
 
 class ViewPost extends StatefulWidget {
   final Size size;
-  final Stream<UserEntity> publishUser;
-  final Stream<UserEntity> currentUser;
+  final UserEntity publishUser;
+  final UserEntity currentUser;
   final PublishEntity publish;
   final Function()? onContentClick;
   final Function()? onLikeClick;
@@ -37,57 +38,30 @@ class _ViewPostState extends State<ViewPost> {
       children: [
         SizedBox(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: widget.size.height * 0.002,
-                horizontal: widget.size.width * 0.004),
+            padding: EdgeInsets.symmetric(vertical: widget.size.height * 0.002, horizontal: widget.size.width * 0.004),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StreamBuilder<UserEntity>(
-                  stream: widget.publishUser,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return StreamBuilder<UserEntity>(
-                          stream: widget.currentUser,
-                          builder: (context, currenUserSnapshot) {
-                            if (currenUserSnapshot.hasData &&
-                                currenUserSnapshot.data != null) {
-                              return PublishHeader(
-                                currentUser: currenUserSnapshot.data!,
-                                publish: widget.publish,
-                                publishUser: snapshot.data!,
-                                onUserImageClick: () {},
-                                size: widget.size,
-                                onConfirmDelete: widget.onConfirmDelete,
-                              );
-                            }
-                            return const Center();
-                          });
-                    }
-                    return const Center();
-                  },
+                PublishHeader(
+                  currentUser: widget.currentUser,
+                  publish: widget.publish,
+                  publishUser: widget.publishUser,
+                  onUserImageClick: () {},
+                  size: widget.size,
+                  onConfirmDelete: widget.onConfirmDelete,
                 ),
                 PublishContent(
                   onContentClick: widget.onContentClick,
                   content: widget.publish.content,
                 ),
-                StreamBuilder<UserEntity>(
-                  stream: widget.currentUser,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData && snapshot.data != null) {
-                      return PublishFooter(
-                        size: widget.size,
-                        onLikeClick: widget.onLikeClick,
-                        isLiked: widget.publish.uidOfWhoLikedIt
-                            .contains(snapshot.data!.uid),
-                        favoriteLength: widget.publish.uidOfWhoLikedIt.length,
-                        commentLength: widget.publish.commentsCount,
-                        onCommentClick: widget.onCommentClick,
-                      );
-                    }
-                    return const SizedBox();
-                  },
-                )
+                PublishFooter(
+                  size: widget.size,
+                  onLikeClick: widget.onLikeClick,
+                  isLiked: widget.publish.uidOfWhoLikedIt.contains(widget.currentUser.uid),
+                  favoriteLength: widget.publish.uidOfWhoLikedIt.length,
+                  commentLength: widget.publish.commentsCount,
+                  onCommentClick: widget.onCommentClick,
+                ),
               ],
             ),
           ),
