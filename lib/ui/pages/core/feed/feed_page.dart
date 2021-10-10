@@ -23,7 +23,6 @@ class _FeedPageState extends State<FeedPage> {
   @override
   void initState() {
     super.initState();
-    
 
     widget.presenter.updateUserId();
     widget.presenter.userCommunicateStream.listen((event) {
@@ -66,14 +65,15 @@ class _FeedPageState extends State<FeedPage> {
                     stream: widget.presenter.isValidPublish,
                     builder: (context, isValidSnapshot) {
                       return Post(
-                        image: snapshot.data != null ? snapshot.data!.photoUrl : '',
+                        image: snapshot.data!.photoUrl,
                         hintTextTextField: "Adicione uma postagem",
                         functionButtonTextField: widget.presenter.addPublish,
                         functionImage: () {},
                         size: widget.size,
                         onTextEditing: widget.presenter.validPublishContent,
                         isValid: isValidSnapshot.data ?? false,
-                        textFieldController: widget.presenter.publishTextFieldController,
+                        textFieldController:
+                            widget.presenter.publishTextFieldController,
                       );
                     },
                   );
@@ -107,20 +107,28 @@ class _FeedPageState extends State<FeedPage> {
                     return StreamBuilder<UserEntity>(
                       stream: widget.presenter.user,
                       builder: (context, currentUserSnapshot) {
-                        if (currentUserSnapshot.hasData && currentUserSnapshot.data != null) {
+                        if (currentUserSnapshot.hasData &&
+                            currentUserSnapshot.data != null) {
                           return StreamBuilder<UserEntity>(
-                            stream: widget.presenter.loadUserEntityById(uid: snapshot.data![index].userId),
+                            stream: widget.presenter.loadUserEntityById(
+                                uid: snapshot.data![index].userId),
                             builder: (context, publishUserSnapshot) {
-                              if (publishUserSnapshot.hasData && publishUserSnapshot.data != null) {
+                              if (publishUserSnapshot.hasData &&
+                                  publishUserSnapshot.data != null) {
                                 return ViewPost(
-                                  onConfirmDelete: () => widget.presenter.removePublish(publishId: snapshot.data![index].uid),
+                                  onConfirmDelete: () => widget.presenter
+                                      .removePublish(
+                                          publishId: snapshot.data![index].uid),
                                   size: widget.size,
                                   publishUser: publishUserSnapshot.data!,
                                   publish: snapshot.data![index],
-                                  onLikeClick: () => widget.presenter.likeClick(publishId: snapshot.data![index].uid),
+                                  onLikeClick: () => widget.presenter.likeClick(
+                                      publishId: snapshot.data![index].uid),
                                   onUserImageClick: () {},
-                                  onContentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
-                                  onCommentClick: () => navigateToPostPage(publishId: snapshot.data![index].uid),
+                                  onContentClick: () => navigateToPostPage(
+                                      publishId: snapshot.data![index].uid),
+                                  onCommentClick: () => navigateToPostPage(
+                                      publishId: snapshot.data![index].uid),
                                   currentUser: currentUserSnapshot.data!,
                                 );
                               } else {
