@@ -2,9 +2,8 @@ import 'package:get/get.dart';
 
 import '../../../domain/usecases/get_user_id.dart';
 import '../../../ui/helpers/helpers.dart';
-import 'shared.dart';
 
-mixin UpdateUserId implements Navigation {
+mixin UpdateUserId {
   String? get userId;
   set userId(String? v);
   Rx<String> get errorStreamController;
@@ -14,9 +13,11 @@ mixin UpdateUserId implements Navigation {
     try {
       userId = localGetUserId.getUserId();
       if (userId == null) {
-        pathStreamController.subject.add('/auth');
+        Get.offAllNamed('/auth');
       }
     } catch (_) {
+      Get.offAllNamed('/auth');
+
       errorStreamController.subject.add(R.string.expiredUser);
     }
   }
