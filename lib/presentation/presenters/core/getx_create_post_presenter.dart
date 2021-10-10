@@ -6,9 +6,8 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
-import '../shared/shared.dart';
 
-class GetxCreatePostPresenter extends GetxController with UpdateUserId, NavigationImpl implements CreatePostPresenter {
+class GetxCreatePostPresenter extends GetxController implements CreatePostPresenter {
   AddPublish remoteAddPublish;
 
   @override
@@ -17,15 +16,19 @@ class GetxCreatePostPresenter extends GetxController with UpdateUserId, Navigati
   Validation validation;
 
   String? _userId;
-  @override
-  set userId(String? id) {
-    _userId = id;
-  }
 
   @override
-  String get userId {
-    updateUserId();
-    return _userId!;
+  void updateUserId() {
+    try {
+      _userId = localGetUserId.getUserId();
+      if (_userId == null) {
+        Get.offAllNamed('/auth');
+      }
+    } catch (_) {
+      Get.offAllNamed('/auth');
+
+      errorStreamController.subject.add(R.string.expiredUser);
+    }
   }
 
   String _publishContent = "";
@@ -67,6 +70,7 @@ class GetxCreatePostPresenter extends GetxController with UpdateUserId, Navigati
   @override
   Stream<UserEntity>? get user {
     updateUserId();
+    print(_userId);
     return remoteLoadUser.loadUserByUID(uid: _userId!);
   }
 
