@@ -45,6 +45,8 @@ class _CreatePostPageState extends State<CreatePostPage> {
                     child: ListTile(
                       title: Text(
                         snapshot.data!.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       leading: Container(
                         width: size.width * 0.13,
