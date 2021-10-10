@@ -26,7 +26,7 @@ class PublishContent extends StatelessWidget {
                 ),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
-                maxLines: 10,
+                maxLines: 4,
               ),
             ),
           ],
