@@ -7,10 +7,10 @@ import '../../../ui/helpers/helpers.dart';
 import '../../../ui/pages/pages.dart';
 import '../../protocols/protocols.dart';
 
-class GetxCreatePostPresenter extends GetxController implements CreatePostPresenter {
+class GetxCreatePostPresenter extends GetxController
+    implements CreatePostPresenter {
   AddPublish remoteAddPublish;
 
-  @override
   GetUserId localGetUserId;
   LoadUser remoteLoadUser;
   Validation validation;
@@ -39,7 +39,7 @@ class GetxCreatePostPresenter extends GetxController implements CreatePostPresen
   Rx<bool> isValidPublishStreamController = Rx(false);
   @override
   Stream<bool> get isValidPublish => isValidPublishStreamController.stream;
-  @override
+
   Rx<String> errorStreamController = Rx("");
   @override
   Stream<String> get errorStream => errorStreamController.stream;
@@ -70,7 +70,7 @@ class GetxCreatePostPresenter extends GetxController implements CreatePostPresen
   @override
   Stream<UserEntity>? get user {
     updateUserId();
-    print(_userId);
+    // print(_userId);
     return remoteLoadUser.loadUserByUID(uid: _userId!);
   }
 
@@ -82,7 +82,8 @@ class GetxCreatePostPresenter extends GetxController implements CreatePostPresen
   }
 
   void _validateForm() {
-    final isValid = _publishContent.isNotEmpty && postErrorStreamController.value == UIError.noError;
+    final isValid = _publishContent.isNotEmpty &&
+        postErrorStreamController.value == UIError.noError;
     isValidPublishStreamController.subject.add(isValid);
   }
 
