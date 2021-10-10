@@ -33,9 +33,7 @@ class _CorePageAppState extends State<CorePageApp> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         appBar: CustomPageViewAppBar(
           pageViewNames: const ["Feed", "Criar postagem", "Perfil"],
@@ -43,7 +41,7 @@ class _CorePageAppState extends State<CorePageApp> {
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: () {},
+              onPressed: () async => await widget.presenter.logout(),
             ),
           ],
         ),
