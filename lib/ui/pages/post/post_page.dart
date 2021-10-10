@@ -20,7 +20,7 @@ class _PostPageState extends State<PostPage> {
   @override
   void initState() {
     super.initState();
-   
+
     widget.presenter.updateUserId();
   }
 
@@ -58,6 +58,7 @@ class _PostPageState extends State<PostPage> {
                                     currentUser: currentUserSnapshot.data!,
                                     publish: publishSnapshot.data!,
                                     publishUser: publishUserSnapshot.data!,
+                                    onLikeClick: () => widget.presenter.likeClick(publishId: publishId),
                                   );
                                 } else {
                                   return const Center();
