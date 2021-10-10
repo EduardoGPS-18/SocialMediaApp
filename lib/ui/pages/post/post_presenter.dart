@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../domain/entities/entities.dart';
-import '../../../presentation/presenters/shared/shared.dart';
 
-abstract class PostPresenter implements Navigation {
+abstract class PostPresenter   {
   void validateComment(String comment);
 
   Stream<String> get errorStream;

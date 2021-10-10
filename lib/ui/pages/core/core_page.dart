@@ -4,12 +4,12 @@ import '../../../shared/shared.dart';
 import 'core.dart';
 
 class CorePageApp extends StatefulWidget {
-  final CorePresenter presenter;
+  final CorePresenter corePresenter;
   final PageController pageController = PageController();
   final FeedPresenter feedPresenter;
   final ProfilePresenter profilePresenter;
 
-  CorePageApp({Key? key, required this.presenter, required this.feedPresenter, required this.profilePresenter}) : super(key: key);
+  CorePageApp({Key? key, required this.corePresenter, required this.feedPresenter, required this.profilePresenter}) : super(key: key);
 
   @override
   _CorePageAppState createState() => _CorePageAppState();
@@ -20,9 +20,9 @@ class _CorePageAppState extends State<CorePageApp> {
   void initState() {
     super.initState();
 
-    widget.presenter.pageIndexNotifier.addListener(() {
+    widget.corePresenter.pageIndexNotifier.addListener(() {
       widget.pageController.animateToPage(
-        widget.presenter.pageIndexNotifier.value,
+        widget.corePresenter.pageIndexNotifier.value,
         duration: const Duration(seconds: 1),
         curve: Curves.easeInOut,
       );
@@ -37,11 +37,13 @@ class _CorePageAppState extends State<CorePageApp> {
       child: Scaffold(
         appBar: CustomPageViewAppBar(
           pageViewNames: const ["Feed", "Criar postagem", "Perfil"],
-          index: widget.presenter.pageIndexNotifier,
+          index: widget.corePresenter.pageIndexNotifier,
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: () async => await widget.presenter.logout(),
+              onPressed: () async {
+                await widget.corePresenter.logout();
+              },
             ),
           ],
         ),
@@ -61,15 +63,15 @@ class _CorePageAppState extends State<CorePageApp> {
           ],
         ),
         bottomNavigationBar: ValueListenableBuilder<int>(
-          valueListenable: widget.presenter.pageIndexNotifier,
+          valueListenable: widget.corePresenter.pageIndexNotifier,
           builder: (context, value, _) => BottomNavigationBar(
             elevation: 15,
             backgroundColor: Theme.of(context).colorScheme.background,
             onTap: (index) {
               if (index == 1) {
-                Navigator.of(context).pushNamed('/add-post');
+                Navigator.of(context).pushNamed("/add-post");
               } else {
-                widget.presenter.pageIndexNotifier.value = index;
+                widget.corePresenter.pageIndexNotifier.value = index;
               }
             },
             currentIndex: value,
