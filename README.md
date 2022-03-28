@@ -21,7 +21,7 @@
 #### Software Development Process ####
 - DDD ( Domain Driven Development )
 
-![](https://img.shields.io/badge/TDD-TEST_DRIVEN_DEVELOPMENT-blue)
+![](https://img.shields.io/badge/DDD-DOMAIN_DRIVEN_DEVELOPMENT-blue)
 
 
 #### Design Patterns ####
